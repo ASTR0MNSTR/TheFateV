@@ -1,0 +1,1042 @@
+CATAID_1	$1	Integer		Unique ID of GAMA object	meta.id;meta.main	int	-2147483648
+Z_1	$2	Float		Spectroscopic redshift	src.redshift	float
+f_mu_SFH_best_fit	$3	Float		Best fit fraction of tau_V^BC contributed by dust in the HII region	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_SFH_percentile2_5	$4	Float		2.5th percentile of fraction of tau_V^BC contributed by dust in the HII region	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_SFH_percentile16	$5	Float		16th percentile of fraction of tau_V^BC contributed by dust in the HII region	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_SFH_percentile50	$6	Float		Median fraction of tau_V^BC contributed by dust in the HII region	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_SFH_percentile84	$7	Float		84th percentile of fraction of tau_V^BC contributed by dust in the HII region	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_SFH_percentile97_5	$8	Float		97.5th percentile of fraction of tau_V^BC contributed by dust in the HII region	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_IR_best_fit	$9	Float		Best fit fraction of L_sun accounted by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_IR_percentile2_5	$10	Float		2.5th percentile of fraction of L_sun accounted by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_IR_percentile16	$11	Float		16th percentile of fraction of L_sun accounted by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_IR_percentile50	$12	Float		Median fraction of L_sun accounted by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_IR_percentile84	$13	Float		84th percentile of fraction of L_sun accounted by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+f_mu_IR_percentile97_5	$14	Float		97.5th percentile of fraction of L_sun accounted by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+mu_parameter_best_fit	$15	Float		Best fit fraction of tau_V contributed by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+mu_parameter_percentile2_5	$16	Float		2.5th percentile of fraction of tau_V contributed by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+mu_parameter_percentile16	$17	Float		16th percentile of fraction of tau_V contributed by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+mu_parameter_percentile50	$18	Float		Median fraction of tau_V contributed by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+mu_parameter_percentile84	$19	Float		84th percentile of fraction of tau_V contributed by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+mu_parameter_percentile97_5	$20	Float		97.5th percentile of fraction of tau_V contributed by dust in the ambient ISM	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_best_fit	$21	Float		Best fit total V-band optical depth of the dust seen by young stars in their birth clouds	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_percentile2_5	$22	Float		2.5th percentile of total V-band optical depth of the dust seen by young stars in their birth clouds	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_percentile16	$23	Float		16th percentile of total V-band optical depth of the dust seen by young stars in their birth clouds	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_percentile50	$24	Float		Median total V-band optical depth of the dust seen by young stars in their birth clouds	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_percentile84	$25	Float		84th percentile of total V-band optical depth of the dust seen by young stars in their birth clouds	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_percentile97_5	$26	Float		97.5th percentile of total V-band optical depth of the dust seen by young stars in their birth clouds	phys.absorption.opticalDepth;em.opt.V	float
+sSFR_0_1Gyr_best_fit	$27	Float	yr^-1	Best fit specific star formation rate	phys.SFR	float
+sSFR_0_1Gyr_percentile2_5	$28	Float	dex(yr^-1)	2.5th percentile of specific star formation rate	phys.SFR	float
+sSFR_0_1Gyr_percentile16	$29	Float	dex(yr^-1)	16th percentile of specific star formation rate	phys.SFR	float
+sSFR_0_1Gyr_percentile50	$30	Float	dex(yr^-1)	Median of specific star formation rate	phys.SFR	float
+sSFR_0_1Gyr_percentile84	$31	Float	dex(yr^-1)	84th percentile of specific star formation rate	phys.SFR	float
+sSFR_0_1Gyr_percentile97_5	$32	Float	dex(yr^-1)	97.5th percentile of specific star formation rate	phys.SFR	float
+mass_stellar_best_fit	$33	Float	Msun	Best fit total mass of stars ever formed; integral of the star formation rate	phys.mass	float
+mass_stellar_percentile2_5	$34	Float	dex(Msun)	2.5th percentile of total mass of stars ever formed; integral of the star formation rate	phys.mass	float
+mass_stellar_percentile16	$35	Float	dex(Msun)	16th percentile of total mass of stars ever formed; integral of the star formation rate	phys.mass	float
+mass_stellar_percentile50	$36	Float	dex(Msun)	Median total mass of stars ever formed; integral of the star formation rate	phys.mass	float
+mass_stellar_percentile84	$37	Float	dex(Msun)	84th percentile of total mass of stars ever formed; integral of the star formation rate	phys.mass	float
+mass_stellar_percentile97_5	$38	Float	dex(Msun)	97.5th percentile of total mass of stars ever formed; integral of the star formation rate	phys.mass	float
+L_dust_best_fit	$39	Float	Lsun	Best fit total stellar luminosity absorbed and re-radiated by dust (birth clouds + ambient ISM)	phys.luminosity	float
+L_dust_percentile2_5	$40	Float	dex(Lsun)	2.5th percentile of total stellar luminosity absorbed and re-radiated by dust (birth clouds + ambient ISM)	phys.luminosity	float
+L_dust_percentile16	$41	Float	dex(Lsun)	16th percentile of total stellar luminosity absorbed and re-radiated by dust (birth clouds + ambient ISM)	phys.luminosity	float
+L_dust_percentile50	$42	Float	dex(Lsun)	Median total stellar luminosity absorbed and re-radiated by dust (birth clouds + ambient ISM)	phys.luminosity	float
+L_dust_percentile84	$43	Float	dex(Lsun)	84th percentile of total stellar luminosity absorbed and re-radiated by dust (birth clouds + ambient ISM)	phys.luminosity	float
+L_dust_percentile97_5	$44	Float	dex(Lsun)	97.5th percentile of total stellar luminosity absorbed and re-radiated by dust (birth clouds + ambient ISM)	phys.luminosity	float
+T_C_ISM_best_fit	$45	Float	K	Best fit equilibrium temperature of cold dust in the ambient ISM	phys.temperature	float
+T_C_ISM_percentile2_5	$46	Float	K	2.5th percentile of equilibrium temperature of cold dust in the ambient ISM	phys.temperature	float
+T_C_ISM_percentile16	$47	Float	K	16th percentile of equilibrium temperature of cold dust in the ambient ISM	phys.temperature	float
+T_C_ISM_percentile50	$48	Float	K	Median equilibrium temperature of cold dust in the ambient ISM	phys.temperature	float
+T_C_ISM_percentile84	$49	Float	K	84th percentile of equilibrium temperature of cold dust in the ambient ISM	phys.temperature	float
+T_C_ISM_percentile97_5	$50	Float	K	97.5th percentile of equilibrium temperature of cold dust in the ambient ISM	phys.temperature	float
+T_W_BC_best_fit	$51	Float	K	Best fit equilibrium temperature of warm dust in the ambient ISM	phys.temperature	float
+T_W_BC_percentile2_5	$52	Float	K	2.5th percentile of equilibrium temperature of warm dust in the ambient ISM	phys.temperature	float
+T_W_BC_percentile16	$53	Float	K	16th percentile of equilibrium temperature of warm dust in the ambient ISM	phys.temperature	float
+T_W_BC_percentile50	$54	Float	K	Median equilibrium temperature of warm dust in the ambient ISM	phys.temperature	float
+T_W_BC_percentile84	$55	Float	K	84th percentile of equilibrium temperature of warm dust in the ambient ISM	phys.temperature	float
+T_W_BC_percentile97_5	$56	Float	K	97.5th percentile of equilibrium temperature of warm dust in the ambient ISM	phys.temperature	float
+xi_C_tot_best_fit	$57	Float		Best fit fractional contribution by cold dust to the dust luminosity of the ambient ISM	phys.luminosity	float
+xi_C_tot_percentile2_5	$58	Float		2.5th percentile of fractional contribution by cold dust to the dust luminosity of the ambient ISM	phys.luminosity	float
+xi_C_tot_percentile16	$59	Float		16th percentile of fractional contribution by cold dust to the dust luminosity of the ambient ISM	phys.luminosity	float
+xi_C_tot_percentile50	$60	Float		Median fractional contribution by cold dust to the dust luminosity of the ambient ISM	phys.luminosity	float
+xi_C_tot_percentile84	$61	Float		84th percentile of fractional contribution by cold dust to the dust luminosity of the ambient ISM	phys.luminosity	float
+xi_C_tot_percentile97_5	$62	Float		97.5th percentile of fractional contribution by cold dust to the dust luminosity of the ambient ISM	phys.luminosity	float
+xi_PAH_tot_best_fit	$63	Float		Best fit fractional contribution by PAHs to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_PAH_tot_percentile2_5	$64	Float		2.5th percentile of fractional contribution by PAHs to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_PAH_tot_percentile16	$65	Float		16th percentile of fractional contribution by PAHs to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_PAH_tot_percentile50	$66	Float		Median fractional contribution by PAHs to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_PAH_tot_percentile84	$67	Float		84th percentile of fractional contribution by PAHs to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_PAH_tot_percentile97_5	$68	Float		97.5th percentile of fractional contribution by PAHs to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_MIR_tot_best_fit	$69	Float		Best fit fractional contribution by the hot MIR continuum to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_MIR_tot_percentile2_5	$70	Float		2.5th percentile of fractional contribution by the hot MIR continuum to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_MIR_tot_percentile16	$71	Float		16th percentile of fractional contribution by the hot MIR continuum to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_MIR_tot_percentile50	$72	Float		Median fractional contribution by the hot MIR continuum to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_MIR_tot_percentile84	$73	Float		84th percentile of fractional contribution by the hot MIR continuum to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_MIR_tot_percentile97_5	$74	Float		97.5th percentile of fractional contribution by the hot MIR continuum to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_W_tot_best_fit	$75	Float		Best fit fractional contribution by warm dust to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_W_tot_percentile2_5	$76	Float		2.5th percentile of fractional contribution by warm dust to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_W_tot_percentile16	$77	Float		16th percentile of fractional contribution by warm dust to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_W_tot_percentile50	$78	Float		Median fractional contribution by warm dust to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_W_tot_percentile84	$79	Float		84th percentile of fractional contribution by warm dust to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+xi_W_tot_percentile97_5	$80	Float		97.5th percentile of fractional contribution by warm dust to the dust luminosity of the stellar birth clouds	phys.luminosity	float
+tau_V_ISM_best_fit	$81	Float		Best fit total V-band optical depth of the dust seen through the ISM	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_ISM_percentile2_5	$82	Float		2.5th percentile of total V-band optical depth of the dust seen through the ISM	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_ISM_percentile16	$83	Float		16th percentile of total V-band optical depth of the dust seen through the ISM	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_ISM_percentile50	$84	Float		Median total V-band optical depth of the dust seen through the ISM	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_ISM_percentile84	$85	Float		84th percentile of total V-band optical depth of the dust seen through the ISM	phys.absorption.opticalDepth;em.opt.V	float
+tau_V_ISM_percentile97_5	$86	Float		97.5th percentile of total V-band optical depth of the dust seen through the ISM	phys.absorption.opticalDepth;em.opt.V	float
+mass_dust_best_fit	$87	Float	Msun	Best fit total mass of dust	phys.mass	float
+mass_dust_percentile2_5	$88	Float	dex(Msun)	2.5th percentile of total mass of dust	phys.mass	float
+mass_dust_percentile16	$89	Float	dex(Msun)	16th percentile of total mass of dust	phys.mass	float
+mass_dust_percentile50	$90	Float	dex(Msun)	Median total mass of dust	phys.mass	float
+mass_dust_percentile84	$91	Float	dex(Msun)	84th percentile of total mass of dust	phys.mass	float
+mass_dust_percentile97_5	$92	Float	dex(Msun)	97.5th percentile of total mass of dust	phys.mass	float
+SFR_0_1Gyr_best_fit	$93	Float	Msun/yr	Best fit star formation rate	phys.SFR	float
+SFR_0_1Gyr_percentile2_5	$94	Float	dex(Msun/yr)	2.5th percentile of star formation rate	phys.SFR	float
+SFR_0_1Gyr_percentile16	$95	Float	dex(Msun/yr)	16th percentile of star formation rate	phys.SFR	float
+SFR_0_1Gyr_percentile50	$96	Float	dex(Msun/yr)	Median star formation rate	phys.SFR	float
+SFR_0_1Gyr_percentile84	$97	Float	dex(Msun/yr)	84th percentile of star formation rate	phys.SFR	float
+SFR_0_1Gyr_percentile97_5	$98	Float	dex(Msun/yr)	97.5th percentile of star formation rate	phys.SFR	float
+metalicity_Z_Zo_percentile2_5	$99	Float		2.5th percentile of metallicity in solar units	phys.abund.Z	float
+metalicity_Z_Zo_percentile16	$100	Float		16th percentile of metallicity in solar units	phys.abund.Z	float
+metalicity_Z_Zo_percentile50	$101	Float		Median metallicity in solar units	phys.abund.Z	float
+metalicity_Z_Zo_percentile84	$102	Float		84th percentile of metallicity in solar units	phys.abund.Z	float
+metalicity_Z_Zo_percentile97_5	$103	Float		97.5th percentile of metallicity in solar units	phys.abund.Z	float
+tform_percentile2_5	$104	Float	dex(yr)	2.5th percentile of age of the oldest stars in the galaxy	time.age	float
+tform_percentile16	$105	Float	dex(yr)	16th percentile of age of the oldest stars in the galaxy	time.age	float
+tform_percentile50	$106	Float	dex(yr)	Median age of the oldest stars in the galaxy	time.age	float
+tform_percentile84	$107	Float	dex(yr)	84th percentile of age of the oldest stars in the galaxy	time.age	float
+tform_percentile97_5	$108	Float	dex(yr)	97.5th percentile of age of the oldest stars in the galaxy	time.age	float
+gamma_percentile2_5	$109	Float	Gyr^-1	2.5th percentile of star formation timescale	phys.SFR;time.scale	float
+gamma_percentile16	$110	Float	Gyr^-1	16th percentile of star formation timescale	phys.SFR;time.scale	float
+gamma_percentile50	$111	Float	Gyr^-1	Median star formation timescale	phys.SFR;time.scale	float
+gamma_percentile84	$112	Float	Gyr^-1	84th percentile of star formation timescale	phys.SFR;time.scale	float
+gamma_percentile97_5	$113	Float	Gyr^-1	97.5th percentile of star formation timescale	phys.SFR;time.scale	float
+tlastb_percentile2_5	$114	Float	dex(yr)	2.5th percentile of time since the last burst of star formation ended	time.age	float
+tlastb_percentile16	$115	Float	dex(yr)	16th percentile of time since the last burst of star formation ended	time.age	float
+tlastb_percentile50	$116	Float	dex(yr)	Median time since the last burst of star formation ended	time.age	float
+tlastb_percentile84	$117	Float	dex(yr)	84th percentile of time since the last burst of star formation ended	time.age	float
+tlastb_percentile97_5	$118	Float	dex(yr)	97.5th percentile of time since the last burst of star formation ended	time.age	float
+agem_percentile2_5	$119	Float	dex(yr)	2.5th percentile of mass-weighted age	time.age	float
+agem_percentile16	$120	Float	dex(yr)	16th percentile of mass-weighted age	time.age	float
+agem_percentile50	$121	Float	dex(yr)	Median mass-weighted age	time.age	float
+agem_percentile84	$122	Float	dex(yr)	84th percentile of mass-weighted age	time.age	float
+agem_percentile97_5	$123	Float	dex(yr)	97.5th percentile of mass-weighted age	time.age	float
+ager_percentile2_5	$124	Float	dex(yr)	2.5th percentile of r-band light-weighted age	time.age	float
+ager_percentile16	$125	Float	dex(yr)	16th percentile of r-band light-weighted age	time.age	float
+ager_percentile50	$126	Float	dex(yr)	Median r-band light-weighted age	time.age	float
+ager_percentile84	$127	Float	dex(yr)	84th percentile of r-band light-weighted age	time.age	float
+ager_percentile97_5	$128	Float	dex(yr)	97.5th percentile of r-band light-weighted age	time.age	float
+sfr16_percentile2_5	$129	Float	dex(Msun/yr)	2.5th percentile of star-formation rate averaged over the last 10^6 yr	phys.SFR	float
+sfr16_percentile16	$130	Float	dex(Msun/yr)	16th percentile of star-formation rate averaged over the last 10^6 yr	phys.SFR	float
+sfr16_percentile50	$131	Float	dex(Msun/yr)	Median star-formation rate averaged over the last 10^6 yr	phys.SFR	float
+sfr16_percentile84	$132	Float	dex(Msun/yr)	84th percentile of star-formation rate averaged over the last 10^6 yr	phys.SFR	float
+sfr16_percentile97_5	$133	Float	dex(Msun/yr)	97.5th percentile of star-formation rate averaged over the last 10^6 yr	phys.SFR	float
+sfr17_percentile2_5	$134	Float	dex(Msun/yr)	2.5th percentile of star-formation rate averaged over the last 10^7 yr	phys.SFR	float
+sfr17_percentile16	$135	Float	dex(Msun/yr)	16th percentile of star-formation rate averaged over the last 10^7 yr	phys.SFR	float
+sfr17_percentile50	$136	Float	dex(Msun/yr)	Median star-formation rate averaged over the last 10^7 yr	phys.SFR	float
+sfr17_percentile84	$137	Float	dex(Msun/yr)	84th percentile of star-formation rate averaged over the last 10^7 yr	phys.SFR	float
+sfr17_percentile97_5	$138	Float	dex(Msun/yr)	97.5th percentile of star-formation rate averaged over the last 10^7 yr	phys.SFR	float
+sfr18_percentile2_5	$139	Float	dex(Msun/yr)	2.5th percentile of star-formation rate averaged over the last 10^8 yr	phys.SFR	float
+sfr18_percentile16	$140	Float	dex(Msun/yr)	16th percentile of star-formation rate averaged over the last 10^8 yr	phys.SFR	float
+sfr18_percentile50	$141	Float	dex(Msun/yr)	Median star-formation rate averaged over the last 10^8 yr	phys.SFR	float
+sfr18_percentile84	$142	Float	dex(Msun/yr)	84th percentile of star-formation rate averaged over the last 10^8 yr	phys.SFR	float
+sfr18_percentile97_5	$143	Float	dex(Msun/yr)	97.5th percentile of star-formation rate averaged over the last 10^8 yr	phys.SFR	float
+sfr19_percentile2_5	$144	Float	dex(Msun/yr)	2.5th percentile of star-formation rate averaged over the last 10^9 yr	phys.SFR	float
+sfr19_percentile16	$145	Float	dex(Msun/yr)	16th percentile of star-formation rate averaged over the last 10^9 yr	phys.SFR	float
+sfr19_percentile50	$146	Float	dex(Msun/yr)	Median star-formation rate averaged over the last 10^9 yr	phys.SFR	float
+sfr19_percentile84	$147	Float	dex(Msun/yr)	84th percentile of star-formation rate averaged over the last 10^9 yr	phys.SFR	float
+sfr19_percentile97_5	$148	Float	dex(Msun/yr)	97.5th percentile of star-formation rate averaged over the last 10^9 yr	phys.SFR	float
+sfr29_percentile2_5	$149	Float	dex(Msun/yr)	2.5th percentile of star-formation rate averaged over the last 2x10^9 yr	phys.SFR	float
+sfr29_percentile16	$150	Float	dex(Msun/yr)	16th percentile of star-formation rate averaged over the last 2x10^9 yr	phys.SFR	float
+sfr29_percentile50	$151	Float	dex(Msun/yr)	Median star-formation rate averaged over the last 2x10^9 yr	phys.SFR	float
+sfr29_percentile84	$152	Float	dex(Msun/yr)	84th percentile of star-formation rate averaged over the last 2x10^9 yr	phys.SFR	float
+sfr29_percentile97_5	$153	Float	dex(Msun/yr)	97.5th percentile of star-formation rate averaged over the last 2x10^9 yr	phys.SFR	float
+fb16_percentile2_5	$154	Float		2.5th percentile of fraction of stellar mass formed in bursts over last 10^6 yr	phys.mass	float
+fb16_percentile16	$155	Float		16th percentile of fraction of stellar mass formed in bursts over last 10^6 yr	phys.mass	float
+fb16_percentile50	$156	Float		Median fraction of stellar mass formed in bursts over last 10^6 yr	phys.mass	float
+fb16_percentile84	$157	Float		84th percentile of fraction of stellar mass formed in bursts over last 10^6 yr	phys.mass	float
+fb16_percentile97_5	$158	Float		97.5th percentile of fraction of stellar mass formed in bursts over last 10^6 yr	phys.mass	float
+fb17_percentile2_5	$159	Float		2.5th percentile of fraction of stellar mass formed in bursts over last 10^7 yr	phys.mass	float
+fb17_percentile16	$160	Float		16th percentile of fraction of stellar mass formed in bursts over last 10^7 yr	phys.mass	float
+fb17_percentile50	$161	Float		Median fraction of stellar mass formed in bursts over last 10^7 yr	phys.mass	float
+fb17_percentile84	$162	Float		84th percentile of fraction of stellar mass formed in bursts over last 10^7 yr	phys.mass	float
+fb17_percentile97_5	$163	Float		97.5th percentile of fraction of stellar mass formed in bursts over last 10^7 yr	phys.mass	float
+fb18_percentile2_5	$164	Float		2.5th percentile of fraction of stellar mass formed in bursts over last 10^8 yr	phys.mass	float
+fb18_percentile16	$165	Float		16th percentile of fraction of stellar mass formed in bursts over last 10^8 yr	phys.mass	float
+fb18_percentile50	$166	Float		Median fraction of stellar mass formed in bursts over last 10^8 yr	phys.mass	float
+fb18_percentile84	$167	Float		84th percentile of fraction of stellar mass formed in bursts over last 10^8 yr	phys.mass	float
+fb18_percentile97_5	$168	Float		97.5th percentile of fraction of stellar mass formed in bursts over last 10^8 yr	phys.mass	float
+fb19_percentile2_5	$169	Float		2.5th percentile of fraction of stellar mass formed in bursts over last 10^9 yr	phys.mass	float
+fb19_percentile16	$170	Float		16th percentile of fraction of stellar mass formed in bursts over last 10^9 yr	phys.mass	float
+fb19_percentile50	$171	Float		Median fraction of stellar mass formed in bursts over last 10^9 yr	phys.mass	float
+fb19_percentile84	$172	Float		84th percentile of fraction of stellar mass formed in bursts over last 10^9 yr	phys.mass	float
+fb19_percentile97_5	$173	Float		97.5th percentile of fraction of stellar mass formed in bursts over last 10^9 yr	phys.mass	float
+fb29_percentile2_5	$174	Float		2.5th percentile of fraction of stellar mass formed in bursts over last 2x10^9 yr	phys.mass	float
+fb29_percentile16	$175	Float		16th percentile of fraction of stellar mass formed in bursts over last 2x10^9 yr	phys.mass	float
+fb29_percentile50	$176	Float		Median fraction of stellar mass formed in bursts over last 2x10^9 yr	phys.mass	float
+fb29_percentile84	$177	Float		84th percentile of fraction of stellar mass formed in bursts over last 2x10^9 yr	phys.mass	float
+fb29_percentile97_5	$178	Float		97.5th percentile of fraction of stellar mass formed in bursts over last 2x10^9 yr	phys.mass	float
+URL_SED	$179	String		URL of MAGPHYS output file containing the best-fit spectrum	meta.ref.url;meta.file	char
+URL_FIT	$180	String		URL of MAGPHYS output file containing individual parameter PDFs	meta.ref.url;meta.file	char
+URL_PNG	$181	String		URL of plot of the best-fit spectrum and input photometry	meta.ref.url;meta.file	char
+CATAID_2	$182	Integer		GAMA Object ID	meta.id	int	-2147483648
+RA_1	$183	Double	deg	Right Ascension (J2000)	pos.eq.ra	double
+DEC_1	$184	Double	deg	Declination (J2000)	pos.eq.dec	double
+R_PETRO_1	$185	Float	mag	Extinction-corrected SDSS DR7 Petrosian mag	phot.mag;em.opt.R	float
+SURVEY_OLDCLASS_1	$186	Short		Useful for selecting samples, see notes	meta.code.class	short	-32768
+SURVEY_CLASS_1	$187	Short		Useful for selecting samples, see notes	meta.code.class	short	-32768
+CENFLUX_u	$188	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.opt.u	float
+BACKFLUX_u	$189	Float	counts	SEx subtracted background at object position	phot.count;em.opt.u	float
+PSFNUM_u	$190	Short		PSFEx number of stars used	meta.number;em.opt.u	short	-32768
+PSFCHI2_u	$191	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.opt.u	float
+PSFFWHM_u	$192	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.opt.u	float
+NSEC_u	$193	Short		SEx number of secondary components detected	meta.number;em.opt.u	short	-32768
+GALXCEN_u	$194	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.opt.u	float
+GALYCEN_u	$195	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.opt.u	float
+GALMAG_u	$196	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.opt.u	float
+GALRE_u	$197	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.opt.u	float
+GALINDEX_u	$198	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.opt.u	float
+GALELLIP_u	$199	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.opt.u	float
+GALPA_u	$200	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.opt.u	float
+GALXCENERR_u	$201	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.opt.u	float
+GALYCENERR_u	$202	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.opt.u	float
+GALMAGERR_u	$203	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.opt.u	float
+GALREERR_u	$204	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.opt.u	float
+GALINDEXERR_u	$205	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.opt.u	float
+GALELLIPERR_u	$206	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.opt.u	float
+GALPAERR_u	$207	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.opt.u	float
+GALRA_u	$208	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.opt.u	double
+GALDEC_u	$209	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.opt.u	float
+GALMAG10RE_u	$210	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.opt.u	float
+GALMU0_u	$211	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.opt.u	float
+GALMUE_u	$212	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.opt.u	float
+GALMUEAVG_u	$213	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.opt.u	float
+GALR90_u	$214	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.opt.u	float
+GALCHI2FULL_u	$215	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.opt.u	float
+GALNDOF_u	$216	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.opt.u	int	-2147483648
+GALCHI2_u	$217	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.opt.u	float
+GALPLAN_u	$218	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.opt.u	short	-32768
+PRICHI2FULL_u	$219	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.opt.u	float
+PRINFP_u	$220	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.opt.u	short	-32768
+PRINDOF_u	$221	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.opt.u	int	-2147483648
+PRICHI2_u	$222	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.opt.u	float
+CENFLUX_g	$223	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.opt.g	float
+BACKFLUX_g	$224	Float	counts	SEx subtracted background at object position	phot.count;em.opt.g	float
+PSFNUM_g	$225	Short		PSFEx number of stars used	meta.number;em.opt.g	short	-32768
+PSFCHI2_g	$226	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.opt.g	float
+PSFFWHM_g	$227	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.opt.g	float
+NSEC_g	$228	Short		SEx number of secondary components detected	meta.number;em.opt.g	short	-32768
+GALXCEN_g	$229	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.opt.g	float
+GALYCEN_g	$230	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.opt.g	float
+GALMAG_g	$231	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.opt.g	float
+GALRE_g	$232	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.opt.g	float
+GALINDEX_g	$233	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.opt.g	float
+GALELLIP_g	$234	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.opt.g	float
+GALPA_g	$235	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.opt.g	float
+GALXCENERR_g	$236	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.opt.g	float
+GALYCENERR_g	$237	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.opt.g	float
+GALMAGERR_g	$238	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.opt.g	float
+GALREERR_g	$239	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.opt.g	float
+GALINDEXERR_g	$240	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.opt.g	float
+GALELLIPERR_g	$241	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.opt.g	float
+GALPAERR_g	$242	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.opt.g	float
+GALRA_g	$243	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.opt.g	double
+GALDEC_g	$244	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.opt.g	float
+GALMAG10RE_g	$245	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.opt.g	float
+GALMU0_g	$246	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.opt.g	float
+GALMUE_g	$247	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.opt.g	float
+GALMUEAVG_g	$248	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.opt.g	float
+GALR90_g	$249	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.opt.g	float
+GALCHI2FULL_g	$250	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.opt.g	float
+GALNDOF_g	$251	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.opt.g	int	-2147483648
+GALCHI2_g	$252	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.opt.g	float
+GALPLAN_g	$253	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.opt.g	short	-32768
+PRICHI2FULL_g	$254	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.opt.g	float
+PRINFP_g	$255	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.opt.g	short	-32768
+PRINDOF_g	$256	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.opt.g	int	-2147483648
+PRICHI2_g	$257	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.opt.g	float
+CENFLUX_r	$258	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.opt.r	float
+BACKFLUX_r	$259	Float	counts	SEx subtracted background at object position	phot.count;em.opt.r	float
+PSFNUM_r	$260	Short		PSFEx number of stars used	meta.number;em.opt.r	short	-32768
+PSFCHI2_r	$261	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.opt.r	float
+PSFFWHM_r	$262	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.opt.r	float
+NSEC_r	$263	Short		SEx number of secondary components detected	meta.number;em.opt.r	short	-32768
+GALXCEN_r	$264	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.opt.r	float
+GALYCEN_r	$265	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.opt.r	float
+GALMAG_r	$266	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.opt.r	float
+GALRE_r	$267	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.opt.r	float
+GALINDEX_r	$268	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.opt.r	float
+GALELLIP_r	$269	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.opt.r	float
+GALPA_r	$270	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.opt.r	float
+GALXCENERR_r	$271	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.opt.r	float
+GALYCENERR_r	$272	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.opt.r	float
+GALMAGERR_r	$273	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.opt.r	float
+GALREERR_r	$274	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.opt.r	float
+GALINDEXERR_r	$275	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.opt.r	float
+GALELLIPERR_r	$276	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.opt.r	float
+GALPAERR_r	$277	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.opt.r	float
+GALRA_r	$278	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.opt.r	double
+GALDEC_r	$279	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.opt.r	float
+GALMAG10RE_r	$280	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.opt.r	float
+GALMU0_r	$281	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.opt.r	float
+GALMUE_r	$282	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.opt.r	float
+GALMUEAVG_r	$283	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.opt.r	float
+GALR90_r	$284	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.opt.r	float
+GALCHI2FULL_r	$285	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.opt.r	float
+GALNDOF_r	$286	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.opt.r	int	-2147483648
+GALCHI2_r	$287	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.opt.r	float
+GALPLAN_r	$288	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.opt.r	short	-32768
+PRICHI2FULL_r	$289	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.opt.r	float
+PRINFP_r	$290	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.opt.r	short	-32768
+PRINDOF_r	$291	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.opt.r	int	-2147483648
+PRICHI2_r	$292	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.opt.r	float
+CENFLUX_i	$293	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.opt.i	float
+BACKFLUX_i	$294	Float	counts	SEx subtracted background at object position	phot.count;em.opt.i	float
+PSFNUM_i	$295	Short		PSFEx number of stars used	meta.number;em.opt.i	short	-32768
+PSFCHI2_i	$296	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.opt.i	float
+PSFFWHM_i	$297	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.opt.i	float
+NSEC_i	$298	Short		SEx number of secondary components detected	meta.number;em.opt.i	short	-32768
+GALXCEN_i	$299	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.opt.i	float
+GALYCEN_i	$300	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.opt.i	float
+GALMAG_i	$301	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.opt.i	float
+GALRE_i	$302	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.opt.i	float
+GALINDEX_i	$303	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.opt.i	float
+GALELLIP_i	$304	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.opt.i	float
+GALPA_i	$305	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.opt.i	float
+GALXCENERR_i	$306	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.opt.i	float
+GALYCENERR_i	$307	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.opt.i	float
+GALMAGERR_i	$308	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.opt.i	float
+GALREERR_i	$309	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.opt.i	float
+GALINDEXERR_i	$310	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.opt.i	float
+GALELLIPERR_i	$311	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.opt.i	float
+GALPAERR_i	$312	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.opt.i	float
+GALRA_i	$313	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.opt.i	double
+GALDEC_i	$314	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.opt.i	float
+GALMAG10RE_i	$315	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.opt.i	float
+GALMU0_i	$316	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.opt.i	float
+GALMUE_i	$317	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.opt.i	float
+GALMUEAVG_i	$318	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.opt.i	float
+GALR90_i	$319	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.opt.i	float
+GALCHI2FULL_i	$320	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.opt.i	float
+GALNDOF_i	$321	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.opt.i	int	-2147483648
+GALCHI2_i	$322	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.opt.i	float
+GALPLAN_i	$323	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.opt.i	short	-32768
+PRICHI2FULL_i	$324	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.opt.i	float
+PRINFP_i	$325	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.opt.i	short	-32768
+PRINDOF_i	$326	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.opt.i	int	-2147483648
+PRICHI2_i	$327	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.opt.i	float
+CENFLUX_z_1	$328	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.opt.z	float
+BACKFLUX_z_1	$329	Float	counts	SEx subtracted background at object position	phot.count;em.opt.z	float
+PSFNUM_z_1	$330	Short		PSFEx number of stars used	meta.number;em.opt.z	short	-32768
+PSFCHI2_z_1	$331	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.opt.z	float
+PSFFWHM_z_1	$332	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.opt.z	float
+NSEC_z_1	$333	Short		SEx number of secondary components detected	meta.number;em.opt.z	short	-32768
+GALXCEN_z_1	$334	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.opt.z	float
+GALYCEN_z_1	$335	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.opt.z	float
+GALMAG_z_1	$336	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.opt.z	float
+GALRE_z_1	$337	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.opt.z	float
+GALINDEX_z_1	$338	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.opt.z	float
+GALELLIP_z_1	$339	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.opt.z	float
+GALPA_z_1	$340	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.opt.z	float
+GALXCENERR_z_1	$341	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.opt.z	float
+GALYCENERR_z_1	$342	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.opt.z	float
+GALMAGERR_z_1	$343	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.opt.z	float
+GALREERR_z_1	$344	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.opt.z	float
+GALINDEXERR_z_1	$345	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.opt.z	float
+GALELLIPERR_z_1	$346	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.opt.z	float
+GALPAERR_z_1	$347	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.opt.z	float
+GALRA_z_1	$348	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.opt.z	double
+GALDEC_z_1	$349	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.opt.z	float
+GALMAG10RE_z_1	$350	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.opt.z	float
+GALMU0_z_1	$351	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.opt.z	float
+GALMUE_z_1	$352	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.opt.z	float
+GALMUEAVG_z_1	$353	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.opt.z	float
+GALR90_z_1	$354	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.opt.z	float
+GALCHI2FULL_z_1	$355	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.opt.z	float
+GALNDOF_z_1	$356	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.opt.z	int	-2147483648
+GALCHI2_z_1	$357	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.opt.z	float
+GALPLAN_z_1	$358	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.opt.z	short	-32768
+PRICHI2FULL_z_1	$359	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.opt.z	float
+PRINFP_z_1	$360	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.opt.z	short	-32768
+PRINDOF_z_1	$361	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.opt.z	int	-2147483648
+PRICHI2_z_1	$362	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.opt.z	float
+CATAID_1a	$363	Integer		GAMA Object ID	meta.id	int	-2147483648
+RA_2	$364	Double	deg	Right Ascension (J2000)	pos.eq.ra	double
+DEC_2	$365	Double	deg	Declination (J2000)	pos.eq.dec	double
+R_PETRO_2	$366	Float	mag	Extinction-corrected SDSS DR7 Petrosian mag	phot.mag;em.opt.R	float
+SURVEY_OLDCLASS_2	$367	Short		Useful for selecting samples, see notes	meta.code.class	short	-32768
+SURVEY_CLASS_2	$368	Short		Useful for selecting samples, see notes	meta.code.class	short	-32768
+CENFLUX_Y_1	$369	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.IR.Y	float
+BACKFLUX_Y_1	$370	Float	counts	SEx subtracted background at object position	phot.count;em.IR.Y	float
+PSFNUM_Y_1	$371	Short		PSFEx number of stars used	meta.number;em.IR.Y	short	-32768
+PSFCHI2_Y_1	$372	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.IR.Y	float
+PSFFWHM_Y_1	$373	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.IR.Y	float
+NSEC_Y_1	$374	Short		SEx number of secondary components detected	meta.number;em.IR.Y	short	-32768
+GALXCEN_Y_1	$375	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.IR.Y	float
+GALYCEN_Y_1	$376	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.IR.Y	float
+GALMAG_Y_1	$377	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.IR.Y	float
+GALRE_Y_1	$378	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.IR.Y	float
+GALINDEX_Y_1	$379	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.IR.Y	float
+GALELLIP_Y_1	$380	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.IR.Y	float
+GALPA_Y_1	$381	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.IR.Y	float
+GALXCENERR_Y_1	$382	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.IR.Y	float
+GALYCENERR_Y_1	$383	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.IR.Y	float
+GALMAGERR_Y_1	$384	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.IR.Y	float
+GALREERR_Y_1	$385	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.IR.Y	float
+GALINDEXERR_Y_1	$386	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.IR.Y	float
+GALELLIPERR_Y_1	$387	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.IR.Y	float
+GALPAERR_Y_1	$388	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.IR.Y	float
+GALRA_Y_1	$389	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.IR.Y	double
+GALDEC_Y_1	$390	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.IR.Y	float
+GALMAG10RE_Y_1	$391	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.IR.Y	float
+GALMU0_Y_1	$392	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.IR.Y	float
+GALMUE_Y_1	$393	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.IR.Y	float
+GALMUEAVG_Y_1	$394	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.IR.Y	float
+GALR90_Y_1	$395	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.IR.Y	float
+GALCHI2FULL_Y_1	$396	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.IR.Y	float
+GALNDOF_Y_1	$397	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.IR.Y	int	-2147483648
+GALCHI2_Y_1	$398	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.IR.Y	float
+GALPLAN_Y_1	$399	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.IR.Y	short	-32768
+PRICHI2FULL_Y_1	$400	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.IR.Y	float
+PRINFP_Y_1	$401	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.IR.Y	short	-32768
+PRINDOF_Y_1	$402	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.IR.Y	int	-2147483648
+PRICHI2_Y_1	$403	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.IR.Y	float
+CENFLUX_J_1	$404	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.IR.J	float
+BACKFLUX_J_1	$405	Float	counts	SEx subtracted background at object position	phot.count;em.IR.J	float
+PSFNUM_J_1	$406	Short		PSFEx number of stars used	meta.number;em.IR.J	short	-32768
+PSFCHI2_J_1	$407	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.IR.J	float
+PSFFWHM_J_1	$408	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.IR.J	float
+NSEC_J_1	$409	Short		SEx number of secondary components detected	meta.number;em.IR.J	short	-32768
+GALXCEN_J_1	$410	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.IR.J	float
+GALYCEN_J_1	$411	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.IR.J	float
+GALMAG_J_1	$412	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.IR.J	float
+GALRE_J_1	$413	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.IR.J	float
+GALINDEX_J_1	$414	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.IR.J	float
+GALELLIP_J_1	$415	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.IR.J	float
+GALPA_J_1	$416	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.IR.J	float
+GALXCENERR_J_1	$417	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.IR.J	float
+GALYCENERR_J_1	$418	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.IR.J	float
+GALMAGERR_J_1	$419	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.IR.J	float
+GALREERR_J_1	$420	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.IR.J	float
+GALINDEXERR_J_1	$421	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.IR.J	float
+GALELLIPERR_J_1	$422	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.IR.J	float
+GALPAERR_J_1	$423	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.IR.J	float
+GALRA_J_1	$424	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.IR.J	double
+GALDEC_J_1	$425	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.IR.J	float
+GALMAG10RE_J_1	$426	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.IR.J	float
+GALMU0_J_1	$427	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.IR.J	float
+GALMUE_J_1	$428	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.IR.J	float
+GALMUEAVG_J_1	$429	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.IR.J	float
+GALR90_J_1	$430	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.IR.J	float
+GALCHI2FULL_J_1	$431	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.IR.J	float
+GALNDOF_J_1	$432	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.IR.J	int	-2147483648
+GALCHI2_J_1	$433	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.IR.J	float
+GALPLAN_J_1	$434	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.IR.J	short	-32768
+PRICHI2FULL_J_1	$435	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.IR.J	float
+PRINFP_J_1	$436	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.IR.J	short	-32768
+PRINDOF_J_1	$437	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.IR.J	int	-2147483648
+PRICHI2_J_1	$438	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.IR.J	float
+CENFLUX_H_1	$439	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.IR.H	float
+BACKFLUX_H_1	$440	Float	counts	SEx subtracted background at object position	phot.count;em.IR.H	float
+PSFNUM_H_1	$441	Short		PSFEx number of stars used	meta.number;em.IR.H	short	-32768
+PSFCHI2_H_1	$442	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.IR.H	float
+PSFFWHM_H_1	$443	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.IR.H	float
+NSEC_H_1	$444	Short		SEx number of secondary components detected	meta.number;em.IR.H	short	-32768
+GALXCEN_H_1	$445	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.IR.H	float
+GALYCEN_H_1	$446	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.IR.H	float
+GALMAG_H_1	$447	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.IR.H	float
+GALRE_H_1	$448	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.IR.H	float
+GALINDEX_H_1	$449	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.IR.H	float
+GALELLIP_H_1	$450	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.IR.H	float
+GALPA_H_1	$451	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.IR.H	float
+GALXCENERR_H_1	$452	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.IR.H	float
+GALYCENERR_H_1	$453	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.IR.H	float
+GALMAGERR_H_1	$454	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.IR.H	float
+GALREERR_H_1	$455	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.IR.H	float
+GALINDEXERR_H_1	$456	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.IR.H	float
+GALELLIPERR_H_1	$457	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.IR.H	float
+GALPAERR_H_1	$458	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.IR.H	float
+GALRA_H_1	$459	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.IR.H	double
+GALDEC_H_1	$460	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.IR.H	float
+GALMAG10RE_H_1	$461	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.IR.H	float
+GALMU0_H_1	$462	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.IR.H	float
+GALMUE_H_1	$463	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.IR.H	float
+GALMUEAVG_H_1	$464	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.IR.H	float
+GALR90_H_1	$465	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.IR.H	float
+GALCHI2FULL_H_1	$466	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.IR.H	float
+GALNDOF_H_1	$467	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.IR.H	int	-2147483648
+GALCHI2_H_1	$468	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.IR.H	float
+GALPLAN_H_1	$469	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.IR.H	short	-32768
+PRICHI2FULL_H_1	$470	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.IR.H	float
+PRINFP_H_1	$471	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.IR.H	short	-32768
+PRINDOF_H_1	$472	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.IR.H	int	-2147483648
+PRICHI2_H_1	$473	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.IR.H	float
+CENFLUX_K_1	$474	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.IR.K	float
+BACKFLUX_K_1	$475	Float	counts	SEx subtracted background at object position	phot.count;em.IR.K	float
+PSFNUM_K_1	$476	Short		PSFEx number of stars used	meta.number;em.IR.K	short	-32768
+PSFCHI2_K_1	$477	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.IR.K	float
+PSFFWHM_K_1	$478	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.IR.K	float
+NSEC_K_1	$479	Short		SEx number of secondary components detected	meta.number;em.IR.K	short	-32768
+GALXCEN_K_1	$480	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.IR.K	float
+GALYCEN_K_1	$481	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.IR.K	float
+GALMAG_K_1	$482	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.IR.K	float
+GALRE_K_1	$483	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.IR.K	float
+GALINDEX_K_1	$484	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.IR.K	float
+GALELLIP_K_1	$485	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.IR.K	float
+GALPA_K_1	$486	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.IR.K	float
+GALXCENERR_K_1	$487	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.IR.K	float
+GALYCENERR_K_1	$488	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.IR.K	float
+GALMAGERR_K_1	$489	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.IR.K	float
+GALREERR_K_1	$490	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.IR.K	float
+GALINDEXERR_K_1	$491	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.IR.K	float
+GALELLIPERR_K_1	$492	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.IR.K	float
+GALPAERR_K_1	$493	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.IR.K	float
+GALRA_K_1	$494	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.IR.K	double
+GALDEC_K_1	$495	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.IR.K	float
+GALMAG10RE_K_1	$496	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.IR.K	float
+GALMU0_K_1	$497	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.IR.K	float
+GALMUE_K_1	$498	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.IR.K	float
+GALMUEAVG_K_1	$499	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.IR.K	float
+GALR90_K_1	$500	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.IR.K	float
+GALCHI2FULL_K_1	$501	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.IR.K	float
+GALNDOF_K_1	$502	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.IR.K	int	-2147483648
+GALCHI2_K_1	$503	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.IR.K	float
+GALPLAN_K_1	$504	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.IR.K	short	-32768
+PRICHI2FULL_K_1	$505	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.IR.K	float
+PRINFP_K_1	$506	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.IR.K	short	-32768
+PRINDOF_K_1	$507	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.IR.K	int	-2147483648
+PRICHI2_K_1	$508	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.IR.K	float
+CATAID_2a	$509	Integer		GAMA Object ID	meta.id	int	-2147483648
+RA_1a	$510	Double	deg	Right Ascension (J2000)	pos.eq.ra	double
+DEC_1a	$511	Double	deg	Declination (J2000)	pos.eq.dec	double
+R_PETRO	$512	Float	mag	Extinction-corrected SDSS DR7 Petrosian mag	phot.mag;em.opt.R	float
+SURVEY_OLDCLASS	$513	Short		Useful for selecting samples, see notes	meta.code.class	short	-32768
+SURVEY_CLASS	$514	Short		Useful for selecting samples, see notes	meta.code.class	short	-32768
+CENFLUX_Z_2	$515	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.IR.Z	float
+BACKFLUX_Z_2	$516	Float	counts	SEx subtracted background at object position	phot.count;em.IR.Z	float
+PSFNUM_Z_2	$517	Short		PSFEx number of stars used	meta.number;em.IR.Z	short	-32768
+PSFCHI2_Z_2	$518	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.IR.Z	float
+PSFFWHM_Z_2	$519	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.IR.Z	float
+NSEC_Z_2	$520	Short		SEx number of secondary components detected	meta.number;em.IR.Z	short	-32768
+GALXCEN_Z_2	$521	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.IR.Z	float
+GALYCEN_Z_2	$522	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.IR.Z	float
+GALMAG_Z_2	$523	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.IR.Z	float
+GALRE_Z_2	$524	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.IR.Z	float
+GALINDEX_Z_2	$525	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.IR.Z	float
+GALELLIP_Z_2	$526	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.IR.Z	float
+GALPA_Z_2	$527	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.IR.Z	float
+GALXCENERR_Z_2	$528	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.IR.Z	float
+GALYCENERR_Z_2	$529	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.IR.Z	float
+GALMAGERR_Z_2	$530	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.IR.Z	float
+GALREERR_Z_2	$531	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.IR.Z	float
+GALINDEXERR_Z_2	$532	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.IR.Z	float
+GALELLIPERR_Z_2	$533	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.IR.Z	float
+GALPAERR_Z_2	$534	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.IR.Z	float
+GALRA_Z_2	$535	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.IR.Z	double
+GALDEC_Z_2	$536	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.IR.Z	float
+GALMAG10RE_Z_2	$537	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.IR.Z	float
+GALMU0_Z_2	$538	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.IR.Z	float
+GALMUE_Z_2	$539	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.IR.Z	float
+GALMUEAVG_Z_2	$540	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.IR.Z	float
+GALR90_Z_2	$541	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.IR.Z	float
+GALCHI2FULL_Z_2	$542	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.IR.Z	float
+GALNDOF_Z_2	$543	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.IR.Z	int	-2147483648
+GALCHI2_Z_2	$544	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.IR.Z	float
+GALPLAN_Z_2	$545	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.IR.Z	short	-32768
+PRICHI2FULL_Z_2	$546	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.IR.Z	float
+PRINFP_Z_2	$547	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.IR.Z	short	-32768
+PRINDOF_Z_2	$548	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.IR.Z	int	-2147483648
+PRICHI2_Z_2	$549	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.IR.Z	float
+CENFLUX_Y_2	$550	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.IR.Y	float
+BACKFLUX_Y_2	$551	Float	counts	SEx subtracted background at object position	phot.count;em.IR.Y	float
+PSFNUM_Y_2	$552	Short		PSFEx number of stars used	meta.number;em.IR.Y	short	-32768
+PSFCHI2_Y_2	$553	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.IR.Y	float
+PSFFWHM_Y_2	$554	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.IR.Y	float
+NSEC_Y_2	$555	Short		SEx number of secondary components detected	meta.number;em.IR.Y	short	-32768
+GALXCEN_Y_2	$556	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.IR.Y	float
+GALYCEN_Y_2	$557	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.IR.Y	float
+GALMAG_Y_2	$558	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.IR.Y	float
+GALRE_Y_2	$559	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.IR.Y	float
+GALINDEX_Y_2	$560	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.IR.Y	float
+GALELLIP_Y_2	$561	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.IR.Y	float
+GALPA_Y_2	$562	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.IR.Y	float
+GALXCENERR_Y_2	$563	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.IR.Y	float
+GALYCENERR_Y_2	$564	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.IR.Y	float
+GALMAGERR_Y_2	$565	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.IR.Y	float
+GALREERR_Y_2	$566	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.IR.Y	float
+GALINDEXERR_Y_2	$567	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.IR.Y	float
+GALELLIPERR_Y_2	$568	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.IR.Y	float
+GALPAERR_Y_2	$569	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.IR.Y	float
+GALRA_Y_2	$570	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.IR.Y	double
+GALDEC_Y_2	$571	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.IR.Y	float
+GALMAG10RE_Y_2	$572	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.IR.Y	float
+GALMU0_Y_2	$573	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.IR.Y	float
+GALMUE_Y_2	$574	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.IR.Y	float
+GALMUEAVG_Y_2	$575	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.IR.Y	float
+GALR90_Y_2	$576	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.IR.Y	float
+GALCHI2FULL_Y_2	$577	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.IR.Y	float
+GALNDOF_Y_2	$578	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.IR.Y	int	-2147483648
+GALCHI2_Y_2	$579	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.IR.Y	float
+GALPLAN_Y_2	$580	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.IR.Y	short	-32768
+PRICHI2FULL_Y_2	$581	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.IR.Y	float
+PRINFP_Y_2	$582	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.IR.Y	short	-32768
+PRINDOF_Y_2	$583	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.IR.Y	int	-2147483648
+PRICHI2_Y_2	$584	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.IR.Y	float
+CENFLUX_J_2	$585	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.IR.J	float
+BACKFLUX_J_2	$586	Float	counts	SEx subtracted background at object position	phot.count;em.IR.J	float
+PSFNUM_J_2	$587	Short		PSFEx number of stars used	meta.number;em.IR.J	short	-32768
+PSFCHI2_J_2	$588	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.IR.J	float
+PSFFWHM_J_2	$589	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.IR.J	float
+NSEC_J_2	$590	Short		SEx number of secondary components detected	meta.number;em.IR.J	short	-32768
+GALXCEN_J_2	$591	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.IR.J	float
+GALYCEN_J_2	$592	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.IR.J	float
+GALMAG_J_2	$593	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.IR.J	float
+GALRE_J_2	$594	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.IR.J	float
+GALINDEX_J_2	$595	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.IR.J	float
+GALELLIP_J_2	$596	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.IR.J	float
+GALPA_J_2	$597	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.IR.J	float
+GALXCENERR_J_2	$598	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.IR.J	float
+GALYCENERR_J_2	$599	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.IR.J	float
+GALMAGERR_J_2	$600	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.IR.J	float
+GALREERR_J_2	$601	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.IR.J	float
+GALINDEXERR_J_2	$602	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.IR.J	float
+GALELLIPERR_J_2	$603	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.IR.J	float
+GALPAERR_J_2	$604	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.IR.J	float
+GALRA_J_2	$605	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.IR.J	double
+GALDEC_J_2	$606	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.IR.J	float
+GALMAG10RE_J_2	$607	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.IR.J	float
+GALMU0_J_2	$608	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.IR.J	float
+GALMUE_J_2	$609	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.IR.J	float
+GALMUEAVG_J_2	$610	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.IR.J	float
+GALR90_J_2	$611	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.IR.J	float
+GALCHI2FULL_J_2	$612	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.IR.J	float
+GALNDOF_J_2	$613	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.IR.J	int	-2147483648
+GALCHI2_J_2	$614	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.IR.J	float
+GALPLAN_J_2	$615	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.IR.J	short	-32768
+PRICHI2FULL_J_2	$616	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.IR.J	float
+PRINFP_J_2	$617	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.IR.J	short	-32768
+PRINDOF_J_2	$618	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.IR.J	int	-2147483648
+PRICHI2_J_2	$619	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.IR.J	float
+CENFLUX_H_2	$620	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.IR.H	float
+BACKFLUX_H_2	$621	Float	counts	SEx subtracted background at object position	phot.count;em.IR.H	float
+PSFNUM_H_2	$622	Short		PSFEx number of stars used	meta.number;em.IR.H	short	-32768
+PSFCHI2_H_2	$623	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.IR.H	float
+PSFFWHM_H_2	$624	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.IR.H	float
+NSEC_H_2	$625	Short		SEx number of secondary components detected	meta.number;em.IR.H	short	-32768
+GALXCEN_H_2	$626	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.IR.H	float
+GALYCEN_H_2	$627	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.IR.H	float
+GALMAG_H_2	$628	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.IR.H	float
+GALRE_H_2	$629	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.IR.H	float
+GALINDEX_H_2	$630	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.IR.H	float
+GALELLIP_H_2	$631	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.IR.H	float
+GALPA_H_2	$632	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.IR.H	float
+GALXCENERR_H_2	$633	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.IR.H	float
+GALYCENERR_H_2	$634	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.IR.H	float
+GALMAGERR_H_2	$635	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.IR.H	float
+GALREERR_H_2	$636	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.IR.H	float
+GALINDEXERR_H_2	$637	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.IR.H	float
+GALELLIPERR_H_2	$638	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.IR.H	float
+GALPAERR_H_2	$639	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.IR.H	float
+GALRA_H_2	$640	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.IR.H	double
+GALDEC_H_2	$641	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.IR.H	float
+GALMAG10RE_H_2	$642	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.IR.H	float
+GALMU0_H_2	$643	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.IR.H	float
+GALMUE_H_2	$644	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.IR.H	float
+GALMUEAVG_H_2	$645	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.IR.H	float
+GALR90_H_2	$646	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.IR.H	float
+GALCHI2FULL_H_2	$647	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.IR.H	float
+GALNDOF_H_2	$648	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.IR.H	int	-2147483648
+GALCHI2_H_2	$649	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.IR.H	float
+GALPLAN_H_2	$650	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.IR.H	short	-32768
+PRICHI2FULL_H_2	$651	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.IR.H	float
+PRINFP_H_2	$652	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.IR.H	short	-32768
+PRINDOF_H_2	$653	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.IR.H	int	-2147483648
+PRICHI2_H_2	$654	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.IR.H	float
+CENFLUX_K_2	$655	Float	counts	Central pixel flux value prior to background estimation	phot.count;em.IR.K	float
+BACKFLUX_K_2	$656	Float	counts	SEx subtracted background at object position	phot.count;em.IR.K	float
+PSFNUM_K_2	$657	Short		PSFEx number of stars used	meta.number;em.IR.K	short	-32768
+PSFCHI2_K_2	$658	Float		PSFEx PSF reduced Chi^2	stat.fit.goodness;em.IR.K	float
+PSFFWHM_K_2	$659	Float	arcsec	PSFEx PSF FWHM	instr.det.psf;meta.modelled;em.IR.K	float
+NSEC_K_2	$660	Short		SEx number of secondary components detected	meta.number;em.IR.K	short	-32768
+GALXCEN_K_2	$661	Float	pixel	GALFIT pixel pos. of model in cutout (x)	pos.cartesian.x;meta.modelled;em.IR.K	float
+GALYCEN_K_2	$662	Float	pixel	GALFIT pixel pos. of model in cutout (y)	pos.cartesian.y;meta.modelled;em.IR.K	float
+GALMAG_K_2	$663	Float	mag	GALFIT magnitude of Sersic model	phot.mag;meta.modelled;em.IR.K	float
+GALRE_K_2	$664	Float	arcsec	GALFIT effective (half-light) radius (semi-major axis)	phys.angSize;meta.modelled;em.IR.K	float
+GALINDEX_K_2	$665	Float		GALFIT Sersic index	stat.fit.param;meta.modelled;em.IR.K	float
+GALELLIP_K_2	$666	Float		GALFIT ellipticity (1-(b/a))	src.ellipticity;meta.modelled;em.IR.K	float
+GALPA_K_2	$667	Float	deg	GALFIT position angle (x+, CCW) (see notes)	pos.posAng;meta.modelled;em.IR.K	float
+GALXCENERR_K_2	$668	Float	pixel	GALFIT error on x position	pos.cartesian.x;stat.error;meta.modelled;em.IR.K	float
+GALYCENERR_K_2	$669	Float	pixel	GALFIT error on y position	pos.cartesian.y;stat.error;meta.modelled;em.IR.K	float
+GALMAGERR_K_2	$670	Float	mag	GALFIT error on magnitude	phot.mag;stat.error;meta.modelled;em.IR.K	float
+GALREERR_K_2	$671	Float	arcsec	GALFIT error on re	phys.angSize;stat.error;meta.modelled;em.IR.K	float
+GALINDEXERR_K_2	$672	Float		GALFIT error on Sersic index	stat.fit.param;stat.error;meta.modelled;em.IR.K	float
+GALELLIPERR_K_2	$673	Float		GALFIT error on ellipticity	src.ellipticity;stat.error;meta.modelled;em.IR.K	float
+GALPAERR_K_2	$674	Float	deg	GALFIT error on position angle	pos.posAng;stat.error;meta.modelled;em.IR.K	float
+GALRA_K_2	$675	Double	deg	GALFIT Right Ascension as determined by GALFIT	pos.eq.ra;meta.modelled;em.IR.K	double
+GALDEC_K_2	$676	Float	deg	GALFIT Declination as determined by GALFIT	pos.eq.dec;meta.modelled;em.IR.K	float
+GALMAG10RE_K_2	$677	Float	mag	GALFIT magnitude of model, truncated at 10*re	phot.mag;meta.modelled;em.IR.K	float
+GALMU0_K_2	$678	Float	mag/arcsec^2	GALFIT central surface brightness	phot.mag.sb;meta.modelled;em.IR.K	float
+GALMUE_K_2	$679	Float	mag/arcsec^2	GALFIT effective surface brightness at re	phot.mag.sb;meta.modelled;em.IR.K	float
+GALMUEAVG_K_2	$680	Float	mag/arcsec^2	GALFIT effective surface brightness within re	phot.mag.sb;meta.modelled;em.IR.K	float
+GALR90_K_2	$681	Float	arcsec	GALFIT rad containing 90% of total light (semi-major axis)	phys.angSize;meta.modelled;em.IR.K	float
+GALCHI2FULL_K_2	$682	Float		GALFIT Chi^2 goodness-of-fit parameter (pri + sec)	stat.fit.goodness;em.IR.K	float
+GALNDOF_K_2	$683	Integer		GALFIT model number of degrees of freedom (pri + sec)	stat.fit.goodness;em.IR.K	int	-2147483648
+GALCHI2_K_2	$684	Float		GALFIT reduced Chi^2 of output model (pri + sec)	stat.fit.goodness;em.IR.K	float
+GALPLAN_K_2	$685	Short		SIGMA chosen GALFIT modelling plan (see notes)	stat.fit.goodness;em.IR.K	short	-32768
+PRICHI2FULL_K_2	$686	Float		PRIMARY Chi^2 goodness-of-fit paramter (primary only)	stat.fit.goodness;em.IR.K	float
+PRINFP_K_2	$687	Short		PRIMARY model number of free parameters (primary only)	stat.fit.goodness;em.IR.K	short	-32768
+PRINDOF_K_2	$688	Integer		PRIMARY model number of degrees of freedom (primary only)	stat.fit.goodness;em.IR.K	int	-2147483648
+PRICHI2_K_2	$689	Float		PRIMARY reduced Chi^2 of output model (primary only)	stat.fit.goodness;em.IR.K	float
+CATAID_1b	$690	Integer		Unique ID of GAMA object	meta.id;meta.main	int	-2147483648
+RA_2a	$691	Double	deg	Right Ascension	pos.eq.ra	double
+DEC_2a	$692	Double	deg	Declination	pos.eq.dec	double
+FUV_flux	$693	Float	Jy	Extinction corrected GALEX FUV flux	phot.flux.density;em.UV.100-200nm	float
+FUV_fluxerr	$694	Float	Jy	Error in extinction corrected GALEX FUV flux	phot.flux.density;em.UV.100-200nm;stat.error	float
+NUV_flux	$695	Float	Jy	Exinction corrected GALEX NUV flux	phot.flux.density;em.UV.200-300nm	float
+NUV_fluxerr	$696	Float	Jy	Error in extinction corrected GALEX NUV flux	phot.flux.density;em.UV.200-300nm;stat.error	float
+u_flux	$697	Float	Jy	Extinction corrected SDSS u band flux	phot.flux.density;em.opt.U	float
+u_fluxerr	$698	Float	Jy	Error in extinction corrected SDSS u band flux	phot.flux.density;em.opt.U;stat.error	float
+g_flux	$699	Float	Jy	Extinction corrected SDSS g band flux	phot.flux.density;em.opt.G	float
+g_fluxerr	$700	Float	Jy	Error in extinction corrected SDSS g band flux	phot.flux.density;em.opt.G;stat.error	float
+r_flux	$701	Float	Jy	Extinction corrected SDSS r band flux	phot.flux.density;em.opt.R	float
+r_fluxerr	$702	Float	Jy	Error in extinction corrected SDSS r band flux	phot.flux.density;em.opt.R;stat.error	float
+i_flux	$703	Float	Jy	Extinction corrected SDSS i band flux	phot.flux.density;em.opt.I	float
+i_fluxerr	$704	Float	Jy	Error in extinction corrected SDSS i band flux	phot.flux.density;em.opt.I;stat.error	float
+z_flux	$705	Float	Jy	Extinction corrected SDSS z band flux	phot.flux.density;em.opt.Z	float
+z_fluxerr	$706	Float	Jy	Error in extinction corrected SDSS z band flux	phot.flux.density;em.opt.Z;stat.error	float
+X_flux	$707	Float	Jy	Extinction correctd VISTA Z band flux	phot.flux.density;em.opt.Z	float
+X_fluxerr	$708	Float	Jy	Error in extinction corrected VISTA Z band flux	phot.flux.density;em.opt.Z;stat.error	float
+Y_flux	$709	Float	Jy	Extinction corrected VISTA Y band flux	phot.flux.density;em.IR.Y	float
+Y_fluxerr	$710	Float	Jy	Error in extinction corrected VISTA Y band flux	phot.flux.density;em.IR.Y;stat.error	float
+J_flux	$711	Float	Jy	Extinction corrected VISTA J band flux	phot.flux.density;em.IR.J	float
+J_fluxerr	$712	Float	Jy	Error in extinction corrected VISTA J band flux	phot.flux.density;em.IR.J;stat.error	float
+H_flux	$713	Float	Jy	Extinction corrected VISTA H band flux	phot.flux.density;em.IR.H	float
+H_fluxerr	$714	Float	Jy	Error in extinction corrected VISTA H band flux	phot.flux.density;em.IR.H;stat.error	float
+K_flux	$715	Float	Jy	Extinction corrected VISTA K band flux	phot.flux.density;em.IR.K	float
+K_fluxerr	$716	Float	Jy	Error in extinction corrected VISTA K band flux	phot.flux.density;em.IR.K;stat.error	float
+W1_flux	$717	Float	Jy	WISE W1 band flux	phot.flux.density;em.IR.3-4um	float
+W1_fluxerr	$718	Float	Jy	Error in WISE W1 band flux	phot.flux.density;em.IR.3-4um;stat.error	float
+W2_flux	$719	Float	Jy	WISE W2 band flux	phot.flux.density;em.IR.4-8um	float
+W2_fluxerr	$720	Float	Jy	Error in WISE W2 band flux	phot.flux.density;em.IR.4-8um;stat.error	float
+W3_flux	$721	Float	Jy	WISE W3 band flux	phot.flux.density;em.IR.8-15um	float
+W3_fluxerr	$722	Float	Jy	Error in WISE W3 band flux	phot.flux.density;em.IR.8-15um;stat.error	float
+W4_flux	$723	Float	Jy	WISE W4 band flux	phot.flux.density;em.IR.15-30um	float
+W4_fluxerr	$724	Float	Jy	Error in WISE W4 band flux	phot.flux.density;em.IR.15-30um;stat.error	float
+P100_flux	$725	Float	Jy	Herschel PACS 100 micron flux	phot.flux.density;em.mm.1500-3000GHz	float
+P100_fluxerr	$726	Float	Jy	Error in Herschel PACS 100 micron flux	phot.flux.density;em.mm.1500-3000GHz;stat.error	float
+P160_flux	$727	Float	Jy	Herschel PACS 160 micron flux	phot.flux.density;em.mm.1500-3000GHz	float
+P160_fluxerr	$728	Float	Jy	Error in Herschel PACS 160 micron flux	phot.flux.density;em.mm.1500-3000GHz;stat.error	float
+S250_flux	$729	Float	Jy	Herschel SPIRE 250 micron flux	phot.flux.density;em.mm.750-1500GHz	float
+S250_fluxerr	$730	Float	Jy	Error in Herschel SPIRE 250 micron flux	phot.flux.density;em.mm.750-1500GHz;stat.error	float
+S350_flux	$731	Float	Jy	Herschel SPIRE 350 micron flux	phot.flux.density;em.mm.750-1500GHz	float
+S350_fluxerr	$732	Float	Jy	Error in Herschel SPIRE 350 micron flux	phot.flux.density;em.mm.750-1500GHz;stat.error	float
+S500_flux	$733	Float	Jy	Herschel SPIRE 500 micron flux	phot.flux.density;em.mm.400-750GHz	float
+S500_fluxerr	$734	Float	Jy	Error in Herschel SPIRE 500 micron flux	phot.flux.density;em.mm.400-750GHz;stat.error	float
+SPECID	$735	String		Unique spectrum ID		char
+CATAID_2b	$736	Integer		Unique GAMA object ID		int	-2147483648
+RA_1b	$737	Double	deg	J2000		double
+DEC_1b	$738	Double	deg	J2000		double
+Z_2	$739	Float		Redshift with heliocentric correction removed		float
+NQ_1	$740	Integer		Redshift quality		int	-2147483648
+SURVEY	$741	String		Survey spectrum originated from		char
+SURVEY_CODE	$742	Short		Numerical code for originating survey		short	-32768
+IS_BEST	$743	Boolean		Spectrum with best redshift for this object?		boolean
+IS_SBEST	$744	Boolean		Spectrum with best redshift for originating survey?		boolean
+SN	$745	Float		S/N ratio per pixel in the 6383 - 6536 A window in the galaxy frame		float
+D4000N	$746	Float		4000 A break strength (see notes for description)		float
+D4000N_ERR	$747	Float		Uncertainty on the 4000 A break strength		float
+BH_NAD_CONT	$748	Float	10^(-17)erg/s/cm^2/A	BH_NAD continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_NAD_EW_ERR	$749	Float	mag	BH_NAD equivalent width uncertainty		float
+BH_NAD_EW	$750	Float	mag	BH_NAD line equivalent width		float
+BH_NAD_FLUX_ERR	$751	Float	10^(-17)erg/s/cm^2	BH_NAD flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_NAD_FLUX	$752	Float	10^(-17)erg/s/cm^2	BH_NAD line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_FC_CONT	$753	Float	10^(-17)erg/s/cm^2/A	BH_FC continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_FC_EW_ERR	$754	Float	mag	BH_FC equivalent width uncertainty		float
+BH_FC_EW	$755	Float	mag	BH_FC line equivalent width		float
+BH_FC_FLUX_ERR	$756	Float	10^(-17)erg/s/cm^2	BH_FC flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_FC_FLUX	$757	Float	10^(-17)erg/s/cm^2	BH_FC line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_MH_CONT	$758	Float	10^(-17)erg/s/cm^2/A	BH_MH continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_MH_EW_ERR	$759	Float	mag	BH_MH equivalent width uncertainty		float
+BH_MH_EW	$760	Float	mag	BH_MH line equivalent width		float
+BH_MH_FLUX_ERR	$761	Float	10^(-17)erg/s/cm^2	BH_MH flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_MH_FLUX	$762	Float	10^(-17)erg/s/cm^2	BH_MH line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_MGG_CONT	$763	Float	10^(-17)erg/s/cm^2/A	BH_MGG continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_MGG_EW_ERR	$764	Float	mag	BH_MGG equivalent width uncertainty		float
+BH_MGG_EW	$765	Float	mag	BH_MGG line equivalent width		float
+BH_MGG_FLUX_ERR	$766	Float	10^(-17)erg/s/cm^2	BH_MGG flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_MGG_FLUX	$767	Float	10^(-17)erg/s/cm^2	BH_MGG line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_HB_CONT	$768	Float	10^(-17)erg/s/cm^2/A	BH_HB continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_HB_EW_ERR	$769	Float	mag	BH_HB equivalent width uncertainty		float
+BH_HB_EW	$770	Float	mag	BH_HB line equivalent width		float
+BH_HB_FLUX_ERR	$771	Float	10^(-17)erg/s/cm^2	BH_HB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_HB_FLUX	$772	Float	10^(-17)erg/s/cm^2	BH_HB line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_G_CONT	$773	Float	10^(-17)erg/s/cm^2/A	BH_G continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_G_EW_ERR	$774	Float	mag	BH_G equivalent width uncertainty		float
+BH_G_EW	$775	Float	mag	BH_G line equivalent width		float
+BH_G_FLUX_ERR	$776	Float	10^(-17)erg/s/cm^2	BH_G flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_G_FLUX	$777	Float	10^(-17)erg/s/cm^2	BH_G line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_CAI_CONT	$778	Float	10^(-17)erg/s/cm^2/A	BH_CAI continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_CAI_EW_ERR	$779	Float	mag	BH_CAI equivalent width uncertainty		float
+BH_CAI_EW	$780	Float	mag	BH_CAI line equivalent width		float
+BH_CAI_FLUX_ERR	$781	Float	10^(-17)erg/s/cm^2	BH_CAI flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_CAI_FLUX	$782	Float	10^(-17)erg/s/cm^2	BH_CAI line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_HK_CONT	$783	Float	10^(-17)erg/s/cm^2/A	BH_HK continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_HK_EW_ERR	$784	Float	mag	BH_HK equivalent width uncertainty		float
+BH_HK_EW	$785	Float	mag	BH_HK line equivalent width		float
+BH_HK_FLUX_ERR	$786	Float	10^(-17)erg/s/cm^2	BH_HK flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_HK_FLUX	$787	Float	10^(-17)erg/s/cm^2	BH_HK line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_CNB_CONT	$788	Float	10^(-17)erg/s/cm^2/A	BH_CNB continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_CNB_EW_ERR	$789	Float	mag	BH_CNB equivalent width uncertainty		float
+BH_CNB_EW	$790	Float	mag	BH_CNB line equivalent width		float
+BH_CNB_FLUX_ERR	$791	Float	10^(-17)erg/s/cm^2	BH_CNB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+BH_CNB_FLUX	$792	Float	10^(-17)erg/s/cm^2	BH_CNB line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+SIIR_CONT	$793	Float	10^(-17)erg/s/cm^2/A	SIIR continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+SIIR_EW_ERR	$794	Float	A	SIIR equivalent width uncertainty		float
+SIIR_EW	$795	Float	A	SIIR line equivalent width		float
+SIIR_FLUX_ERR	$796	Float	10^(-17)erg/s/cm^2	SIIR flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+SIIR_FLUX	$797	Float	10^(-17)erg/s/cm^2	SIIR line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+SIIB_CONT	$798	Float	10^(-17)erg/s/cm^2/A	SIIB continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+SIIB_EW_ERR	$799	Float	A	SIIB equivalent width uncertainty		float
+SIIB_EW	$800	Float	A	SIIB line equivalent width		float
+SIIB_FLUX_ERR	$801	Float	10^(-17)erg/s/cm^2	SIIB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+SIIB_FLUX	$802	Float	10^(-17)erg/s/cm^2	SIIB line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+NIIR_CONT	$803	Float	10^(-17)erg/s/cm^2/A	NIIR continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+NIIR_EW_ERR	$804	Float	A	NIIR equivalent width uncertainty		float
+NIIR_EW	$805	Float	A	NIIR line equivalent width		float
+NIIR_FLUX_ERR	$806	Float	10^(-17)erg/s/cm^2	NIIR flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+NIIR_FLUX	$807	Float	10^(-17)erg/s/cm^2	NIIR line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+NIIB_CONT	$808	Float	10^(-17)erg/s/cm^2/A	NIIB continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+NIIB_EW_ERR	$809	Float	A	NIIB equivalent width uncertainty		float
+NIIB_EW	$810	Float	A	NIIB line equivalent width		float
+NIIB_FLUX_ERR	$811	Float	10^(-17)erg/s/cm^2	NIIB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+NIIB_FLUX	$812	Float	10^(-17)erg/s/cm^2	NIIB line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+HA_CONT	$813	Float	10^(-17)erg/s/cm^2/A	HA continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+HA_EW_ERR	$814	Float	A	HA equivalent width uncertainty		float
+HA_EW	$815	Float	A	HA line equivalent width		float
+HA_FLUX_ERR	$816	Float	10^(-17)erg/s/cm^2	HA flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+HA_FLUX	$817	Float	10^(-17)erg/s/cm^2	HA line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+OI6364_CONT	$818	Float	10^(-17)erg/s/cm^2/A	OI6364 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+OI6364_EW_ERR	$819	Float	A	OI6364 equivalent width uncertainty		float
+OI6364_EW	$820	Float	A	OI6364 line equivalent width		float
+OI6364_FLUX_ERR	$821	Float	10^(-17)erg/s/cm^2	OI6364 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+OI6364_FLUX	$822	Float	10^(-17)erg/s/cm^2	OI6364 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+SIII6312_CONT	$823	Float	10^(-17)erg/s/cm^2/A	SIII6312 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+SIII6312_EW_ERR	$824	Float	A	SIII6312 equivalent width uncertainty		float
+SIII6312_EW	$825	Float	A	SIII6312 line equivalent width		float
+SIII6312_FLUX_ERR	$826	Float	10^(-17)erg/s/cm^2	SIII6312 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+SIII6312_FLUX	$827	Float	10^(-17)erg/s/cm^2	SIII6312 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+OI6300_CONT	$828	Float	10^(-17)erg/s/cm^2/A	OI6300 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+OI6300_EW_ERR	$829	Float	A	OI6300 equivalent width uncertainty		float
+OI6300_EW	$830	Float	A	OI6300 line equivalent width		float
+OI6300_FLUX_ERR	$831	Float	10^(-17)erg/s/cm^2	OI6300 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+OI6300_FLUX	$832	Float	10^(-17)erg/s/cm^2	OI6300 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+TIO2_CONT	$833	Float	10^(-17)erg/s/cm^2/A	TIO2 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+TIO2_EW_ERR	$834	Float	mag	TIO2 equivalent width uncertainty		float
+TIO2_EW	$835	Float	mag	TIO2 line equivalent width		float
+TIO2_FLUX_ERR	$836	Float	10^(-17)erg/s/cm^2	TIO2 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+TIO2_FLUX	$837	Float	10^(-17)erg/s/cm^2	TIO2 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+TIO1_CONT	$838	Float	10^(-17)erg/s/cm^2/A	TIO1 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+TIO1_EW_ERR	$839	Float	mag	TIO1 equivalent width uncertainty		float
+TIO1_EW	$840	Float	mag	TIO1 line equivalent width		float
+TIO1_FLUX_ERR	$841	Float	10^(-17)erg/s/cm^2	TIO1 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+TIO1_FLUX	$842	Float	10^(-17)erg/s/cm^2	TIO1 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+NA5895_CONT	$843	Float	10^(-17)erg/s/cm^2/A	NA5895 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+NA5895_EW_ERR	$844	Float	A	NA5895 equivalent width uncertainty		float
+NA5895_EW	$845	Float	A	NA5895 line equivalent width		float
+NA5895_FLUX_ERR	$846	Float	10^(-17)erg/s/cm^2	NA5895 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+NA5895_FLUX	$847	Float	10^(-17)erg/s/cm^2	NA5895 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+NII5755_CONT	$848	Float	10^(-17)erg/s/cm^2/A	NII5755 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+NII5755_EW_ERR	$849	Float	A	NII5755 equivalent width uncertainty		float
+NII5755_EW	$850	Float	A	NII5755 line equivalent width		float
+NII5755_FLUX_ERR	$851	Float	10^(-17)erg/s/cm^2	NII5755 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+NII5755_FLUX	$852	Float	10^(-17)erg/s/cm^2	NII5755 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5782_CONT	$853	Float	10^(-17)erg/s/cm^2/A	FE5782 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5782_EW_ERR	$854	Float	A	FE5782 equivalent width uncertainty		float
+FE5782_EW	$855	Float	A	FE5782 line equivalent width		float
+FE5782_FLUX_ERR	$856	Float	10^(-17)erg/s/cm^2	FE5782 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5782_FLUX	$857	Float	10^(-17)erg/s/cm^2	FE5782 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5709_CONT	$858	Float	10^(-17)erg/s/cm^2/A	FE5709 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5709_EW_ERR	$859	Float	A	FE5709 equivalent width uncertainty		float
+FE5709_EW	$860	Float	A	FE5709 line equivalent width		float
+FE5709_FLUX_ERR	$861	Float	10^(-17)erg/s/cm^2	FE5709 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5709_FLUX	$862	Float	10^(-17)erg/s/cm^2	FE5709 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5406_CONT	$863	Float	10^(-17)erg/s/cm^2/A	FE5406 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5406_EW_ERR	$864	Float	A	FE5406 equivalent width uncertainty		float
+FE5406_EW	$865	Float	A	FE5406 line equivalent width		float
+FE5406_FLUX_ERR	$866	Float	10^(-17)erg/s/cm^2	FE5406 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5406_FLUX	$867	Float	10^(-17)erg/s/cm^2	FE5406 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5335_CONT	$868	Float	10^(-17)erg/s/cm^2/A	FE5335 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5335_EW_ERR	$869	Float	A	FE5335 equivalent width uncertainty		float
+FE5335_EW	$870	Float	A	FE5335 line equivalent width		float
+FE5335_FLUX_ERR	$871	Float	10^(-17)erg/s/cm^2	FE5335 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5335_FLUX	$872	Float	10^(-17)erg/s/cm^2	FE5335 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5270_CONT	$873	Float	10^(-17)erg/s/cm^2/A	FE5270 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5270_EW_ERR	$874	Float	A	FE5270 equivalent width uncertainty		float
+FE5270_EW	$875	Float	A	FE5270 line equivalent width		float
+FE5270_FLUX_ERR	$876	Float	10^(-17)erg/s/cm^2	FE5270 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5270_FLUX	$877	Float	10^(-17)erg/s/cm^2	FE5270 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+MGB5177_CONT	$878	Float	10^(-17)erg/s/cm^2/A	MGB5177 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+MGB5177_EW_ERR	$879	Float	A	MGB5177 equivalent width uncertainty		float
+MGB5177_EW	$880	Float	A	MGB5177 line equivalent width		float
+MGB5177_FLUX_ERR	$881	Float	10^(-17)erg/s/cm^2	MGB5177 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+MGB5177_FLUX	$882	Float	10^(-17)erg/s/cm^2	MGB5177 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+MG2_CONT	$883	Float	10^(-17)erg/s/cm^2/A	MG2 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+MG2_EW_ERR	$884	Float	mag	MG2 equivalent width uncertainty		float
+MG2_EW	$885	Float	mag	MG2 line equivalent width		float
+MG2_FLUX_ERR	$886	Float	10^(-17)erg/s/cm^2	MG2 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+MG2_FLUX	$887	Float	10^(-17)erg/s/cm^2	MG2 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+MG1_CONT	$888	Float	10^(-17)erg/s/cm^2/A	MG1 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+MG1_EW_ERR	$889	Float	mag	MG1 equivalent width uncertainty		float
+MG1_EW	$890	Float	mag	MG1 line equivalent width		float
+MG1_FLUX_ERR	$891	Float	10^(-17)erg/s/cm^2	MG1 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+MG1_FLUX	$892	Float	10^(-17)erg/s/cm^2	MG1 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5015_CONT	$893	Float	10^(-17)erg/s/cm^2/A	FE5015 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5015_EW_ERR	$894	Float	A	FE5015 equivalent width uncertainty		float
+FE5015_EW	$895	Float	A	FE5015 line equivalent width		float
+FE5015_FLUX_ERR	$896	Float	10^(-17)erg/s/cm^2	FE5015 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+FE5015_FLUX	$897	Float	10^(-17)erg/s/cm^2	FE5015 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+OIIIR_CONT	$898	Float	10^(-17)erg/s/cm^2/A	OIIIR continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+OIIIR_EW_ERR	$899	Float	A	OIIIR equivalent width uncertainty		float
+OIIIR_EW	$900	Float	A	OIIIR line equivalent width		float
+OIIIR_FLUX_ERR	$901	Float	10^(-17)erg/s/cm^2	OIIIR flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+OIIIR_FLUX	$902	Float	10^(-17)erg/s/cm^2	OIIIR line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+OIIIB_CONT	$903	Float	10^(-17)erg/s/cm^2/A	OIIIB continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+OIIIB_EW_ERR	$904	Float	A	OIIIB equivalent width uncertainty		float
+OIIIB_EW	$905	Float	A	OIIIB line equivalent width		float
+OIIIB_FLUX_ERR	$906	Float	10^(-17)erg/s/cm^2	OIIIB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+OIIIB_FLUX	$907	Float	10^(-17)erg/s/cm^2	OIIIB line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+HB_P_CONT	$908	Float	10^(-17)erg/s/cm^2/A	HB_P continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+HB_P_EW_ERR	$909	Float	A	HB_P equivalent width uncertainty		float
+HB_P_EW	$910	Float	A	HB_P line equivalent width		float
+HB_P_FLUX_ERR	$911	Float	10^(-17)erg/s/cm^2	HB_P flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+HB_P_FLUX	$912	Float	10^(-17)erg/s/cm^2	HB_P line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+HB_CONT	$913	Float	10^(-17)erg/s/cm^2/A	HB continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+HB_EW_ERR	$914	Float	A	HB equivalent width uncertainty		float
+HB_EW	$915	Float	A	HB line equivalent width		float
+HB_FLUX_ERR	$916	Float	10^(-17)erg/s/cm^2	HB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+HB_FLUX	$917	Float	10^(-17)erg/s/cm^2	HB line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+FE4668_CONT	$918	Float	10^(-17)erg/s/cm^2/A	FE4668 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+FE4668_EW_ERR	$919	Float	A	FE4668 equivalent width uncertainty		float
+FE4668_EW	$920	Float	A	FE4668 line equivalent width		float
+FE4668_FLUX_ERR	$921	Float	10^(-17)erg/s/cm^2	FE4668 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+FE4668_FLUX	$922	Float	10^(-17)erg/s/cm^2	FE4668 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+FE4531_CONT	$923	Float	10^(-17)erg/s/cm^2/A	FE4531 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+FE4531_EW_ERR	$924	Float	A	FE4531 equivalent width uncertainty		float
+FE4531_EW	$925	Float	A	FE4531 line equivalent width		float
+FE4531_FLUX_ERR	$926	Float	10^(-17)erg/s/cm^2	FE4531 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+FE4531_FLUX	$927	Float	10^(-17)erg/s/cm^2	FE4531 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+CA4455_CONT	$928	Float	10^(-17)erg/s/cm^2/A	CA4455 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+CA4455_EW_ERR	$929	Float	A	CA4455 equivalent width uncertainty		float
+CA4455_EW	$930	Float	A	CA4455 line equivalent width		float
+CA4455_FLUX_ERR	$931	Float	10^(-17)erg/s/cm^2	CA4455 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+CA4455_FLUX	$932	Float	10^(-17)erg/s/cm^2	CA4455 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+FE4383_CONT	$933	Float	10^(-17)erg/s/cm^2/A	FE4383 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+FE4383_EW_ERR	$934	Float	A	FE4383 equivalent width uncertainty		float
+FE4383_EW	$935	Float	A	FE4383 line equivalent width		float
+FE4383_FLUX_ERR	$936	Float	10^(-17)erg/s/cm^2	FE4383 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+FE4383_FLUX	$937	Float	10^(-17)erg/s/cm^2	FE4383 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+OIII4363_CONT	$938	Float	10^(-17)erg/s/cm^2/A	OIII4363 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+OIII4363_EW_ERR	$939	Float	A	OIII4363 equivalent width uncertainty		float
+OIII4363_EW	$940	Float	A	OIII4363 line equivalent width		float
+OIII4363_FLUX_ERR	$941	Float	10^(-17)erg/s/cm^2	OIII4363 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+OIII4363_FLUX	$942	Float	10^(-17)erg/s/cm^2	OIII4363 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+HGVA275_CONT	$943	Float	10^(-17)erg/s/cm^2/A	HGVA275 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+HGVA275_EW_ERR	$944	Float	mag	HGVA275 equivalent width uncertainty		float
+HGVA275_EW	$945	Float	mag	HGVA275 line equivalent width		float
+HGVA275_FLUX_ERR	$946	Float	10^(-17)erg/s/cm^2	HGVA275 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+HGVA275_FLUX	$947	Float	10^(-17)erg/s/cm^2	HGVA275 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+HGVA200_CONT	$948	Float	10^(-17)erg/s/cm^2/A	HGVA200 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+HGVA200_EW_ERR	$949	Float	mag	HGVA200 equivalent width uncertainty		float
+HGVA200_EW	$950	Float	mag	HGVA200 line equivalent width		float
+HGVA200_FLUX_ERR	$951	Float	10^(-17)erg/s/cm^2	HGVA200 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+HGVA200_FLUX	$952	Float	10^(-17)erg/s/cm^2	HGVA200 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+HGVA125_CONT	$953	Float	10^(-17)erg/s/cm^2/A	HGVA125 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+HGVA125_EW_ERR	$954	Float	mag	HGVA125 equivalent width uncertainty		float
+HGVA125_EW	$955	Float	mag	HGVA125 line equivalent width		float
+HGVA125_FLUX_ERR	$956	Float	10^(-17)erg/s/cm^2	HGVA125 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+HGVA125_FLUX	$957	Float	10^(-17)erg/s/cm^2	HGVA125 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+HGF_CONT	$958	Float	10^(-17)erg/s/cm^2/A	HGF continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+HGF_EW_ERR	$959	Float	A	HGF equivalent width uncertainty		float
+HGF_EW	$960	Float	A	HGF line equivalent width		float
+HGF_FLUX_ERR	$961	Float	10^(-17)erg/s/cm^2	HGF flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+HGF_FLUX	$962	Float	10^(-17)erg/s/cm^2	HGF line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+HGA_CONT	$963	Float	10^(-17)erg/s/cm^2/A	HGA continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+HGA_EW_ERR	$964	Float	A	HGA equivalent width uncertainty		float
+HGA_EW	$965	Float	A	HGA line equivalent width		float
+HGA_FLUX_ERR	$966	Float	10^(-17)erg/s/cm^2	HGA flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+HGA_FLUX	$967	Float	10^(-17)erg/s/cm^2	HGA line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+G4300_CONT	$968	Float	10^(-17)erg/s/cm^2/A	G4300 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+G4300_EW_ERR	$969	Float	A	G4300 equivalent width uncertainty		float
+G4300_EW	$970	Float	A	G4300 line equivalent width		float
+G4300_FLUX_ERR	$971	Float	10^(-17)erg/s/cm^2	G4300 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+G4300_FLUX	$972	Float	10^(-17)erg/s/cm^2	G4300 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+CA4227_CONT	$973	Float	10^(-17)erg/s/cm^2/A	CA4227 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+CA4227_EW_ERR	$974	Float	A	CA4227 equivalent width uncertainty		float
+CA4227_EW	$975	Float	A	CA4227 line equivalent width		float
+CA4227_FLUX_ERR	$976	Float	10^(-17)erg/s/cm^2	CA4227 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+CA4227_FLUX	$977	Float	10^(-17)erg/s/cm^2	CA4227 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+CN2_CONT	$978	Float	10^(-17)erg/s/cm^2/A	CN2 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+CN2_EW_ERR	$979	Float	mag	CN2 equivalent width uncertainty		float
+CN2_EW	$980	Float	mag	CN2 line equivalent width		float
+CN2_FLUX_ERR	$981	Float	10^(-17)erg/s/cm^2	CN2 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+CN2_FLUX	$982	Float	10^(-17)erg/s/cm^2	CN2 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+CN1_CONT	$983	Float	10^(-17)erg/s/cm^2/A	CN1 continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+CN1_EW_ERR	$984	Float	mag	CN1 equivalent width uncertainty		float
+CN1_EW	$985	Float	mag	CN1 line equivalent width		float
+CN1_FLUX_ERR	$986	Float	10^(-17)erg/s/cm^2	CN1 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+CN1_FLUX	$987	Float	10^(-17)erg/s/cm^2	CN1 line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+HDF_CONT	$988	Float	10^(-17)erg/s/cm^2/A	HDF continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+HDF_EW_ERR	$989	Float	A	HDF equivalent width uncertainty		float
+HDF_EW	$990	Float	A	HDF line equivalent width		float
+HDF_FLUX_ERR	$991	Float	10^(-17)erg/s/cm^2	HDF flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+HDF_FLUX	$992	Float	10^(-17)erg/s/cm^2	HDF line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+HDA_CONT	$993	Float	10^(-17)erg/s/cm^2/A	HDA continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+HDA_EW_ERR	$994	Float	A	HDA equivalent width uncertainty		float
+HDA_EW	$995	Float	A	HDA line equivalent width		float
+HDA_FLUX_ERR	$996	Float	10^(-17)erg/s/cm^2	HDA flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+HDA_FLUX	$997	Float	10^(-17)erg/s/cm^2	HDA line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+OII_CONT	$998	Float	10^(-17)erg/s/cm^2/A	OII continuum (NB: units only valid for SDSS and AAOmega spectra)		float
+OII_EW_ERR	$999	Float	A	OII equivalent width uncertainty		float
+OII_EW	$1000	Float	A	OII line equivalent width		float
+OII_FLUX_ERR	$1001	Float	10^(-17)erg/s/cm^2	OII flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)		float
+OII_FLUX	$1002	Float	10^(-17)erg/s/cm^2	OII line flux (NB: units only valid for SDSS and AAOmega spectra)		float
+CATAID_1c	$1003	Integer		Unique GAMA ID	meta.id	int	-2147483648
+RA_2b	$1004	Double	deg	J2000	pos.eq.ra	double
+DEC_2b	$1005	Double	deg	J2000	pos.eq.dec	double
+Z_TONRY	$1006	Float		Heliocentric redshift corrected for the effects of peculiar velocity	src.redshift	float
+nQ_2	$1007	Short		Redshift quality flag	meta.code.qual;src.redshift	short	-32768
+M_r	$1008	Float	mag	Extinction and k-corrected absolute r-band magnitude	phys.magAbs	float
+DistanceToEdge	$1009	Float	Mpc	Distance to nearest angular survey edge in co-moving units	pos.distance	float
+Completeness	$1010	Float		Value used to correct environment measures for local survey incompleteness, see notes	arith.factor	float
+DistanceTo5nn	$1011	Float	Mpc	Distance to 5th nearest neighbour in co-moving units	pos.distance	float
+SurfaceDensity	$1012	Float	Mpc^-2	Surface density based on the distance to the 5th nearest neighbour	src.density	float
+SurfaceDensityErr	$1013	Float	Mpc^-2	Surface density uncertainty	stat.error;src.density	float
+SurfaceDensityFlag	$1014	Short		Flag indicating problems with surface density measurement, see notes	meta.code.error;src.density	short	-32768
+CountInCyl	$1015	Float		Number of (other) galaxies within cylinder of radius 1 co-moving Mpc	meta.number	float
+CountInCylErr	$1016	Float		Poisson error on number of galaxies in cylinder	stat.error;meta.number	float
+CountInCylFlag	$1017	Short		Flag indicating problems with CountInCyl, see notes	meta.code.error;meta.number	short	-32768
+AGEDenPar	$1018	Float	Mpc^-1	Adaptive Gaussian environment parameter	src.density	float
+AGEErr	$1019	Float		Poisson error on the number of galaxies used to calculate AGEDenPar	stat.error;meta.number	float
+AGEScale	$1020	Float		Adaptive scaling factor used for the adaptive Gaussian ellipsoid	arith.factor	float
+AGEDenParFlag	$1021	Short		Flag indicating problems with AGEDenPar, see notes	meta.code.error;src.density	short	-32768
+CATAID_2c	$1022	Integer		Unique ID of GAMA object	meta.id	int	-2147483648
+ELLIPTICAL	$1023	String		Simon`s and Stephen`s visual classification	meta.code.class	char
+ELLIPTICAL_CODE	$1024	Short		Numerical code for ELLIPTICAL, see notes	meta.code.class	short	-32768
+HUBBLE_TYPE_SPD	$1025	String		Simon`s and Stephen`s visual Hubble type classification	meta.code.class	char
+HUBBLE_TYPE_SPD_CODE	$1026	Short		Numerical code for HUBBLE_TYPE_SPD, see notes	meta.code.class	short	-32768
+HUBBLE_TYPE_LSK	$1027	String		Lee`s and Uros` visual Hubble type classification	meta.code.class	char
+HUBBLE_TYPE_LSK_CODE	$1028	Short		Numerical code for HUBBLE_TYPE_LSK, see notes	meta.code.class	short	-32768
+HUBBLE_TYPE_ASGR	$1029	String		Aaron`s and Rebecca`s visual Hubble type classification	meta.code.class	char
+HUBBLE_TYPE_ASGR_CODE	$1030	Short		Numerical code for HUBBLE_TYPE_ASGR, see notes	meta.code.class	short	-32768
+HUBBLE_TYPE	$1031	String		Final Hubble type classification	meta.code.class	char
+HUBBLE_TYPE_CODE	$1032	Short		Numerical code for HUBBLE_TYPE, see notes	meta.code.class	short	-32768
+ASGR_DISTURBED	$1033	Float		Renormalised votes that galaxy is disturbed, see notes	meta.code.class	float
+ASGR_NORMAL	$1034	Float		Renormalised votes that galaxy is undisturbed, see notes	meta.code.class	float
+ASGR_UNSURE	$1035	Float		Renormalised votes that classification in unclear	meta.code.class	float
+ASGR_CLASSIFIERS	$1036	Float		Total number of classifiers (renormalised)	meta.code.class	float
+ASGR_PROBDIST	$1037	Float		Probability galaxy is disturbed (ASGR_DISTURBED/ASGR_CLASSIFIERS)	meta.code.class	float
+P_EL	$1038	Float		Fraction of Galaxy Zoo votes for Elliptical (biased)	meta.code.class	float
+P_CS	$1039	Float		Fraction of Galaxy Zoo votes for NotElliptical (biased)	meta.code.class	float
+P_EL_DEBIASED	$1040	Float		Fraction of Galaxy Zoo votes for Elliptical (debiased)	meta.code.class	float
+P_CS_DEBIASED	$1041	Float		Fraction of Galaxy Zoo votes for NotElliptical (debiased)	meta.code.class	float
+URL_IMG	$1042	String		URL of SDSS/UKIDSS-LAS/VIKING giH postage stamp	meta.ref.url;meta.file	char

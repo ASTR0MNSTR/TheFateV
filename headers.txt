@@ -1,0 +1,278 @@
+# SpecLineSFR
+# DirectSummation
+# v05
+# 2016-03-16
+# Matt Owers <matt.owers@mq.edu.au>
+#
+# This table provides direct summation line measurements for all
+# spectra of those objects that have a best redshift with nQ > 1
+# and 0.002 < z < 1.35.
+#
+SPECID               1  -                     -  Unique spectrum ID
+CATAID               2  -                     -  Unique GAMA object ID
+RA                   3  deg                   -  J2000
+DEC                  4  deg                   -  J2000
+Z                    5  -                     -  Redshift with heliocentric correction removed
+NQ                   6  -                     -  Redshift quality
+SURVEY               7  -                     -  Survey spectrum originated from
+SURVEY_CODE          8  -                     -  Numerical code for originating survey
+IS_BEST              9  -                     -  Spectrum with best redshift for this object?
+IS_SBEST            10  -                     -  Spectrum with best redshift for originating survey?
+SN                  11  -                     -  S/N ratio per pixel in the 6383 - 6536 A window in the galaxy frame
+D4000N              12  -                     -  4000 A break strength (see notes for description)
+D4000N_ERR          13  -                     -  Uncertainty on the 4000 A break strength
+BH_NAD_CONT         14  10^(-17)erg/s/cm^2/A  -  BH_NAD continuum (NB: units only valid for SDSS and AAOmega spectra)
+BH_NAD_EW_ERR       15  mag                   -  BH_NAD equivalent width uncertainty
+BH_NAD_EW           16  mag                   -  BH_NAD line equivalent width
+BH_NAD_FLUX_ERR     17  10^(-17)erg/s/cm^2    -  BH_NAD flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+BH_NAD_FLUX         18  10^(-17)erg/s/cm^2    -  BH_NAD line flux (NB: units only valid for SDSS and AAOmega spectra)
+BH_FC_CONT          19  10^(-17)erg/s/cm^2/A  -  BH_FC continuum (NB: units only valid for SDSS and AAOmega spectra)
+BH_FC_EW_ERR        20  mag                   -  BH_FC equivalent width uncertainty
+BH_FC_EW            21  mag                   -  BH_FC line equivalent width
+BH_FC_FLUX_ERR      22  10^(-17)erg/s/cm^2    -  BH_FC flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+BH_FC_FLUX          23  10^(-17)erg/s/cm^2    -  BH_FC line flux (NB: units only valid for SDSS and AAOmega spectra)
+BH_MH_CONT          24  10^(-17)erg/s/cm^2/A  -  BH_MH continuum (NB: units only valid for SDSS and AAOmega spectra)
+BH_MH_EW_ERR        25  mag                   -  BH_MH equivalent width uncertainty
+BH_MH_EW            26  mag                   -  BH_MH line equivalent width
+BH_MH_FLUX_ERR      27  10^(-17)erg/s/cm^2    -  BH_MH flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+BH_MH_FLUX          28  10^(-17)erg/s/cm^2    -  BH_MH line flux (NB: units only valid for SDSS and AAOmega spectra)
+BH_MGG_CONT         29  10^(-17)erg/s/cm^2/A  -  BH_MGG continuum (NB: units only valid for SDSS and AAOmega spectra)
+BH_MGG_EW_ERR       30  mag                   -  BH_MGG equivalent width uncertainty
+BH_MGG_EW           31  mag                   -  BH_MGG line equivalent width
+BH_MGG_FLUX_ERR     32  10^(-17)erg/s/cm^2    -  BH_MGG flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+BH_MGG_FLUX         33  10^(-17)erg/s/cm^2    -  BH_MGG line flux (NB: units only valid for SDSS and AAOmega spectra)
+BH_HB_CONT          34  10^(-17)erg/s/cm^2/A  -  BH_HB continuum (NB: units only valid for SDSS and AAOmega spectra)
+BH_HB_EW_ERR        35  mag                   -  BH_HB equivalent width uncertainty
+BH_HB_EW            36  mag                   -  BH_HB line equivalent width
+BH_HB_FLUX_ERR      37  10^(-17)erg/s/cm^2    -  BH_HB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+BH_HB_FLUX          38  10^(-17)erg/s/cm^2    -  BH_HB line flux (NB: units only valid for SDSS and AAOmega spectra)
+BH_G_CONT           39  10^(-17)erg/s/cm^2/A  -  BH_G continuum (NB: units only valid for SDSS and AAOmega spectra)
+BH_G_EW_ERR         40  mag                   -  BH_G equivalent width uncertainty
+BH_G_EW             41  mag                   -  BH_G line equivalent width
+BH_G_FLUX_ERR       42  10^(-17)erg/s/cm^2    -  BH_G flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+BH_G_FLUX           43  10^(-17)erg/s/cm^2    -  BH_G line flux (NB: units only valid for SDSS and AAOmega spectra)
+BH_CAI_CONT         44  10^(-17)erg/s/cm^2/A  -  BH_CAI continuum (NB: units only valid for SDSS and AAOmega spectra)
+BH_CAI_EW_ERR       45  mag                   -  BH_CAI equivalent width uncertainty
+BH_CAI_EW           46  mag                   -  BH_CAI line equivalent width
+BH_CAI_FLUX_ERR     47  10^(-17)erg/s/cm^2    -  BH_CAI flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+BH_CAI_FLUX         48  10^(-17)erg/s/cm^2    -  BH_CAI line flux (NB: units only valid for SDSS and AAOmega spectra)
+BH_HK_CONT          49  10^(-17)erg/s/cm^2/A  -  BH_HK continuum (NB: units only valid for SDSS and AAOmega spectra)
+BH_HK_EW_ERR        50  mag                   -  BH_HK equivalent width uncertainty
+BH_HK_EW            51  mag                   -  BH_HK line equivalent width
+BH_HK_FLUX_ERR      52  10^(-17)erg/s/cm^2    -  BH_HK flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+BH_HK_FLUX          53  10^(-17)erg/s/cm^2    -  BH_HK line flux (NB: units only valid for SDSS and AAOmega spectra)
+BH_CNB_CONT         54  10^(-17)erg/s/cm^2/A  -  BH_CNB continuum (NB: units only valid for SDSS and AAOmega spectra)
+BH_CNB_EW_ERR       55  mag                   -  BH_CNB equivalent width uncertainty
+BH_CNB_EW           56  mag                   -  BH_CNB line equivalent width
+BH_CNB_FLUX_ERR     57  10^(-17)erg/s/cm^2    -  BH_CNB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+BH_CNB_FLUX         58  10^(-17)erg/s/cm^2    -  BH_CNB line flux (NB: units only valid for SDSS and AAOmega spectra)
+SIIR_CONT           59  10^(-17)erg/s/cm^2/A  -  SIIR continuum (NB: units only valid for SDSS and AAOmega spectra)
+SIIR_EW_ERR         60  A                     -  SIIR equivalent width uncertainty
+SIIR_EW             61  A                     -  SIIR line equivalent width
+SIIR_FLUX_ERR       62  10^(-17)erg/s/cm^2    -  SIIR flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+SIIR_FLUX           63  10^(-17)erg/s/cm^2    -  SIIR line flux (NB: units only valid for SDSS and AAOmega spectra)
+SIIB_CONT           64  10^(-17)erg/s/cm^2/A  -  SIIB continuum (NB: units only valid for SDSS and AAOmega spectra)
+SIIB_EW_ERR         65  A                     -  SIIB equivalent width uncertainty
+SIIB_EW             66  A                     -  SIIB line equivalent width
+SIIB_FLUX_ERR       67  10^(-17)erg/s/cm^2    -  SIIB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+SIIB_FLUX           68  10^(-17)erg/s/cm^2    -  SIIB line flux (NB: units only valid for SDSS and AAOmega spectra)
+NIIR_CONT           69  10^(-17)erg/s/cm^2/A  -  NIIR continuum (NB: units only valid for SDSS and AAOmega spectra)
+NIIR_EW_ERR         70  A                     -  NIIR equivalent width uncertainty
+NIIR_EW             71  A                     -  NIIR line equivalent width
+NIIR_FLUX_ERR       72  10^(-17)erg/s/cm^2    -  NIIR flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+NIIR_FLUX           73  10^(-17)erg/s/cm^2    -  NIIR line flux (NB: units only valid for SDSS and AAOmega spectra)
+NIIB_CONT           74  10^(-17)erg/s/cm^2/A  -  NIIB continuum (NB: units only valid for SDSS and AAOmega spectra)
+NIIB_EW_ERR         75  A                     -  NIIB equivalent width uncertainty
+NIIB_EW             76  A                     -  NIIB line equivalent width
+NIIB_FLUX_ERR       77  10^(-17)erg/s/cm^2    -  NIIB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+NIIB_FLUX           78  10^(-17)erg/s/cm^2    -  NIIB line flux (NB: units only valid for SDSS and AAOmega spectra)
+HA_CONT             79  10^(-17)erg/s/cm^2/A  -  HA continuum (NB: units only valid for SDSS and AAOmega spectra)
+HA_EW_ERR           80  A                     -  HA equivalent width uncertainty
+HA_EW               81  A                     -  HA line equivalent width
+HA_FLUX_ERR         82  10^(-17)erg/s/cm^2    -  HA flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HA_FLUX             83  10^(-17)erg/s/cm^2    -  HA line flux (NB: units only valid for SDSS and AAOmega spectra)
+OI6364_CONT         84  10^(-17)erg/s/cm^2/A  -  OI6364 continuum (NB: units only valid for SDSS and AAOmega spectra)
+OI6364_EW_ERR       85  A                     -  OI6364 equivalent width uncertainty
+OI6364_EW           86  A                     -  OI6364 line equivalent width
+OI6364_FLUX_ERR     87  10^(-17)erg/s/cm^2    -  OI6364 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+OI6364_FLUX         88  10^(-17)erg/s/cm^2    -  OI6364 line flux (NB: units only valid for SDSS and AAOmega spectra)
+SIII6312_CONT       89  10^(-17)erg/s/cm^2/A  -  SIII6312 continuum (NB: units only valid for SDSS and AAOmega spectra)
+SIII6312_EW_ERR     90  A                     -  SIII6312 equivalent width uncertainty
+SIII6312_EW         91  A                     -  SIII6312 line equivalent width
+SIII6312_FLUX_ERR   92  10^(-17)erg/s/cm^2    -  SIII6312 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+SIII6312_FLUX       93  10^(-17)erg/s/cm^2    -  SIII6312 line flux (NB: units only valid for SDSS and AAOmega spectra)
+OI6300_CONT         94  10^(-17)erg/s/cm^2/A  -  OI6300 continuum (NB: units only valid for SDSS and AAOmega spectra)
+OI6300_EW_ERR       95  A                     -  OI6300 equivalent width uncertainty
+OI6300_EW           96  A                     -  OI6300 line equivalent width
+OI6300_FLUX_ERR     97  10^(-17)erg/s/cm^2    -  OI6300 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+OI6300_FLUX         98  10^(-17)erg/s/cm^2    -  OI6300 line flux (NB: units only valid for SDSS and AAOmega spectra)
+TIO2_CONT           99  10^(-17)erg/s/cm^2/A  -  TIO2 continuum (NB: units only valid for SDSS and AAOmega spectra)
+TIO2_EW_ERR        100  mag                   -  TIO2 equivalent width uncertainty
+TIO2_EW            101  mag                   -  TIO2 line equivalent width
+TIO2_FLUX_ERR      102  10^(-17)erg/s/cm^2    -  TIO2 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+TIO2_FLUX          103  10^(-17)erg/s/cm^2    -  TIO2 line flux (NB: units only valid for SDSS and AAOmega spectra)
+TIO1_CONT          104  10^(-17)erg/s/cm^2/A  -  TIO1 continuum (NB: units only valid for SDSS and AAOmega spectra)
+TIO1_EW_ERR        105  mag                   -  TIO1 equivalent width uncertainty
+TIO1_EW            106  mag                   -  TIO1 line equivalent width
+TIO1_FLUX_ERR      107  10^(-17)erg/s/cm^2    -  TIO1 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+TIO1_FLUX          108  10^(-17)erg/s/cm^2    -  TIO1 line flux (NB: units only valid for SDSS and AAOmega spectra)
+NA5895_CONT        109  10^(-17)erg/s/cm^2/A  -  NA5895 continuum (NB: units only valid for SDSS and AAOmega spectra)
+NA5895_EW_ERR      110  A                     -  NA5895 equivalent width uncertainty
+NA5895_EW          111  A                     -  NA5895 line equivalent width
+NA5895_FLUX_ERR    112  10^(-17)erg/s/cm^2    -  NA5895 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+NA5895_FLUX        113  10^(-17)erg/s/cm^2    -  NA5895 line flux (NB: units only valid for SDSS and AAOmega spectra)
+NII5755_CONT       114  10^(-17)erg/s/cm^2/A  -  NII5755 continuum (NB: units only valid for SDSS and AAOmega spectra)
+NII5755_EW_ERR     115  A                     -  NII5755 equivalent width uncertainty
+NII5755_EW         116  A                     -  NII5755 line equivalent width
+NII5755_FLUX_ERR   117  10^(-17)erg/s/cm^2    -  NII5755 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+NII5755_FLUX       118  10^(-17)erg/s/cm^2    -  NII5755 line flux (NB: units only valid for SDSS and AAOmega spectra)
+FE5782_CONT        119  10^(-17)erg/s/cm^2/A  -  FE5782 continuum (NB: units only valid for SDSS and AAOmega spectra)
+FE5782_EW_ERR      120  A                     -  FE5782 equivalent width uncertainty
+FE5782_EW          121  A                     -  FE5782 line equivalent width
+FE5782_FLUX_ERR    122  10^(-17)erg/s/cm^2    -  FE5782 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+FE5782_FLUX        123  10^(-17)erg/s/cm^2    -  FE5782 line flux (NB: units only valid for SDSS and AAOmega spectra)
+FE5709_CONT        124  10^(-17)erg/s/cm^2/A  -  FE5709 continuum (NB: units only valid for SDSS and AAOmega spectra)
+FE5709_EW_ERR      125  A                     -  FE5709 equivalent width uncertainty
+FE5709_EW          126  A                     -  FE5709 line equivalent width
+FE5709_FLUX_ERR    127  10^(-17)erg/s/cm^2    -  FE5709 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+FE5709_FLUX        128  10^(-17)erg/s/cm^2    -  FE5709 line flux (NB: units only valid for SDSS and AAOmega spectra)
+FE5406_CONT        129  10^(-17)erg/s/cm^2/A  -  FE5406 continuum (NB: units only valid for SDSS and AAOmega spectra)
+FE5406_EW_ERR      130  A                     -  FE5406 equivalent width uncertainty
+FE5406_EW          131  A                     -  FE5406 line equivalent width
+FE5406_FLUX_ERR    132  10^(-17)erg/s/cm^2    -  FE5406 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+FE5406_FLUX        133  10^(-17)erg/s/cm^2    -  FE5406 line flux (NB: units only valid for SDSS and AAOmega spectra)
+FE5335_CONT        134  10^(-17)erg/s/cm^2/A  -  FE5335 continuum (NB: units only valid for SDSS and AAOmega spectra)
+FE5335_EW_ERR      135  A                     -  FE5335 equivalent width uncertainty
+FE5335_EW          136  A                     -  FE5335 line equivalent width
+FE5335_FLUX_ERR    137  10^(-17)erg/s/cm^2    -  FE5335 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+FE5335_FLUX        138  10^(-17)erg/s/cm^2    -  FE5335 line flux (NB: units only valid for SDSS and AAOmega spectra)
+FE5270_CONT        139  10^(-17)erg/s/cm^2/A  -  FE5270 continuum (NB: units only valid for SDSS and AAOmega spectra)
+FE5270_EW_ERR      140  A                     -  FE5270 equivalent width uncertainty
+FE5270_EW          141  A                     -  FE5270 line equivalent width
+FE5270_FLUX_ERR    142  10^(-17)erg/s/cm^2    -  FE5270 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+FE5270_FLUX        143  10^(-17)erg/s/cm^2    -  FE5270 line flux (NB: units only valid for SDSS and AAOmega spectra)
+MGB5177_CONT       144  10^(-17)erg/s/cm^2/A  -  MGB5177 continuum (NB: units only valid for SDSS and AAOmega spectra)
+MGB5177_EW_ERR     145  A                     -  MGB5177 equivalent width uncertainty
+MGB5177_EW         146  A                     -  MGB5177 line equivalent width
+MGB5177_FLUX_ERR   147  10^(-17)erg/s/cm^2    -  MGB5177 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+MGB5177_FLUX       148  10^(-17)erg/s/cm^2    -  MGB5177 line flux (NB: units only valid for SDSS and AAOmega spectra)
+MG2_CONT           149  10^(-17)erg/s/cm^2/A  -  MG2 continuum (NB: units only valid for SDSS and AAOmega spectra)
+MG2_EW_ERR         150  mag                   -  MG2 equivalent width uncertainty
+MG2_EW             151  mag                   -  MG2 line equivalent width
+MG2_FLUX_ERR       152  10^(-17)erg/s/cm^2    -  MG2 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+MG2_FLUX           153  10^(-17)erg/s/cm^2    -  MG2 line flux (NB: units only valid for SDSS and AAOmega spectra)
+MG1_CONT           154  10^(-17)erg/s/cm^2/A  -  MG1 continuum (NB: units only valid for SDSS and AAOmega spectra)
+MG1_EW_ERR         155  mag                   -  MG1 equivalent width uncertainty
+MG1_EW             156  mag                   -  MG1 line equivalent width
+MG1_FLUX_ERR       157  10^(-17)erg/s/cm^2    -  MG1 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+MG1_FLUX           158  10^(-17)erg/s/cm^2    -  MG1 line flux (NB: units only valid for SDSS and AAOmega spectra)
+FE5015_CONT        159  10^(-17)erg/s/cm^2/A  -  FE5015 continuum (NB: units only valid for SDSS and AAOmega spectra)
+FE5015_EW_ERR      160  A                     -  FE5015 equivalent width uncertainty
+FE5015_EW          161  A                     -  FE5015 line equivalent width
+FE5015_FLUX_ERR    162  10^(-17)erg/s/cm^2    -  FE5015 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+FE5015_FLUX        163  10^(-17)erg/s/cm^2    -  FE5015 line flux (NB: units only valid for SDSS and AAOmega spectra)
+OIIIR_CONT         164  10^(-17)erg/s/cm^2/A  -  OIIIR continuum (NB: units only valid for SDSS and AAOmega spectra)
+OIIIR_EW_ERR       165  A                     -  OIIIR equivalent width uncertainty
+OIIIR_EW           166  A                     -  OIIIR line equivalent width
+OIIIR_FLUX_ERR     167  10^(-17)erg/s/cm^2    -  OIIIR flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+OIIIR_FLUX         168  10^(-17)erg/s/cm^2    -  OIIIR line flux (NB: units only valid for SDSS and AAOmega spectra)
+OIIIB_CONT         169  10^(-17)erg/s/cm^2/A  -  OIIIB continuum (NB: units only valid for SDSS and AAOmega spectra)
+OIIIB_EW_ERR       170  A                     -  OIIIB equivalent width uncertainty
+OIIIB_EW           171  A                     -  OIIIB line equivalent width
+OIIIB_FLUX_ERR     172  10^(-17)erg/s/cm^2    -  OIIIB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+OIIIB_FLUX         173  10^(-17)erg/s/cm^2    -  OIIIB line flux (NB: units only valid for SDSS and AAOmega spectra)
+HB_P_CONT          174  10^(-17)erg/s/cm^2/A  -  HB_P continuum (NB: units only valid for SDSS and AAOmega spectra)
+HB_P_EW_ERR        175  A                     -  HB_P equivalent width uncertainty
+HB_P_EW            176  A                     -  HB_P line equivalent width
+HB_P_FLUX_ERR      177  10^(-17)erg/s/cm^2    -  HB_P flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HB_P_FLUX          178  10^(-17)erg/s/cm^2    -  HB_P line flux (NB: units only valid for SDSS and AAOmega spectra)
+HB_CONT            179  10^(-17)erg/s/cm^2/A  -  HB continuum (NB: units only valid for SDSS and AAOmega spectra)
+HB_EW_ERR          180  A                     -  HB equivalent width uncertainty
+HB_EW              181  A                     -  HB line equivalent width
+HB_FLUX_ERR        182  10^(-17)erg/s/cm^2    -  HB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HB_FLUX            183  10^(-17)erg/s/cm^2    -  HB line flux (NB: units only valid for SDSS and AAOmega spectra)
+FE4668_CONT        184  10^(-17)erg/s/cm^2/A  -  FE4668 continuum (NB: units only valid for SDSS and AAOmega spectra)
+FE4668_EW_ERR      185  A                     -  FE4668 equivalent width uncertainty
+FE4668_EW          186  A                     -  FE4668 line equivalent width
+FE4668_FLUX_ERR    187  10^(-17)erg/s/cm^2    -  FE4668 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+FE4668_FLUX        188  10^(-17)erg/s/cm^2    -  FE4668 line flux (NB: units only valid for SDSS and AAOmega spectra)
+FE4531_CONT        189  10^(-17)erg/s/cm^2/A  -  FE4531 continuum (NB: units only valid for SDSS and AAOmega spectra)
+FE4531_EW_ERR      190  A                     -  FE4531 equivalent width uncertainty
+FE4531_EW          191  A                     -  FE4531 line equivalent width
+FE4531_FLUX_ERR    192  10^(-17)erg/s/cm^2    -  FE4531 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+FE4531_FLUX        193  10^(-17)erg/s/cm^2    -  FE4531 line flux (NB: units only valid for SDSS and AAOmega spectra)
+CA4455_CONT        194  10^(-17)erg/s/cm^2/A  -  CA4455 continuum (NB: units only valid for SDSS and AAOmega spectra)
+CA4455_EW_ERR      195  A                     -  CA4455 equivalent width uncertainty
+CA4455_EW          196  A                     -  CA4455 line equivalent width
+CA4455_FLUX_ERR    197  10^(-17)erg/s/cm^2    -  CA4455 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+CA4455_FLUX        198  10^(-17)erg/s/cm^2    -  CA4455 line flux (NB: units only valid for SDSS and AAOmega spectra)
+FE4383_CONT        199  10^(-17)erg/s/cm^2/A  -  FE4383 continuum (NB: units only valid for SDSS and AAOmega spectra)
+FE4383_EW_ERR      200  A                     -  FE4383 equivalent width uncertainty
+FE4383_EW          201  A                     -  FE4383 line equivalent width
+FE4383_FLUX_ERR    202  10^(-17)erg/s/cm^2    -  FE4383 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+FE4383_FLUX        203  10^(-17)erg/s/cm^2    -  FE4383 line flux (NB: units only valid for SDSS and AAOmega spectra)
+OIII4363_CONT      204  10^(-17)erg/s/cm^2/A  -  OIII4363 continuum (NB: units only valid for SDSS and AAOmega spectra)
+OIII4363_EW_ERR    205  A                     -  OIII4363 equivalent width uncertainty
+OIII4363_EW        206  A                     -  OIII4363 line equivalent width
+OIII4363_FLUX_ERR  207  10^(-17)erg/s/cm^2    -  OIII4363 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+OIII4363_FLUX      208  10^(-17)erg/s/cm^2    -  OIII4363 line flux (NB: units only valid for SDSS and AAOmega spectra)
+HGVA275_CONT       209  10^(-17)erg/s/cm^2/A  -  HGVA275 continuum (NB: units only valid for SDSS and AAOmega spectra)
+HGVA275_EW_ERR     210  mag                   -  HGVA275 equivalent width uncertainty
+HGVA275_EW         211  mag                   -  HGVA275 line equivalent width
+HGVA275_FLUX_ERR   212  10^(-17)erg/s/cm^2    -  HGVA275 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HGVA275_FLUX       213  10^(-17)erg/s/cm^2    -  HGVA275 line flux (NB: units only valid for SDSS and AAOmega spectra)
+HGVA200_CONT       214  10^(-17)erg/s/cm^2/A  -  HGVA200 continuum (NB: units only valid for SDSS and AAOmega spectra)
+HGVA200_EW_ERR     215  mag                   -  HGVA200 equivalent width uncertainty
+HGVA200_EW         216  mag                   -  HGVA200 line equivalent width
+HGVA200_FLUX_ERR   217  10^(-17)erg/s/cm^2    -  HGVA200 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HGVA200_FLUX       218  10^(-17)erg/s/cm^2    -  HGVA200 line flux (NB: units only valid for SDSS and AAOmega spectra)
+HGVA125_CONT       219  10^(-17)erg/s/cm^2/A  -  HGVA125 continuum (NB: units only valid for SDSS and AAOmega spectra)
+HGVA125_EW_ERR     220  mag                   -  HGVA125 equivalent width uncertainty
+HGVA125_EW         221  mag                   -  HGVA125 line equivalent width
+HGVA125_FLUX_ERR   222  10^(-17)erg/s/cm^2    -  HGVA125 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HGVA125_FLUX       223  10^(-17)erg/s/cm^2    -  HGVA125 line flux (NB: units only valid for SDSS and AAOmega spectra)
+HGF_CONT           224  10^(-17)erg/s/cm^2/A  -  HGF continuum (NB: units only valid for SDSS and AAOmega spectra)
+HGF_EW_ERR         225  A                     -  HGF equivalent width uncertainty
+HGF_EW             226  A                     -  HGF line equivalent width
+HGF_FLUX_ERR       227  10^(-17)erg/s/cm^2    -  HGF flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HGF_FLUX           228  10^(-17)erg/s/cm^2    -  HGF line flux (NB: units only valid for SDSS and AAOmega spectra)
+HGA_CONT           229  10^(-17)erg/s/cm^2/A  -  HGA continuum (NB: units only valid for SDSS and AAOmega spectra)
+HGA_EW_ERR         230  A                     -  HGA equivalent width uncertainty
+HGA_EW             231  A                     -  HGA line equivalent width
+HGA_FLUX_ERR       232  10^(-17)erg/s/cm^2    -  HGA flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HGA_FLUX           233  10^(-17)erg/s/cm^2    -  HGA line flux (NB: units only valid for SDSS and AAOmega spectra)
+G4300_CONT         234  10^(-17)erg/s/cm^2/A  -  G4300 continuum (NB: units only valid for SDSS and AAOmega spectra)
+G4300_EW_ERR       235  A                     -  G4300 equivalent width uncertainty
+G4300_EW           236  A                     -  G4300 line equivalent width
+G4300_FLUX_ERR     237  10^(-17)erg/s/cm^2    -  G4300 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+G4300_FLUX         238  10^(-17)erg/s/cm^2    -  G4300 line flux (NB: units only valid for SDSS and AAOmega spectra)
+CA4227_CONT        239  10^(-17)erg/s/cm^2/A  -  CA4227 continuum (NB: units only valid for SDSS and AAOmega spectra)
+CA4227_EW_ERR      240  A                     -  CA4227 equivalent width uncertainty
+CA4227_EW          241  A                     -  CA4227 line equivalent width
+CA4227_FLUX_ERR    242  10^(-17)erg/s/cm^2    -  CA4227 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+CA4227_FLUX        243  10^(-17)erg/s/cm^2    -  CA4227 line flux (NB: units only valid for SDSS and AAOmega spectra)
+CN2_CONT           244  10^(-17)erg/s/cm^2/A  -  CN2 continuum (NB: units only valid for SDSS and AAOmega spectra)
+CN2_EW_ERR         245  mag                   -  CN2 equivalent width uncertainty
+CN2_EW             246  mag                   -  CN2 line equivalent width
+CN2_FLUX_ERR       247  10^(-17)erg/s/cm^2    -  CN2 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+CN2_FLUX           248  10^(-17)erg/s/cm^2    -  CN2 line flux (NB: units only valid for SDSS and AAOmega spectra)
+CN1_CONT           249  10^(-17)erg/s/cm^2/A  -  CN1 continuum (NB: units only valid for SDSS and AAOmega spectra)
+CN1_EW_ERR         250  mag                   -  CN1 equivalent width uncertainty
+CN1_EW             251  mag                   -  CN1 line equivalent width
+CN1_FLUX_ERR       252  10^(-17)erg/s/cm^2    -  CN1 flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+CN1_FLUX           253  10^(-17)erg/s/cm^2    -  CN1 line flux (NB: units only valid for SDSS and AAOmega spectra)
+HDF_CONT           254  10^(-17)erg/s/cm^2/A  -  HDF continuum (NB: units only valid for SDSS and AAOmega spectra)
+HDF_EW_ERR         255  A                     -  HDF equivalent width uncertainty
+HDF_EW             256  A                     -  HDF line equivalent width
+HDF_FLUX_ERR       257  10^(-17)erg/s/cm^2    -  HDF flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HDF_FLUX           258  10^(-17)erg/s/cm^2    -  HDF line flux (NB: units only valid for SDSS and AAOmega spectra)
+HDA_CONT           259  10^(-17)erg/s/cm^2/A  -  HDA continuum (NB: units only valid for SDSS and AAOmega spectra)
+HDA_EW_ERR         260  A                     -  HDA equivalent width uncertainty
+HDA_EW             261  A                     -  HDA line equivalent width
+HDA_FLUX_ERR       262  10^(-17)erg/s/cm^2    -  HDA flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HDA_FLUX           263  10^(-17)erg/s/cm^2    -  HDA line flux (NB: units only valid for SDSS and AAOmega spectra)
+OII_CONT           264  10^(-17)erg/s/cm^2/A  -  OII continuum (NB: units only valid for SDSS and AAOmega spectra)
+OII_EW_ERR         265  A                     -  OII equivalent width uncertainty
+OII_EW             266  A                     -  OII line equivalent width
+OII_FLUX_ERR       267  10^(-17)erg/s/cm^2    -  OII flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+OII_FLUX           268  10^(-17)erg/s/cm^2    -  OII line flux (NB: units only valid for SDSS and AAOmega spectra)
