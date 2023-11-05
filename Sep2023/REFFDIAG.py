@@ -23,7 +23,7 @@ class Main:
         self.WHAN_colors_merged = ['royalblue', 'lime', 'hotpink', 'brown']
     
     def reading(self):
-        usecols= ['WHAN', 'BPT', 'BMS']
+        usecols= ['WHAN', 'BPT', 'Aperture_1_Reff']
         self.dataframe = pd.read_csv(self.file, usecols=usecols)
     
     def plotting(self):
@@ -45,13 +45,13 @@ class Main:
         Main.histo(self, ax2, [0], 'WHAN')
         Main.histo(self, ax4, [1], 'WHAN')
         Main.histo(self, ax6, [0, 1], 'WHAN')
-        ax1.set(title='below-MS (1298 galaxies)')
-        ax3.set(title='MS (697 galaxies)')
-        ax5.set(title='Total (1995 galaxies)')     
+        ax1.set(title=r'$> 1 \; R_{eff}$ (1224 gal.)')
+        ax3.set(title=r'$< 1 \; R_{eff}$ (483 gal.)')
+        ax5.set(title='Total (1707 gal.)')     
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
-        fig.savefig('./FIGURES/BMSMS.pdf')
+        fig.savefig('./FIGURES/APERTURE_DIAG.pdf')
         plt.show()
 
     def sorting_forWHAN(self, keys):
@@ -65,8 +65,8 @@ class Main:
         RG = 0
         NDA = 0
         self.total1 = 0
-        for i in range(len(self.dataframe['BMS'])):
-            if self.dataframe['BMS'][i] in keys:
+        for i in range(len(self.dataframe['Aperture_1_Reff'])):
+            if self.dataframe['Aperture_1_Reff'][i] in keys:
                 self.total1 += 1
                 if self.dataframe['WHAN'][i] == 'SF':
                     SF += 1
@@ -86,7 +86,7 @@ class Main:
                 #    NDA += 1
                     self.total1 -= 1
                 else:
-                    print('AKHRANA, ATMENA')
+                    print(self.dataframe['WHAN'][i])
         
         print(keys, self.total1)
         
@@ -107,8 +107,8 @@ class Main:
         NOEL = 0
 
         self.total2 = 0
-        for i in range(len(self.dataframe['BMS'])):
-            if self.dataframe['BMS'][i] in keys:
+        for i in range(len(self.dataframe['Aperture_1_Reff'])):
+            if self.dataframe['Aperture_1_Reff'][i] in keys:
                 self.total2 += 1
                 if self.dataframe['BPT'][i] in ['SFXY']:
                     SF += 1
@@ -132,7 +132,7 @@ class Main:
                 elif self.dataframe['BPT'][i] == 'NOEL':
                     NOEL += 1
                 else:
-                    print('AKHRANA, ATMENA')
+                    print(self.dataframe['BPT'][i])
         
         print(keys, self.total2)
         return [AGN, AGNX, UNC, UNCX, UNCY, SF, SFX, SFY, NOEL]
@@ -202,6 +202,6 @@ class Main:
             figure.set(aspect='equal')
 
 if __name__ == '__main__':
-    obj = Main('GAMA_ETG_OLA.csv')
+    obj = Main('GAMA_ETG_OLA_R.csv')
     obj.reading()
     obj.plotting()

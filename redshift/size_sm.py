@@ -78,14 +78,23 @@ class Main(hp):
         lines_stripped = [line.strip() for line in lines]
         for line in lines_stripped:
             GAMAID = int(line.split()[0])
-            X = float(line.split()[1])
-            Y = 3/float(line.split()[301])
-            Y_up = 3/float(line.split()[301])
-            Y_down = 3/float(line.split()[301])
+            X = float(line.split()[35])
+            Y = float(line.split()[301])
+            ER = float(line.split()[308])
+            Y_up = float(line.split()[301]) + ER
+            Y_down = float(line.split()[301]) - ER
+            
+            if ER == -9999.0 or 2*ER > Y:
+                X = -99999.0
+                Y = -99999.0
+                Y_up = -99999.0
+                Y_down = -99999.0
+                ER = -99999.0
+
             #SFR_up = float(line.split()[96])
             #SFR_down = float(line.split()[94])
             #SFR_er = [[abs(SFR_down-SFR_0)], [abs(SFR_up-SFR_0)]]
-            self.base_dict.update({GAMAID: [X, Y, Y_up, Y_down]})
+            self.base_dict.update({GAMAID: [X, Y, Y_up, Y_down, ER]})
 
         self.data_dict = []
 
@@ -95,12 +104,29 @@ class Main(hp):
                 self.data_dict.append({'GAMAID': int(row['GAMAID']), 'AGN': row['BPT'], 'SC_WHAN' : row['WHAN'], 'BMS' : int(row['BMS'])})
 
     def matching(self):
+        ERs = []
+        Ys = []
+        trust = []
         for item in self.data_dict:
             try:
-                X, Y, Y_up, Y_down = self.base_dict[item['GAMAID']]
+                X, Y, Y_up, Y_down, ER = self.base_dict[item['GAMAID']]
+                Ys.append(Y)
+                ERs.append(ER)
                 item.update({'X' : X, 'Y' : Y, 'Y_up' : Y_up, 'Y_down' : Y_down})
+                if Y - ER > 3 and Y != -99999.0:
+                    trust.append(1)
+                elif Y + ER < 3 and Y != -99999.0:
+                    trust.append(0)
+                else:
+                    trust.append(-1)
             except: 
                 print(item['GAMAID'])
+        
+        df = pd.read_csv('GAMA_ETG_OLA.csv')
+        df.insert(10, column='GALRE_i', value=Ys)
+        df.insert(11, column='GALREERR_i', value=ERs)
+        df.insert(12, column='Aperture_1_Reff', value=trust)
+        df.to_csv('GAMA_ETG_OLA_R.csv', index=False)
     
     def plotting_mdms_age(self):
         gs_top = plt.GridSpec(1, 2, wspace=0)
@@ -114,15 +140,18 @@ class Main(hp):
         self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
         self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in')
 
-        self.ax4.set_ylabel(r'$Aperture in R_{eff} \; i, \;$')
+        self.ax4.set_ylabel(r'$R_{eff} \; i, \; arcsec$')
         for ax in self.topaxes:    
-            ax.set_xlim([0, 0.35])
+            ax.set_xlim([9.9, 11.6])
+            ax.set_xlabel(r'$M_* / M_\odot$')
+            ax.set_ylim([0, 15])
+
 
         #self.ax5.set_xlabel(r'$log(age/yr)$')
 
         Main.plotter_BPT(self, 'X', 'Y', 'Y_up', 'Y_down', 'AGN', True)
         Main.plotter_WHAN(self, 'X', 'Y', 'Y_up', 'Y_down', 'SC_WHAN', True)
-        self.fig1.savefig('./FIGURES/AP_RED.pdf')
+        self.fig1.savefig('./FIGURES/SIZE_MS.pdf')
         plt.show()
 
     def plotter_BPT(self, x, y, up, down, AGN_key, bids):
@@ -163,23 +192,24 @@ class Main(hp):
             tot.append(Y)
             tot_up.append(Y_up)
             tot_down.append(Y_down)
+            if 15 > Y > 0:
             #marker = self.color_dict[AGN][2]
-            if AGN in ['AGNXY', 'AGNX', 'AGNY']:
+                if AGN in ['AGNXY', 'AGNX', 'AGNY']:
                     yes_temp.append(Y)
                     yes_temp_age.append(X)
                     yes_temp_up.append(Y_up)
                     yes_temp_down.append(Y_down)
-            elif AGN in ['UNCXY', 'UNCX', 'UNCY']:
+                elif AGN in ['UNCXY', 'UNCX', 'UNCY']:
                     UNC_temp.append(Y)
                     UNC_temp_age.append(X)
                     UNC_temp_up.append(Y_up)
                     UNC_temp_down.append(Y_down)
-            elif AGN in ['SFXY', 'SFX', 'SFY']:
+                elif AGN in ['SFXY', 'SFX', 'SFY']:
                     no_temp.append(Y)
                     no_temp_age.append(X)
                     no_temp_up.append(Y_up)
                     no_temp_down.append(Y_down)
-            elif AGN == 'NOEL':
+                elif AGN == 'NOEL':
                     noel_temp.append(Y)
                     noel_temp_age.append(X)
                     noel_temp_up.append(Y_up)
@@ -191,8 +221,8 @@ class Main(hp):
         self.errs = []
         self.ages = []
         
-        age_bids = [[0.0, 0.05], [0.05, 0.1], [0.1, 0.15], [0.15, 0.2], [0.2, 0.25], [0.25, 0.34]]
-        ages_const = np.arange(0.0, 0.35, 0.05)
+        age_bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
+        ages_const = np.arange(10, 11.5, 0.25)
 
         for item in class_list:
             X_plot = []
@@ -271,33 +301,34 @@ class Main(hp):
             tot.append(Y)
             tot_up.append(Y_up)
             tot_down.append(Y_down)
+            if 15 > Y > 0:
             #marker = self.color_dict[AGN][2]
-            if AGN in ['sAGN']:
+                if AGN in ['sAGN']:
                     yes_temp.append(Y)
                     yes_temp_age.append(X)
                     yes_temp_up.append(Y_up)
                     yes_temp_down.append(Y_down)
-            elif AGN in ['ELR']:
+                elif AGN in ['ELR']:
                     UNC_temp.append(Y)
                     UNC_temp_age.append(X)
                     UNC_temp_up.append(Y_up)
                     UNC_temp_down.append(Y_down)
-            elif AGN in ['SF']:
+                elif AGN in ['SF']:
                     no_temp.append(Y)
                     no_temp_age.append(X)
                     no_temp_up.append(Y_up)
                     no_temp_down.append(Y_down)
-            elif AGN in ['RG']:
+                elif AGN in ['RG']:
                     noel_temp.append(Y)
                     noel_temp_age.append(X)
                     noel_temp_up.append(Y_up)
                     noel_temp_down.append(Y_down)
-            elif AGN in ['LLR']:
+                elif AGN in ['LLR']:
                     llr_temp.append(Y)
                     llr_temp_age.append(X)
                     llr_temp_up.append(Y_up)
                     llr_temp_down.append(Y_down)
-            elif AGN in ['wAGN']:
+                elif AGN in ['wAGN']:
                     wAGN_temp.append(Y)
                     wAGN_temp_age.append(X)
                     wAGN_temp_up.append(Y_up)
@@ -310,8 +341,8 @@ class Main(hp):
         self.errs = []
         self.ages = []
     
-        age_bids = [[0.0, 0.05], [0.05, 0.1], [0.1, 0.15], [0.15, 0.2], [0.2, 0.25], [0.25, 0.34]]
-        ages_const = np.arange(0.0, 0.35, 0.05)
+        age_bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
+        ages_const = np.arange(10, 11.5, 0.25)
 
         for item in class_list:
             X_plot = []

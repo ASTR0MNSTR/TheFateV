@@ -164,6 +164,8 @@ class Main(hp):
         self.HgF_cont = []
         self.HdF_cont = []
         self.HA_cont = []
+        self.GAMAIDs = []
+        self.lines_prob = []
 
         #self.color_dict ={
         #    'AGN' : ['midnightblue', 15, '.'],
@@ -238,6 +240,7 @@ class Main(hp):
         if CATAID in self.sample_dict.keys():
             bms = self.sample_dict[CATAID]
         else:
+            #bms = -1
             return 1
 
         Z = float(galaxy_pars[4])
@@ -317,8 +320,8 @@ class Main(hp):
         for pars in self.flux_er_mod:
             if type(pars) == list:
                 counter_all += 1
-                if pars[-1][2] == 'true' and pars[-1][3] == 'true' and (pars[-1][0] == 'GAMA' or pars[-1][0] == 'SDSS') and pars[-1][6] != 'NDA': #!!!!
-                #if pars[-1][2] == 'true' and pars[-1][3] == 'true' and pars[-1][6] != 'NDA': #!!!!
+                #i f pars[-1][2] == 'true' and pars[-1][3] == 'true' and (pars[-1][0] == 'GAMA' or pars[-1][0] == 'SDSS') and pars[-1][6] != 'NDA': #!!!!
+                if pars[-1][2] == 'true' and pars[-1][3] == 'true' and pars[-1][6] != 'NDA' and pars[-1][0] == 'SDSS': #!!!!
                 #if pars[-1][2] == 'true' and pars[-1][3] == 'true':
                 #if pars[-3][6] != 'NDA': #!!!!
                     Main.exporting(self, pars)
@@ -503,7 +506,6 @@ class Main(hp):
             head_length=0.03, color=dict[mode][0], alpha=1)
         except:
             pass
-
 
     def plotting_BPT(self):
         gs_top = plt.GridSpec(1, 2, wspace=0)
@@ -799,7 +801,7 @@ class Main(hp):
 
 
 if __name__ == '__main__':
-    obj = Main('E:\LICENSE\ProgsData\main\Oleg_GAMA_belowMS.csv', 'E:\LICENSE\ProgsData\main\DirectSummationv05', 'GAMA_ETG_OLA.csv')
+    obj = Main('E:\LICENSE\ProgsData\main\Oleg_GAMA_belowMS.csv', 'E:\LICENSE\ProgsData\main\DirectSummationv05', r'E:\backup\backup_BPT\GAMA_ETG_OLA_SDSS.csv')
     obj.ola_reading()
     obj.samples_get()
     obj.gama_reading()
