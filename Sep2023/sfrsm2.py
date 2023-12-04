@@ -2,23 +2,21 @@ import csv
 import matplotlib.pyplot as plt 
 import numpy as np
 import math
-import statistics as st
-from scipy.stats import pearsonr
-from scipy.stats import sem
+# import statistics as st
 import pandas as pd
-from scipy.optimize import curve_fit
-import random
-from _global_ import *
+# from scipy.optimize import curve_fit
+from __legpars__ import *
+from __stats__ import *
 
 class hp:
     def log_er(item):
         return [[abs(math.log(1-item, 10))], [abs(math.log(1+item, 10))]]
-
-    def temp_stats_1(x, y_mid, y_up, y_down, x_bids):
+    
+    def bootstrapper(x, y_mid, y_up, y_down, x_bids):
         y_values = [[], [], [], [], [], []]
         stmeaner = []
         stmean = []
-        medians = [(pair[0] + pair[1])/2 for pair in x_bids]
+        x_values = [(pair[0] + pair[1])/2 for pair in x_bids]
 
         for j, item in enumerate(x):
             for i, pair in enumerate(x_bids):
@@ -33,22 +31,15 @@ class hp:
                 stmean.append(-99)
                 stmeaner.append(0)
             else:
-                data = []
-                for i in range(100):
-                    av = []
-                    for pair in mean:
-                        if random.random() > 0.5:
-                            av.append(pair[2] + abs(random.gauss(0, pair[1])))
-                        else:
-                            av.append(pair[2] - abs(random.gauss(0, pair[0])))
-                    data.append(st.mean(av))
-                
-                data.sort()
-                stmean.append(data[49])
-                stmeaner.append([[data[49] - data[15]], [data[83] - data[49]]])
-
-
-        return medians, stmean, stmeaner, length
+                data = [pair[2] for pair in mean]
+                values = (data,)
+                res = bootstrap(values, np.median, n_resamples=1000)
+                medians = res.bootstrap_distribution
+                print(medians)
+                stmean.append(np.median(medians))
+                medians = np.sort(medians)
+                stmeaner.append([[np.median(medians) - medians[160]], [medians[840] - np.median(medians)]])
+        return x_values, stmean, stmeaner, length
     
 class Main(hp):
     def __init__(self, ola_file, out):
@@ -59,6 +50,9 @@ class Main(hp):
         self.color_dict_BPT = color_dict
         self.color_dict_WHAN = cd_WHAN
         self.color_dict_leg = color_dict_leg
+
+        self.list_names_BPT = ['AGN', 'UNC', 'SF', 'NOEL']
+        self.list_names_WHAN = ['sAGN', 'wAGN', 'SF','ELR', 'RG', 'LLR']
 
         self.BMS_dict= {
             0 : ['.', 12], #bms
@@ -117,7 +111,7 @@ class Main(hp):
         Main.plotter_mdms_BPT(self, 'X', 'Y', 'Y_up', 'Y_down', 'AGN', False)
         Main.plotter_mdms_WHAN(self, 'X', 'Y', 'Y_up', 'Y_down', 'SC_WHAN', False)
         self.fig1.savefig('./FIGURES/SFRSM.pdf')
-        plt.show()
+        #plt.show()
 
     def plotter_mdms_BPT(self, x, y, up, down, AGN_key, bids):
 
@@ -195,7 +189,7 @@ class Main(hp):
         for item in class_list:
             X_plot = []
             Y_plot = []
-            X, Y, err, length = hp.temp_stats_1(item[0], item[1], item[3], item[4], age_bids)
+            X, Y, err, length = hp.bootstrapper(item[0], item[1], item[3], item[4], age_bids)
             self.ages = X
             self.means.append(Y)
             self.errs.append(err)
@@ -219,8 +213,9 @@ class Main(hp):
         self.ax4.plot(x, (0.84 - 0.026*11.804604)*x - (6.51 - 0.11*11.804604), linestyle='dashed', color='k', label=r'$z = 0.13$')
         self.ax4.plot(x, (0.84 - 0.026*9.8615801)*x - (6.51 - 0.11*9.8615801), linestyle='dotted', color='k', label=r'$z = 0.32$')
         self.ax4.plot(x, (0.84 - 0.026*13.323023)*x - (6.51 - 0.11*13.323023), color='k', label=r'$z = 0.01$')
-        #self.ax4.legend()
-
+        for j, item in enumerate(class_list):
+            self.ax4.scatter(-99, -99, alpha = 1, color=item[2], marker=item[5], s = 150, label=self.list_names_BPT[j])
+        self.ax4.legend(fontsize="13")
         #self.ax4.set_xlim(8, 10.1)
         #self.ax4.set_ylim(14, 26)
         #self.fig.savefig(name_file + '.pdf')
@@ -322,7 +317,7 @@ class Main(hp):
         for item in class_list:
             X_plot = []
             Y_plot = []
-            X, Y, err, length = hp.temp_stats_1(item[0], item[1], item[3], item[4], age_bids)
+            X, Y, err, length = hp.bootstrapper(item[0], item[1], item[3], item[4], age_bids)
             self.ages = X
             self.means.append(Y)
             self.errs.append(err)
@@ -341,10 +336,12 @@ class Main(hp):
         #    self.ax5.scatter(-99, -99, alpha = 1, color=item[2], marker=item[5], s = 150, label=self.list_names_WHAN[j])
 
         x = np.arange(6.9, 12, 0.1)
-        self.ax5.plot(x, (0.84 - 0.026*11.804604)*x - (6.51 - 0.11*11.804604), linestyle='dashed', color='k', label=r'$z = 0.13$')
-        self.ax5.plot(x, (0.84 - 0.026*9.8615801)*x - (6.51 - 0.11*9.8615801), linestyle='dotted', color='k', label=r'$z = 0.32$')
-        self.ax5.plot(x, (0.84 - 0.026*13.323023)*x - (6.51 - 0.11*13.323023), color='k', label=r'$z = 0.01$')
-        self.ax5.legend(title='Speagle+14:')
+        self.ax5.plot(x, (0.84 - 0.026*11.804604)*x - (6.51 - 0.11*11.804604), linestyle='dashed', color='k') #label=r'$z = 0.13$')
+        self.ax5.plot(x, (0.84 - 0.026*9.8615801)*x - (6.51 - 0.11*9.8615801), linestyle='dotted', color='k') #label=r'$z = 0.32$')
+        self.ax5.plot(x, (0.84 - 0.026*13.323023)*x - (6.51 - 0.11*13.323023), color='k') #label=r'$z = 0.01$')
+        for j, item in enumerate(class_list):
+            self.ax5.scatter(-99, -99, alpha = 1, color=item[2], marker=item[5], s = 150, label=self.list_names_WHAN[j])
+        self.ax5.legend(fontsize="13")
 
         
 

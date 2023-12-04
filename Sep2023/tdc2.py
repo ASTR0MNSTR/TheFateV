@@ -2,55 +2,16 @@ import csv
 import matplotlib.pyplot as plt 
 import numpy as np
 import math
-import statistics as st
-from scipy.stats import pearsonr
-from scipy.stats import sem
+# import statistics as st
 import pandas as pd
-from scipy.optimize import curve_fit
-import random
-from _global_ import *
+# from scipy.optimize import curve_fit
+from __legpars__ import *
+from __stats__ import *
 
 class hp:
     def log_er(item):
         return [[abs(math.log(1-item, 10))], [abs(math.log(1+item, 10))]]
-
-    def temp_stats_1(x, y_mid, y_up, y_down, x_bids):
-        y_values = [[], [], [], [], [], []]
-        stmeaner = []
-        stmean = []
-        medians = [(pair[0] + pair[1])/2 for pair in x_bids]
-
-        for j, item in enumerate(x):
-            for i, pair in enumerate(x_bids):
-                if item >= pair[0] and item < pair[1]:
-                    y_values[i].append([y_mid[j] - y_down[j], y_up[j] - y_mid[j], y_mid[j]])
-                    break
-        
-        length = [len(item) for item in y_values]
-
-        for mean in y_values:
-            if len(mean) <= 3:
-                stmean.append(-99)
-                stmeaner.append(0)
-            else:
-                data = []
-                for i in range(100):
-                    av = []
-                    for pair in mean:
-                        if random.random() > 0.5:
-                            av.append(pair[2] + abs(random.gauss(0, pair[1])))
-                        else:
-                            av.append(pair[2] - abs(random.gauss(0, pair[0])))
-                    data.append(st.mean(av))
-                
-                data.sort()
-                stmean.append(data[49])
-                stmeaner.append([[data[49] - data[15]], [data[83] - data[49]]])
-
-
-        return medians, stmean, stmeaner, length
          
-    
 class Main(hp):
     def __init__(self, ola_file, out):
         self.ola_file = ola_file
@@ -62,7 +23,7 @@ class Main(hp):
         self.color_dict_leg = color_dict_leg
 
         self.list_names_BPT = ['AGN', 'UNC', 'SF', 'NOEL']
-        self.list_names_WHAN = ['sAGN', 'ELR', 'SF', 'RG', 'LLR', 'wAGN']
+        self.list_names_WHAN = ['sAGN', 'wAGN', 'SF','ELR', 'RG', 'LLR']
 
         self.BMS_dict= {
             0 : ['o', 12], #bms
@@ -109,8 +70,8 @@ class Main(hp):
 
         self.topaxes = [self.ax5, self.ax4]
 
-        self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
-        self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=False, left=True, labelleft=False, right=True, labelright=False, direction='in')
+        self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
+        self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in')
 
         self.ax4.set_ylabel(r'$T_{cold \; dust}, K$')
         for ax in self.topaxes:    
@@ -118,7 +79,8 @@ class Main(hp):
             ax.set_ylim([14.5, 26])
             ax.set_yticks(np.arange(15, 25.9, 2))
 
-        #self.ax5.set_xlabel(r'$log(age/yr)$')
+        self.ax5.set_xlabel(r'$log(age/yr)$')
+        self.ax4.set_xlabel(r'$log(age/yr)$')
 
         Main.plotter_BPT(self, 'X', 'Y', 'Y_up', 'Y_down', 'AGN', True)
         Main.plotter_WHAN(self, 'X', 'Y', 'Y_up', 'Y_down', 'SC_WHAN', True)
@@ -200,24 +162,24 @@ class Main(hp):
         for item in class_list:
             X_plot = []
             Y_plot = []
-            X, Y, err, length = hp.temp_stats_1(item[0], item[1], item[3], item[4], age_bids)
+            X, Y, err, length = bootstrapper(item[0], item[1], item[3], item[4], age_bids)
             self.ages = X
             self.means.append(Y)
             self.errs.append(err)
             for j in range(len(X)):
                 if Y[j] != -99:
                     self.ax4.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[2], fmt=item[5], ms = 12)
-                    self.ax4.text(X[j], Y[j], length[j], c = 'red')
+                    #self.ax4.text(X[j], Y[j], length[j], c = 'red')
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
             self.ax4.plot(X_plot, Y_plot, alpha = 1, color=item[2])
 
-        for key in self.color_dict_leg.keys():
-                self.ax4.scatter(-99, -99, alpha= 1, color = self.color_dict_leg[key][0], marker = self.color_dict_leg[key][2], s = self.color_dict_leg[key][1], label=key)
+        #for key in self.color_dict_leg.keys():
+        #        self.ax4.scatter(-99, -99, alpha= 1, color = self.color_dict_leg[key][0], marker = self.color_dict_leg[key][2], s = self.color_dict_leg[key][1], label=key)
         self.ax4.set_xticks(ages_const)
         for j, item in enumerate(class_list):
             self.ax4.scatter(-99, -99, alpha = 1, color=item[2], marker=item[5], s = 150, label=self.list_names_BPT[j])
-        self.ax4.legend()
+        self.ax4.legend(fontsize="13")
 
         #self.ax4.set_xlim(8, 10.1)
         #self.ax4.set_ylim(14, 26)
@@ -307,7 +269,7 @@ class Main(hp):
                     wAGN_temp_down.append(Y_down)
         
         #class_list = [[yes_temp_age, yes_temp, 'midnightblue'], [UNC_temp_age, UNC_temp, 'red'], [no_temp_age, no_temp, 'mediumvioletred'], [noel_temp_age, noel_temp, 'orchid'], [llr_age, llr, 'maroon']]
-        class_list = [[yes_temp_age, yes_temp, 'midnightblue', yes_temp_down, yes_temp_up, 'P'], [UNC_temp_age, UNC_temp, 'sandybrown', UNC_temp_down, UNC_temp_up, 'D'], [no_temp_age, no_temp, 'mediumvioletred', no_temp_down, no_temp_up, '*'], [noel_temp_age, noel_temp, 'chocolate', noel_temp_down, noel_temp_up, 'o'], [llr_temp_age, llr_temp, 'maroon', llr_temp_down, llr_temp_up, 'o'], [wAGN_temp_age, wAGN_temp, 'blue', wAGN_temp_down, wAGN_temp_up, 'P']]
+        class_list = [[yes_temp_age, yes_temp, 'midnightblue', yes_temp_down, yes_temp_up, 'P'], [wAGN_temp_age, wAGN_temp, 'blue', wAGN_temp_down, wAGN_temp_up, 'P'], [no_temp_age, no_temp, 'mediumvioletred', no_temp_down, no_temp_up, '*'], [UNC_temp_age, UNC_temp, 'sandybrown', UNC_temp_down, UNC_temp_up, 'D'], [noel_temp_age, noel_temp, 'chocolate', noel_temp_down, noel_temp_up, 'o'], [llr_temp_age, llr_temp, 'maroon', llr_temp_down, llr_temp_up, 'o']]
 
         self.means = []
         self.errs = []
@@ -322,24 +284,24 @@ class Main(hp):
         for item in class_list:
             X_plot = []
             Y_plot = []
-            X, Y, err, length = hp.temp_stats_1(item[0], item[1], item[3], item[4], age_bids)
+            X, Y, err, length = bootstrapper(item[0], item[1], item[3], item[4], age_bids)
             self.ages = X
             self.means.append(Y)
             self.errs.append(err)
             for j in range(len(X)):
                 if Y[j] != -99:
                     self.ax5.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[2], fmt=item[5], ms = 12)
-                    self.ax5.text(X[j], Y[j], length[j], c = 'red')
+                    #self.ax5.text(X[j], Y[j], length[j], c = 'red')
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
             self.ax5.plot(X_plot, Y_plot, alpha = 1, color=item[2])
 
-        for key in self.color_dict_WHAN.keys():
-            self.ax5.scatter(-99, -99, alpha= 0.7, color = self.color_dict_WHAN[key][0], marker = self.color_dict_WHAN[key][2], s = self.color_dict_WHAN[key][1], label=key)
+        #for key in self.color_dict_WHAN.keys():
+        #    self.ax5.scatter(-99, -99, alpha= 0.7, color = self.color_dict_WHAN[key][0], marker = self.color_dict_WHAN[key][2], s = self.color_dict_WHAN[key][1], label=key)
         self.ax5.set_xticks(ages_const)
         for j, item in enumerate(class_list):
             self.ax5.scatter(-99, -99, alpha = 1, color=item[2], marker=item[5], s = 150, label=self.list_names_WHAN[j])
-        self.ax5.legend()
+        self.ax5.legend(fontsize="13")
 
         #self.ax4.set_xlim(8, 10.1)
         #self.ax4.set_ylim(14, 26)
@@ -347,7 +309,7 @@ class Main(hp):
         #plt.show()
 
 if __name__ == '__main__':
-    obj = Main('E:\LICENSE\ProgsData\main\GAMAforOleg.txt', 'GAMA_ETG_OLA.csv')
+    obj = Main(r'E:/LICENSE/ProgsData/main/GAMAforOleg.txt', r'E:/backup/backup_BPT/GAMA_ETG_OLA.csv')
     obj.reading()
     obj.matching()
     obj.plotting_mdms_age()

@@ -2,56 +2,16 @@ import csv
 import matplotlib.pyplot as plt 
 import numpy as np
 import math
-import statistics as st
-from scipy.stats import pearsonr
-from scipy.stats import sem
+# import statistics as st
 import pandas as pd
-from scipy.optimize import curve_fit
-import random
-from _global_ import *
+# from scipy.optimize import curve_fit
+from __legpars__ import *
+from __stats__ import *
 
 class hp:
     def log_er(item):
         return [[abs(math.log(1-item, 10))], [abs(math.log(1+item, 10))]]
 
-    def temp_stats_1(x, y_mid, y_up, y_down, x_bids):
-        y_values = [[], [], [], [], [], []]
-        stmeaner = []
-        stmean = []
-        medians = [(pair[0] + pair[1])/2 for pair in x_bids]
-
-        for j, item in enumerate(x):
-            for i, pair in enumerate(x_bids):
-                if item >= pair[0] and item < pair[1]:
-                    y_values[i].append([y_mid[j] - y_down[j], y_up[j] - y_mid[j], y_mid[j]])
-                    break
-        
-        length = [len(item) for item in y_values]
-
-        for mean in y_values:
-            if len(mean) <= 3:
-                stmean.append(-99)
-                stmeaner.append(0)
-            else:
-                data = []
-                for i in range(100):
-                    av = []
-                    for pair in mean:
-                        if random.random() > 0.5:
-                            av.append(pair[2] + abs(random.gauss(0, pair[1])))
-                        else:
-                            av.append(pair[2] - abs(random.gauss(0, pair[0])))
-                    data.append(st.mean(av))
-                
-                data.sort()
-                stmean.append(data[49])
-                stmeaner.append([[data[49] - data[15]], [data[83] - data[49]]])
-
-
-        return medians, stmean, stmeaner, length
-    
-         
-    
 class Main(hp):
     def __init__(self, ola_file, out):
         self.ola_file = ola_file
@@ -126,7 +86,7 @@ class Main(hp):
         Main.plotter_mdms_BPT(self, 'X', 'Y', 'Y_up', 'Y_down', 'AGN', True, 'P100', 'P100_er')
         Main.plotter_mdms_WHAN(self, 'X', 'Y', 'Y_up', 'Y_down', 'SC_WHAN', True, 'P100', 'P100_er')
         self.fig1.savefig('./FIGURES/TDW.pdf')
-        plt.show()
+        #plt.show()
 
     def plotter_mdms_BPT(self, x, y, up, down, AGN_key, bids, p100, p100_er):
 
@@ -206,7 +166,7 @@ class Main(hp):
         for item in class_list:
             X_plot = []
             Y_plot = []
-            X, Y, err, length = hp.temp_stats_1(item[0], item[1], item[3], item[4], age_bids)
+            X, Y, err, length = bootstrapper(item[0], item[1], item[3], item[4], age_bids)
             self.ages = X
             self.means.append(Y)
             self.errs.append(err)
@@ -330,7 +290,7 @@ class Main(hp):
         for item in class_list:
             X_plot = []
             Y_plot = []
-            X, Y, err, length = hp.temp_stats_1(item[0], item[1], item[3], item[4], age_bids)
+            X, Y, err, length = bootstrapper(item[0], item[1], item[3], item[4], age_bids)
             self.ages = X
             self.means.append(Y)
             self.errs.append(err)

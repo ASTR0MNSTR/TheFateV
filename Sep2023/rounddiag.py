@@ -71,7 +71,7 @@ class Main:
         axs[0, 2].pie(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))[0], radius=1-size, colors=self.WHAN_colors_merged, autopct=Main.short_WHAN_in(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
         axs[0, 2].set(aspect='equal')
         
-        axs[0, 2].legend(title='WHAN classes:', loc="best")
+        axs[0, 2].legend(title='WHAN classes:', loc="best", fontsize="13")
         axs[0, 2].set(aspect='equal')
 
 ######################################

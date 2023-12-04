@@ -41,7 +41,7 @@ class Main:
         line = line.strip()
         SPEC_ID = line.split()[734]
         SURVEY = line.split()[740]
-        if SURVEY == 'SDSS':
+        if SURVEY == 'SDSS' or SURVEY == 'GAMA':
             if SPEC_ID in self.spec_ids:
                 Y = float(line.split()[301])
                 ER = float(line.split()[308])
@@ -51,12 +51,20 @@ class Main:
                     ER = -99999.0
                     trust = -1
                 else:
-                    if Y - ER > 3:
-                        trust = 1
-                    elif Y + ER < 3:
-                        trust = 0
-                    else:
-                        trust = -1 
+                    if SURVEY == 'GAMA':
+                        if (Y - ER) > 2:
+                            trust = 1
+                        elif (Y + ER) < 2:
+                            trust = 0
+                        else:
+                            trust = -1 
+                    elif SURVEY == 'SDSS':
+                        if (Y - ER) > 3:
+                            trust = 1
+                        elif (Y + ER) < 3:
+                            trust = 0
+                        else:
+                            trust = -1 
                 
                 self.reff_dict.update({SPEC_ID: [Y, ER, trust]})
 
@@ -66,7 +74,7 @@ class Main:
         reff_err = []
         trust_val = []
         for key in self.reff_dict.keys():
-            spec_ids_out.append(int(key))
+            spec_ids_out.append(key)
             reff.append(self.reff_dict[key][0])
             reff_err.append(self.reff_dict[key][1])
             trust_val.append(self.reff_dict[key][2])
@@ -81,9 +89,9 @@ class Main:
         df2 = pd.DataFrame.from_dict(Dict_for_dataframe)
         
         csv_out = pd.merge(self.df, df2, how="inner", on="SPEC_ID")
-        csv_out.to_csv('E:/databases/GAMA_ETG_OLA_SDSS_R.csv', index=False)
+        csv_out.to_csv('E:/databases/GAMA_ETG_OLA_R_1.csv', index=False)
 
 if __name__ == '__main__':
-    obj = Main('E:/databases/GAMA_ETG_OLA_SDSS.csv', 'E:\LICENSE\ProgsData\main\GAMAv3.txt')
+    obj = Main(r'E:\backup\backup_BPT\GAMA_ETG_OLA.csv', r'E:\LICENSE\ProgsData\main\GAMAv3.txt')
     obj.reading_files()
     obj.appending_csv() 

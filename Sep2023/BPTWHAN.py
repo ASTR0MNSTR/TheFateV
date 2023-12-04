@@ -8,7 +8,7 @@ from astropy.cosmology import FlatLambdaCDM
 import astropy.units as u
 
 from AGN_reg import *
-from _global_ import *
+from __legpars__ import *
 
 # version 0.5 importing dust-correction
 
@@ -167,6 +167,8 @@ class Main(hp):
         self.GAMAIDs = []
         self.lines_prob = []
 
+        self.radio_sources = [39495, 272962, 375530, 959586, 210108, 137037, 419441, 31076, 250557, 228288, 238593, 238593, 373280, 622622, 185507]
+
         #self.color_dict ={
         #    'AGN' : ['midnightblue', 15, '.'],
         #    'AGNX' : ['midnightblue', 27, '>'],
@@ -236,12 +238,11 @@ class Main(hp):
         line_out = line.strip()
         galaxy_pars = line_out.split()
         CATAID = int(galaxy_pars[1])
-        #bms = -1
+        bms = -1
         if CATAID in self.sample_dict.keys():
             bms = self.sample_dict[CATAID]
         else:
-            #bms = -1
-            return 1
+            bms = -1
 
         Z = float(galaxy_pars[4])
         RA = float(galaxy_pars[2])
@@ -320,10 +321,10 @@ class Main(hp):
         for pars in self.flux_er_mod:
             if type(pars) == list:
                 counter_all += 1
-                #i f pars[-1][2] == 'true' and pars[-1][3] == 'true' and (pars[-1][0] == 'GAMA' or pars[-1][0] == 'SDSS') and pars[-1][6] != 'NDA': #!!!!
-                if pars[-1][2] == 'true' and pars[-1][3] == 'true' and pars[-1][6] != 'NDA' and pars[-1][0] == 'SDSS': #!!!!
-                #if pars[-1][2] == 'true' and pars[-1][3] == 'true':
-                #if pars[-3][6] != 'NDA': #!!!!
+                # if pars[-1][2] == 'true' and pars[-1][3] == 'true' and (pars[-1][0] == 'GAMA' or pars[-1][0] == 'SDSS') and pars[-1][6] != 'NDA': #!!!!
+                if pars[-1][2] == 'true' and pars[-1][3] == 'true': #!!!!
+                    # if pars[-1][4] in self.radio_sources:
+                    #     print(pars[-1][4], pars[-1][10][3], pars[-1][6], pars[-1][12])
                     Main.exporting(self, pars)
                     counter_best += 1
                     self.flux_er_mod9.append(pars)
@@ -401,36 +402,36 @@ class Main(hp):
             'Z' : self.Z,
             'BPT': self.AGN,
             'WHAN' : self.SC_WHAN,
-            'SN_HgF' : self.SN_HgF,
-            'SN_HdF' : self.SN_HdF,
-            'HgF' : self.HgF,
-            'HgF_cont' : self.HgF_cont,
-            'HgF_er' : self.HgF_er,
-            'HdF' : self.HdF,
-            'HdF_cont' : self.HdF_cont,
-            'HdF_er' : self.HdF_er,
-            'HA_EW' : self.HA_EW_l,
-            'HA_EW_ERR' : self.HA_EW_l_er,
-            'HA': self.HA_l,
-            'HA_cont' : self.HA_cont,
-            'HA_er': self.HA_l_er,
-            'HB': self.HB_l,
-            'HB_er': self.HB_l_er,
-            'OIII': self.OIII_l,
-            'OIII_er': self.OIII_l_er,
-            'NII': self.NII_l,
-            'NII_er': self.NII_l_er,
-            'HdA' : self.HdA,
-            'HdA_er' : self.HdA_er,
-            'HgA' : self.HgA,
-            'HgA_er' : self.HgA_er, 
-            'SII' : self.SII_l,
-            'SII_er' : self.SII_l_er,
-            'OI' : self.OI_l,
-            'OI_er' : self.OI_l_er,
-            'OII' : self.OII_l,
-            'OII_er' : self.OII_l_er,
-            'BMS': self.BMS
+            # 'SN_HgF' : self.SN_HgF,
+            # 'SN_HdF' : self.SN_HdF,
+            # 'HgF' : self.HgF,
+            # 'HgF_cont' : self.HgF_cont,
+            # 'HgF_er' : self.HgF_er,
+            # 'HdF' : self.HdF,
+            # 'HdF_cont' : self.HdF_cont,
+            # 'HdF_er' : self.HdF_er,
+            # 'HA_EW' : self.HA_EW_l,
+            # 'HA_EW_ERR' : self.HA_EW_l_er,
+            # 'HA': self.HA_l,
+            # 'HA_cont' : self.HA_cont,
+            # 'HA_er': self.HA_l_er,
+            # 'HB': self.HB_l,
+            # 'HB_er': self.HB_l_er,
+            # 'OIII': self.OIII_l,
+            # 'OIII_er': self.OIII_l_er,
+            # 'NII': self.NII_l,
+            # 'NII_er': self.NII_l_er,
+            # 'HdA' : self.HdA,
+            # 'HdA_er' : self.HdA_er,
+            # 'HgA' : self.HgA,
+            # 'HgA_er' : self.HgA_er, 
+            # 'SII' : self.SII_l,
+            # 'SII_er' : self.SII_l_er,
+            # 'OI' : self.OI_l,
+            # 'OI_er' : self.OI_l_er,
+            # 'OII' : self.OII_l,
+            # 'OII_er' : self.OII_l_er,
+            # 'BMS': self.BMS
         }
 
         df = pd.DataFrame(Dict)
@@ -531,11 +532,11 @@ class Main(hp):
                       c='k', linestyle='dashed')  # Kauffman, 2003
             # https://adsabs.harvard.edu/full/2003MNRAS.346.1055K
             ax.plot(X_11, 1.01*X_11 + 0.48, c='k', linestyle='dotted')
-            ax.text(-1, 2, 'AGN', fontweight='semibold')
+            ax.text(-1, 1.2, 'AGN', fontweight='semibold')
             #self.ax1.text(0.1, 0.2, 'LINER')
-            ax.text(0, -1.5, 'C', fontweight='semibold')
-            ax.text(-1.7, -2, 'SF', fontweight='semibold')
-            ax.text(1, 0.5, 'LINER', fontweight='semibold')
+            ax.text(0, -1, 'C', fontweight='semibold')
+            ax.text(-1.5, -0.5, 'SF', fontweight='semibold')
+            ax.text(0.4, 0.5, 'LINER', fontweight='semibold')
             ax.set_yticks(np.arange(-1.5, 1.5, 0.5))
             ax.set_xticks(np.arange(-2, 1, 0.5))
 
@@ -611,23 +612,24 @@ class Main(hp):
 
         print('Number of points on BPT: ', k)
 
-        self.ax4.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='.')
-        self.ax4.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s = 30, marker='.')
-        self.ax4.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s = 30, marker='.')
-        self.ax4.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
-        self.ax4.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
-        self.ax5.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
-        self.ax5.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
+        self.ax4.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='o')
+        self.ax4.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s = 30, marker='o')
+        self.ax4.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s = 30, marker='o')
+        #self.ax4.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
+        #self.ax4.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
+        #self.ax5.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
+        #self.ax5.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
 
         self.ax4.set_box_aspect(1)
         self.ax5.set_box_aspect(1)
 
         for key in self.cd_WHAN_leg.keys():
             self.ax5.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = self.cd_WHAN_leg[key][1], label=key)
-        self.ax5.legend(loc=3)
 
-        self.ax4.legend(loc=3)
+        self.ax5.legend(loc=3, fontsize="13")
+        self.ax4.legend(loc=3, fontsize="13")
         self.fig.savefig('./FIGURES/BPT.pdf')
+        #self.fig.savefig('BPT.pdf')
         # plt.show()
 
     
@@ -716,20 +718,20 @@ class Main(hp):
         print(k)
 
         for key in self.cd_WHAN_leg.keys():
-            self.ax4.scatter(-99, -99, alpha= 1, color = self.cd_WHAN[key][0], marker = self.cd_WHAN[key][2], s = self.cd_WHAN[key][1], label=key)
-        self.ax4.legend()
+            self.ax4.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = self.cd_WHAN_leg[key][1], label=key)
 
-        self.ax5.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s=9)
-        self.ax5.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s=9)
-        self.ax5.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s=9)
-        self.ax4.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
-        self.ax4.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
-        self.ax5.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
-        self.ax5.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
+        self.ax5.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='o')
+        self.ax5.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s = 30, marker='o')
+        self.ax5.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s = 30, marker='o')
+        #self.ax4.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
+        #self.ax4.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
+        #self.ax5.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
+        #self.ax5.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
 
-        self.ax4.legend(loc=3)
-        self.ax5.legend(loc=3)
+        self.ax4.legend(loc=3, fontsize="13")
+        self.ax5.legend(loc=3, fontsize="13")
         self.fig.savefig('./FIGURES/WHAN.pdf')
+        #self.fig.savefig('WHAN.pdf')
 
         # plt.show()
 
@@ -801,7 +803,7 @@ class Main(hp):
 
 
 if __name__ == '__main__':
-    obj = Main('E:\LICENSE\ProgsData\main\Oleg_GAMA_belowMS.csv', 'E:\LICENSE\ProgsData\main\DirectSummationv05', r'E:\backup\backup_BPT\GAMA_ETG_OLA_SDSS.csv')
+    obj = Main('E:\LICENSE\ProgsData\main\Oleg_GAMA_belowMS.csv', 'E:\LICENSE\ProgsData\main\DirectSummationv05', r'E:/databases/OLA_PRZEMO.csv')
     obj.ola_reading()
     obj.samples_get()
     obj.gama_reading()
