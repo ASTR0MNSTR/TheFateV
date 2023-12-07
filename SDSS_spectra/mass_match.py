@@ -43,8 +43,8 @@ class Main:
         SURVEY = line.split()[740]
         if SURVEY == 'SDSS' or SURVEY == 'GAMA':
             if SPEC_ID in self.spec_ids:
-                Y = float(line.split()[301])
-                ER = float(line.split()[308])
+                Y = float(line.split()[377])
+                ER = float(line.split()[384])
 
                 if ER == -9999.0 or 2*ER > Y:
                     Y = -99999.0
@@ -89,7 +89,7 @@ class Main:
         df2 = pd.DataFrame.from_dict(Dict_for_dataframe)
         
         csv_out = pd.merge(self.df, df2, how="inner", on="SPEC_ID")
-        csv_out.to_csv('E:/databases/GAMA_ETG_OLA_R_1.csv', index=False)
+        csv_out.to_csv('E:/databases/GAMA_ETG_OLA_R_Y_1.csv', index=False)
 
 if __name__ == '__main__':
     obj = Main(r'E:\backup\backup_BPT\GAMA_ETG_OLA.csv', r'E:\LICENSE\ProgsData\main\GAMAv3.txt')

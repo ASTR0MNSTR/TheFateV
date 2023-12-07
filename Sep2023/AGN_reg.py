@@ -54,7 +54,10 @@ def line_flagging(pair, spec_coefs):
         elif item[0] <= SN*item[1]: #non-det
             pair_flags.append(flags_dict[j])
             m += 1
-            item[0] += SN*item[1]*spec_coefs[j]
+            #item[0] += SN*item[1]*spec_coefs[j]
+            item[0] += SN*item[1]
+            item[0] *= spec_coefs[j]
+            item[1] *= spec_coefs[j]
         elif item[0] > SN*item[1]: #det
             item[0] *= spec_coefs[j]
         else:
@@ -216,5 +219,5 @@ def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, 
     #    AGN += '!'
     #    SC_WHAN += '!'
 
-    return AGN, X, X_er, pair_x_flags, Y, Y_er, pair_y_flags, SC_WHAN
+    return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN
 

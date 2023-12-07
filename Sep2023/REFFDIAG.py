@@ -45,13 +45,13 @@ class Main:
         Main.histo(self, ax2, [0], 'WHAN')
         Main.histo(self, ax4, [1], 'WHAN')
         Main.histo(self, ax6, [0, 1], 'WHAN')
-        ax1.set(title=r'$> 1 \; R_{eff}$ (1059 gal.)')
-        ax3.set(title=r'$< 1 \; R_{eff}$ (610 gal.)')
-        ax5.set(title='Total (1669 gal.)')     
+        ax1.set(title=r'$> 1 \; R_{eff}$ (1368 gal.)')
+        ax3.set(title=r'$< 1 \; R_{eff}$ (257 gal.)')
+        ax5.set(title='Total (1625 gal.)')     
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
-        fig.savefig('./FIGURES/APERTURE_DIAG_SDSS.pdf')
+        fig.savefig('./FIGURES/APERTURE_DIAG_SDSS_Y.pdf')
         plt.show()
 
     def sorting_forWHAN(self, keys):
@@ -202,6 +202,6 @@ class Main:
             figure.set(aspect='equal')
 
 if __name__ == '__main__':
-    obj = Main('E:/databases/GAMA_ETG_OLA_R_1.csv')
+    obj = Main('E:/databases/GAMA_ETG_OLA_R_Y_1.csv')
     obj.reading()
     obj.plotting()

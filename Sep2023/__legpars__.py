@@ -8,7 +8,7 @@ cd_WHAN = {
             'RG' : ['chocolate', 9, '.']
         }
 
-color_dict ={
+color_dict_BPT ={
             'AGNXY' : ['midnightblue', 15, '.'],
             'AGNX' : ['midnightblue', 15, '.'],
             'AGNY' : ['midnightblue', 15, '.'],
@@ -38,3 +38,6 @@ cd_WHAN_leg = {
             'RG' : ['chocolate', 20, 'o'],
             'LLR' : ['maroon', 20, 'o']
         }
+
+list_names_BPT = ['AGN', 'UNC', 'SF', 'NOEL']
+list_names_WHAN = ['sAGN', 'wAGN', 'SF','ELR', 'RG', 'LLR']

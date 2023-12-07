@@ -7,11 +7,10 @@ import pandas as pd
 from astropy.cosmology import FlatLambdaCDM
 import astropy.units as u
 
-from AGN_reg import *
+from AGN_reg_woe import *
 from __legpars__ import *
 
 # version 0.5 importing dust-correction
-
 
 class hp:
     def log(figure):
@@ -19,24 +18,6 @@ class hp:
 
     def log_er(item):
         return [[abs(math.log(1-item, 10))], [abs(math.log(1+item, 10))]]
-
-    def atten_coef(A_V, mode):
-        R_V = 4.05
-        OIII_c = 2.659*(-2.156 + (1.509/0.5007) -
-                        (0.198/(0.5007**2)) + (0.011/(0.5007**3))) + R_V
-        NII_c = 2.659*(-1.857 + (1.040/0.6583)) + R_V
-        SII_c = 2.659*(-1.857 + (1.040/0.6732)) + R_V
-        OI_c = 2.659*(-1.857 + (1.040/0.6300)) + R_V
-        HB_c = 2.659*(-2.156 + (1.509/0.4861) -
-                      (0.198/(0.4861**2)) + (0.011/(0.4861**3))) + R_V
-        HD_c = 2.659*(-2.156 + (1.509/0.4101734) -
-                      (0.198/(0.4101734**2)) + (0.011/(0.4101734**3))) + R_V
-        HG_c = 2.659*(-2.156 + (1.509/0.4340472) -
-                      (0.198/(0.4340472**2)) + (0.011/(0.4340472**3))) + R_V
-        res = [OIII_c, NII_c, SII_c, OI_c, HB_c, HD_c, HG_c]
-        res_out = [item*A_V/R_V for item in res]
-        res_out_out = [10**(0.4*item) for item in res_out]
-        return res_out_out
 
     def SFR(HA, HA_er, z):
         if HA == -99999.0 or HA_er < 0:
@@ -183,7 +164,7 @@ class Main(hp):
         #     'NDA' : ['slategrey', 3, '.']
         #}
         size = 3
-        self.color_dict = color_dict
+        self.color_dict = color_dict_BPT
 
         #self.cd_WHAN = {
         #    'NOEL' : ['orchid', 24, '.'],
@@ -242,7 +223,7 @@ class Main(hp):
         if CATAID in self.sample_dict.keys():
             bms = self.sample_dict[CATAID]
         else:
-            bms = -1
+            return 1
 
         Z = float(galaxy_pars[4])
         RA = float(galaxy_pars[2])
@@ -289,7 +270,10 @@ class Main(hp):
 
         # dust_correction module:
         
-        AGN, X, X_er, pair_x_flags, Y, Y_er, pair_y_flags, SC_WHAN = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, pair_HA)
+        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, pair_HA)
+
+        X_er = 0
+        Y_er = 0
 
         SFR_HA, SFR_HA_er = hp.SFR(HA, HA_er, Z)
 
@@ -321,8 +305,8 @@ class Main(hp):
         for pars in self.flux_er_mod:
             if type(pars) == list:
                 counter_all += 1
-                # if pars[-1][2] == 'true' and pars[-1][3] == 'true' and (pars[-1][0] == 'GAMA' or pars[-1][0] == 'SDSS') and pars[-1][6] != 'NDA': #!!!!
-                if pars[-1][2] == 'true' and pars[-1][3] == 'true': #!!!!
+                if pars[-1][2] == 'true' and pars[-1][3] == 'true' and (pars[-1][0] == 'GAMA' or pars[-1][0] == 'SDSS') and pars[-1][6] != 'NDA': #!!!!
+                #if pars[-1][2] == 'true' and pars[-1][3] == 'true': #!!!!
                     # if pars[-1][4] in self.radio_sources:
                     #     print(pars[-1][4], pars[-1][10][3], pars[-1][6], pars[-1][12])
                     Main.exporting(self, pars)
@@ -392,7 +376,7 @@ class Main(hp):
     def file_out(self):
 
         Dict = {
-            'SPEC_ID' : self.SPEC_ID,
+            'SPECID' : self.SPEC_ID,
             'GAMAID': self.GAMAID,
             'SURVEY': self.SURV,
             'IS_BEST': self.IS_BEST,
@@ -402,36 +386,36 @@ class Main(hp):
             'Z' : self.Z,
             'BPT': self.AGN,
             'WHAN' : self.SC_WHAN,
-            # 'SN_HgF' : self.SN_HgF,
-            # 'SN_HdF' : self.SN_HdF,
-            # 'HgF' : self.HgF,
-            # 'HgF_cont' : self.HgF_cont,
-            # 'HgF_er' : self.HgF_er,
-            # 'HdF' : self.HdF,
-            # 'HdF_cont' : self.HdF_cont,
-            # 'HdF_er' : self.HdF_er,
-            # 'HA_EW' : self.HA_EW_l,
-            # 'HA_EW_ERR' : self.HA_EW_l_er,
-            # 'HA': self.HA_l,
-            # 'HA_cont' : self.HA_cont,
-            # 'HA_er': self.HA_l_er,
-            # 'HB': self.HB_l,
-            # 'HB_er': self.HB_l_er,
-            # 'OIII': self.OIII_l,
-            # 'OIII_er': self.OIII_l_er,
-            # 'NII': self.NII_l,
-            # 'NII_er': self.NII_l_er,
-            # 'HdA' : self.HdA,
-            # 'HdA_er' : self.HdA_er,
-            # 'HgA' : self.HgA,
-            # 'HgA_er' : self.HgA_er, 
-            # 'SII' : self.SII_l,
-            # 'SII_er' : self.SII_l_er,
-            # 'OI' : self.OI_l,
-            # 'OI_er' : self.OI_l_er,
-            # 'OII' : self.OII_l,
-            # 'OII_er' : self.OII_l_er,
-            # 'BMS': self.BMS
+            'SN_HgF' : self.SN_HgF,
+            'SN_HdF' : self.SN_HdF,
+            'HgF' : self.HgF,
+            'HgF_cont' : self.HgF_cont,
+            'HgF_er' : self.HgF_er,
+            'HdF' : self.HdF,
+            'HdF_cont' : self.HdF_cont,
+            'HdF_er' : self.HdF_er,
+            'HA_EW' : self.HA_EW_l,
+            'HA_EW_ERR' : self.HA_EW_l_er,
+            'HA': self.HA_l,
+            'HA_cont' : self.HA_cont,
+            'HA_er': self.HA_l_er,
+            'HB': self.HB_l,
+            'HB_er': self.HB_l_er,
+            'OIII': self.OIII_l,
+            'OIII_er': self.OIII_l_er,
+            'NII': self.NII_l,
+            'NII_er': self.NII_l_er,
+            'HdA' : self.HdA,
+            'HdA_er' : self.HdA_er,
+            'HgA' : self.HgA,
+            'HgA_er' : self.HgA_er, 
+            'SII' : self.SII_l,
+            'SII_er' : self.SII_l_er,
+            'OI' : self.OI_l,
+            'OI_er' : self.OI_l_er,
+            'OII' : self.OII_l,
+            'OII_er' : self.OII_l_er,
+            'BMS': self.BMS
         }
 
         df = pd.DataFrame(Dict)
@@ -473,47 +457,47 @@ class Main(hp):
             pass
 
     
-    def plotting_arrows_WHAN(self, ax, dict, x, y, pair_x_flags, pair_y_flags, mode, m_x, m_y):
+    # def plotting_arrows_WHAN(self, ax, dict, x, y, pair_x_flags, pair_y_flags, mode, m_x, m_y):
 
-        try:
-            pair_x_flag = pair_x_flags[0]
-        except:
-            pair_x_flag = ''
+    #     try:
+    #         pair_x_flag = pair_x_flags[0]
+    #     except:
+    #         pair_x_flag = ''
 
-        try:
-            pair_y_flag = pair_y_flags[0]
-        except:
-            pair_y_flag = ''
+    #     try:
+    #         pair_y_flag = pair_y_flags[0]
+    #     except:
+    #         pair_y_flag = ''
 
-        if pair_x_flag == 'down':
-            pair_x_flag = 'left'
-        elif pair_x_flag == 'up':
-            pair_x_flag = 'right'
+    #     if pair_x_flag == 'down':
+    #         pair_x_flag = 'left'
+    #     elif pair_x_flag == 'up':
+    #         pair_x_flag = 'right'
 
-        coord_dict = {
-            'down' : [0, m_y*(-0.07)],
-            'left' : [m_x*(-0.07), 0],
-            'up' : [0, m_y*(0.07)],
-            'right' : [m_x*(0.07), 0]
-        }
-        try:
-            ax.arrow(x, y, coord_dict[pair_x_flag][0], coord_dict[pair_x_flag][1], head_width=0.03,
-            head_length=0.03, color=dict[mode][0], alpha=1)
-        except:
-            pass
+    #     coord_dict = {
+    #         'down' : [0, m_y*(-0.07)],
+    #         'left' : [m_x*(-0.1), 0],
+    #         'up' : [0, m_y*(0.07)],
+    #         'right' : [m_x*(0.1), 0]
+    #     }
+    #     try:
+    #         ax.arrow(x, y, coord_dict[pair_x_flag][0], coord_dict[pair_x_flag][1], head_width=0.03,
+    #         head_length=0.03, color=dict[mode][0], alpha=1)
+    #     except:
+    #         pass
 
-        try:
-            ax.arrow(x, y, coord_dict[pair_y_flag][0], coord_dict[pair_y_flag][1], head_width=0.03,
-            head_length=0.03, color=dict[mode][0], alpha=1)
-        except:
-            pass
+    #     try:
+    #         ax.arrow(x, y, coord_dict[pair_y_flag][0], coord_dict[pair_y_flag][1], head_width=0.03,
+    #         head_length=0.03, color=dict[mode][0], alpha=1)
+    #     except:
+    #         pass
 
     def plotting_BPT(self):
-        gs_top = plt.GridSpec(1, 2, wspace=0)
-        self.fig = plt.figure(figsize=(12, 6))
+        self.gs_top = plt.GridSpec(2, 2, wspace=0)
+        self.fig = plt.figure(figsize=(12, 12), tight_layout=True)
 
-        self.ax4 = self.fig.add_subplot(gs_top[:,0])
-        self.ax5 = self.fig.add_subplot(gs_top[:,1], sharey=self.ax4)
+        self.ax4 = self.fig.add_subplot(self.gs_top[0,0])
+        self.ax5 = self.fig.add_subplot(self.gs_top[0,1], sharey=self.ax4)
 
         self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in')
         self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=True, left=True, direction='in')
@@ -521,24 +505,24 @@ class Main(hp):
         self.topaxes = [self.ax5, self.ax4]
         for ax in self.topaxes:    
             ax.set_xlabel(r'$log(N[II]/H\alpha)$')
-            ax.set_xlim(-2, 0.8)
-            ax.set_ylim(-1.5, 1.5) 
+            ax.set_xlim(-2.1, 1.3)
+            ax.set_ylim(-1.2, 2.1) 
             X_1 = np.arange(-4, 0.4, 0.01)
             X_111 = np.arange(-4, 0, 0.01)
-            X_11 = np.arange(-0.45, 0.6, 0.01)
+            X_11 = np.arange(-0.45, 1.5, 0.01)
             ax.plot(X_1, (0.61/(X_1 - 0.47)) + 1.19,
                       c='k')  # Kewley, 2001
             ax.plot(X_111, (0.61/(X_111 - 0.05)) + 1.3,
                       c='k', linestyle='dashed')  # Kauffman, 2003
             # https://adsabs.harvard.edu/full/2003MNRAS.346.1055K
-            ax.plot(X_11, 1.01*X_11 + 0.48, c='k', linestyle='dotted')
-            ax.text(-1, 1.2, 'AGN', fontweight='semibold')
+            ax.plot(X_11, 1.01*X_11 + 0.48, c='r', linestyle='dotted')
+            ax.text(-1.5, 1.2, 'AGN')
             #self.ax1.text(0.1, 0.2, 'LINER')
-            ax.text(0, -1, 'C', fontweight='semibold')
-            ax.text(-1.5, -0.5, 'SF', fontweight='semibold')
-            ax.text(0.4, 0.5, 'LINER', fontweight='semibold')
-            ax.set_yticks(np.arange(-1.5, 1.5, 0.5))
-            ax.set_xticks(np.arange(-2, 1, 0.5))
+            ax.text(0, -1, 'C')
+            ax.text(-1.5, -0.5, 'SF')
+            ax.text(0.5, -0.5, 'LINER')
+            ax.set_yticks(np.arange(-1, 2.5, 0.5))
+            ax.set_xticks(np.arange(-2, 1.5, 0.5))
 
         self.ax4.set_ylabel(r'$log(O[III]/H\beta)$')
 
@@ -626,33 +610,34 @@ class Main(hp):
         for key in self.cd_WHAN_leg.keys():
             self.ax5.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = self.cd_WHAN_leg[key][1], label=key)
 
-        self.ax5.legend(loc=3, fontsize="13")
-        self.ax4.legend(loc=3, fontsize="13")
-        self.fig.savefig('./FIGURES/BPT.pdf')
+        #self.ax5.legend(loc=3, fontsize="13")
+        #self.ax4.legend(loc=3, fontsize="13")
+        #self.fig.savefig('./FIGURES/BPT.pdf')
         #self.fig.savefig('BPT.pdf')
         # plt.show()
 
     
     def plotting_WHAN(self):
-        
 
-        gs_top = plt.GridSpec(2, 1, hspace=0)
-        self.fig = plt.figure(figsize=(8,8))
+        self.ax6 = self.fig.add_subplot(self.gs_top[1,0])
+        self.ax7 = self.fig.add_subplot(self.gs_top[1,1], sharey=self.ax6)
 
-        self.ax4 = self.fig.add_subplot(gs_top[0,:])
-        self.ax5 = self.fig.add_subplot(gs_top[1,:], sharex=self.ax4)
+        # gs_top = plt.GridSpec(2, 1, hspace=0)
+        # self.fig = plt.figure(figsize=(8,8), tight_layout=True)
 
-        self.topaxes = [self.ax5, self.ax4]
+        # self.ax6 = self.fig.add_subplot(gs_top[0,:])
+        # self.ax7 = self.fig.add_subplot(gs_top[1,:], sharex=self.ax6)
 
-        self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
-        self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
+        self.topaxes = [self.ax7, self.ax6]
+
+        self.ax7.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in')
+        self.ax6.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=True, left=True, direction='in')
         #for ax in self.topaxes[1:]:
         #plt.setp(ax.get_xticklabels(), visible=False)
 
         for ax in self.topaxes:    
-            ax.set_ylabel(r"$log(EW_{H\alpha})$")
-            ax.set_xlim([-2, 2.5])
-            ax.set_ylim([-3, 3])
+            ax.set_xlim([-2.1, 2.4])
+            ax.set_ylim([-3, 2.7])
             ax.axhline(y = 0.47712, color = 'black', linestyle='dashed')
             ax.axhline(y = -0.301, color = 'black', linestyle='dotted')
             ax.text(1.5, 0, 'ELR')
@@ -666,10 +651,13 @@ class Main(hp):
 
             Y_sAGN = np.arange(0.47712, 3, 0.01)
             ax.plot(-0.4+Y_sAGN*0, Y_sAGN, 'black')
+            ax.set_xlabel(r"$log(N[II]/H\alpha)$")
+            ax.set_xticks(np.arange(-2, 2.5, 0.5))
+            ax.set_yticks(np.arange(-3, 3, 0.5))
         
-        self.ax5.set_yticks(np.arange(-3, 2.1, 1))
+        self.ax7.set_yticks(np.arange(-3, 2.1, 1))
 
-        self.ax5.set_xlabel(r"$log(N[II]/H\alpha)$")
+        self.ax6.set_ylabel(r"$log(EW_{H\alpha})$")
 
         k = 0
         # norm = mpl.colors.Normalize(vmin=8.8,vmax=10.25)
@@ -691,46 +679,49 @@ class Main(hp):
 
             if AGN[-1] == '!':
                 AGN = AGN[:-1]
-                self.ax4.scatter(x, y, color='none', edgecolors='crimson', s=20)
-                self.ax5.scatter(x, y, color='none', edgecolors='crimson', s=20)
+                self.ax7.scatter(x, y, color='none', edgecolors='crimson', s=20)
+                self.ax6.scatter(x, y, color='none', edgecolors='crimson', s=20)
                 
 
             if SC_WHAN[-1] == '!':
                 SC_WHAN = SC_WHAN[:-1]
-                self.ax4.scatter(x, y, color='none', edgecolors='black', s=50)
-                self.ax5.scatter(x, y, color='none', edgecolors='black', s=50)
+                self.ax7.scatter(x, y, color='none', edgecolors='black', s=50)
+                self.ax6.scatter(x, y, color='none', edgecolors='black', s=50)
 
             if y >= -3 and y <= 3 and x >= -3.5 and x <= 2:
                 k += 1
             if len(pair_x_flags) == 0 and len(pair_y_flags) == 0:
-                self.ax5.scatter(x, y, s=self.color_dict[AGN][1], color=self.color_dict[AGN][0], alpha=1, marker=self.color_dict[AGN][2])
-                self.ax4.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=1)
+                self.ax6.scatter(x, y, s=self.color_dict[AGN][1], color=self.color_dict[AGN][0], alpha=1, marker=self.color_dict[AGN][2])
+                self.ax7.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=1)
                 #if len(pair_x_flags) != 0:
                 #    Main.plotting_arrows(
-                #        self, self.ax4, x, y, pair_x_flags, [], AGN)
-                # self.ax4.scatter(plots[i][0], plots[i][1], color=self.s_m.to_rgba(age), marker="x")
+                #        self, self.ax6, x, y, pair_x_flags, [], AGN)
+                # self.ax6.scatter(plots[i][0], plots[i][1], color=self.s_m.to_rgba(age), marker="x")
             else:
-                Main.plotting_arrows_WHAN(
-                    self, self.ax4, self.cd_WHAN, x, y, pair_x_flags, pair_y_flags, SC_WHAN, m_y = 1, m_x = 0.3)
-                Main.plotting_arrows_WHAN(
-                    self, self.ax5, self.color_dict, x, y, pair_x_flags, pair_y_flags, AGN, m_y = 1, m_x = 0.3)
+                Main.plotting_arrows(
+                    self, self.ax7, self.cd_WHAN, x, y, pair_x_flags, pair_y_flags, SC_WHAN, m_y = 1, m_x = 0.8)
+                Main.plotting_arrows(
+                    self, self.ax6, self.color_dict, x, y, pair_x_flags, pair_y_flags, AGN, m_y = 1, m_x = 0.8)
         
         print(k)
 
+        self.ax6.set_box_aspect(1)
+        self.ax7.set_box_aspect(1)
+
         for key in self.cd_WHAN_leg.keys():
-            self.ax4.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = self.cd_WHAN_leg[key][1], label=key)
+            self.ax7.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = self.cd_WHAN_leg[key][1], label=key)
 
-        self.ax5.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='o')
-        self.ax5.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s = 30, marker='o')
-        self.ax5.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s = 30, marker='o')
-        #self.ax4.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
-        #self.ax4.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
-        #self.ax5.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
-        #self.ax5.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s = 30, marker='o')
+        #self.ax6.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
+        #self.ax6.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
+        #self.ax7.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
+        #self.ax7.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
 
-        self.ax4.legend(loc=3, fontsize="13")
-        self.ax5.legend(loc=3, fontsize="13")
-        self.fig.savefig('./FIGURES/WHAN.pdf')
+        self.ax7.legend(loc=3, fontsize="13")
+        self.ax6.legend(loc=3, fontsize="13")
+        self.fig.savefig('./FIGURES/BPT_WHAN.pdf')
         #self.fig.savefig('WHAN.pdf')
 
         # plt.show()
@@ -803,10 +794,10 @@ class Main(hp):
 
 
 if __name__ == '__main__':
-    obj = Main('E:\LICENSE\ProgsData\main\Oleg_GAMA_belowMS.csv', 'E:\LICENSE\ProgsData\main\DirectSummationv05', r'E:/databases/OLA_PRZEMO.csv')
+    obj = Main('E:\LICENSE\ProgsData\main\Oleg_GAMA_belowMS.csv', 'E:\LICENSE\ProgsData\main\DirectSummationv05', r'E:/backup/backup_BPT/GAMA_ETG_OLA.csv')
     obj.ola_reading()
     obj.samples_get()
     obj.gama_reading()
     obj.sorting()
-    #obj.plotting_BPT()
-    #obj.plotting_WHAN()
+    obj.plotting_BPT()
+    obj.plotting_WHAN()

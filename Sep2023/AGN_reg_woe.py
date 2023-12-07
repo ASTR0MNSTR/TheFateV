@@ -79,12 +79,12 @@ def line_flagging(pair, spec_coefs):
 
     return res, pair_flags, abs
 
-def double_line(res, res_er, pair_flags, limit_SF, limit_AGN, flag):
+def double_line(res, pair_flags, limit_SF, limit_AGN, flag):
     AGN = 'PROB'
-    if res_er != -99:
-        if res - res_er[0][0] > limit_AGN:
+    if len(pair_flags) == 0:
+        if res > limit_AGN:
             AGN = 'AGN'
-        elif res + res_er[1][0] < limit_SF:
+        elif res < limit_SF:
             AGN = 'SF'
         else:
             AGN = 'UNC'
@@ -98,10 +98,10 @@ def double_line(res, res_er, pair_flags, limit_SF, limit_AGN, flag):
     AGN += flag
     return AGN
 
-def def_four_lines(X, X_er, Y, Y_er):
-    if Y + Y_er[1][0] < (0.61 / ((X + X_er[1][0]) - 0.05)) + 1.3 and X < 0.05:
+def def_four_lines(X, Y):
+    if Y < 0.61 / ((X - 0.05)) + 1.3 and X < 0.05:
         AGN = 'SFXY'
-    elif Y - Y_er[0][0] > (0.61 / ((X - X_er[0][0]) - 0.47)) + 1.19 and X < 0.47:
+    elif Y > 0.61 / ((X - 0.47)) + 1.19 and X < 0.47:
         AGN = 'AGNXY'
     elif X > 0.47:
         AGN = 'AGNXY'
@@ -160,14 +160,7 @@ def four_lines(X, pair_x_flags, Y, pair_y_flags):
 
     return AGN
 
-def metallicity(X, X_er, pair_x_flags, Y, Y_er, pair_y_flags):
-    #met = 8.73 - 0.32*(Y - X)
-    met = 9.37 + 2.03*X + 1.26*(X**2) + 0.32*(X**3)
-        #err_plus = 0.32*fluxes[2][1][0] + 0.32*fluxes[3][1][0]
-        #err_minus = 0.32*fluxes[2][0][0] + 0.32*fluxes[3][0][0]
-    return met, 0, 0
-
-def WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA):
+def WHAN(X, pair_x_flags, HA_ew, pair_HA):
     if HA_ew == -99999.0:
         return 'NDA'
     else:
@@ -188,8 +181,8 @@ def WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA):
                 return 'sAGN'
             else:
                 return 'UNC'
-
-def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, pair_HA, SII, SII_er, OI, OI_er, OII, OII_er):
+            
+def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, pair_HA):
 
     #for dust correction
     coefs = dust_correction(HA, HA_er, HB, HB_er)
@@ -197,32 +190,31 @@ def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, 
     #coefs = [1, 1, 1, 1, 1, 1, 1]
     #coefs = [OIII_c, NII_c, SII_c, OI_c, HB_c, OII_c, HA_c]
     
-    Y, Y_er, pair_y_flags = line_flagging([[OIII, OIII_er], [HB, HB_er]], [coefs[0], coefs[4]])
-    X, X_er, pair_x_flags = line_flagging([[NII, NII_er], [HA, HA_er]], [coefs[1], coefs[6]])
-    x_S, x_S_er, pair_x_S_flag = line_flagging([[SII, SII_er], [HA, HA_er]], [coefs[2], coefs[6]])
-    x_O, x_O_er, pair_x_O_flag = line_flagging([[OI, OI_er], [HA, HA_er]], [coefs[3], coefs[6]])
-    y_OII, y_er_OII, pair_y_OII = line_flagging([[OIII, OIII_er], [OII, OII_er]], [coefs[0], coefs[5]])
+    Y, pair_y_flags, abs_Y = line_flagging([[OIII, OIII_er], [HB, HB_er]], [coefs[0], coefs[4]])
+    X, pair_x_flags, abs_X = line_flagging([[NII, NII_er], [HA, HA_er]], [coefs[1], coefs[6]])
 
-    
     if X == -100 or Y == -100:
         AGN = 'NDA'
         SC_WHAN = 'NDA'
     elif X == -99 and Y == -99:
         AGN = 'NOEL'
-        SC_WHAN = WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA)
+        SC_WHAN = WHAN(X, pair_x_flags, HA_ew, pair_HA)
     elif X == -99 and Y != -99:
-        AGN = double_line(Y, Y_er, pair_y_flags, 1.3, 1.19, 'Y')
-        SC_WHAN = WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA)
+        AGN = double_line(Y, pair_y_flags, 1.3, 1.19, 'Y')
+        SC_WHAN = WHAN(X, pair_x_flags, HA_ew, pair_HA)
     elif X != 99 and Y == -99:
-        AGN = double_line(X, X_er, pair_x_flags, 0.05, 0.47, 'X')
-        SC_WHAN = WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA)
+        AGN = double_line(X, pair_x_flags, 0.05, 0.47, 'X')
+        SC_WHAN = WHAN(X, pair_x_flags, HA_ew, pair_HA)
     elif len(pair_x_flags) == 0 and len(pair_y_flags) == 0:
-        AGN = def_four_lines(X, X_er, Y, Y_er)
-        SC_WHAN = WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA)
+        AGN = def_four_lines(X, Y)
+        SC_WHAN = WHAN(X, pair_x_flags, HA_ew, pair_HA)
     else:
-        SC_WHAN = WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA)
+        SC_WHAN = WHAN(X, pair_x_flags, HA_ew, pair_HA)
         AGN = four_lines(X, pair_x_flags, Y, pair_y_flags)
-
     
-    return AGN, X, X_er, pair_x_flags, Y, Y_er, pair_y_flags, SC_WHAN, x_S, x_S_er, pair_x_S_flag, x_O, x_O_er, pair_x_O_flag, y_OII, y_er_OII, pair_y_OII
+    #if abs_X > 0 or abs_Y > 0:
+    #    AGN += '!'
+    #    SC_WHAN += '!'
+
+    return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN
 
