@@ -18,7 +18,7 @@ class Main(hp):
         self.out = out
         self.base_dict = {}
         self.data_dict = []
-        self.color_dict_BPT = color_dict
+        self.color_dict_BPT = color_dict_BPT
         self.color_dict_WHAN = cd_WHAN
         self.color_dict_leg = color_dict_leg
 
@@ -53,7 +53,7 @@ class Main(hp):
         with open(self.out, 'r') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                self.data_dict.append({'GAMAID': int(row['GAMAID']), 'AGN': row['BPT'], 'SC_WHAN' : row['WHAN'], 'BMS' : int(row['BMS'])})
+                self.data_dict.append({'GAMAID': int(row['CATAID_1']), 'AGN': row['BPT'], 'SC_WHAN' : row['WHAN'], 'BMS' : int(row['BMS'])})
 
     def matching(self):
         for item in self.data_dict:
@@ -166,7 +166,7 @@ class Main(hp):
         for item in class_list:
             X_plot = []
             Y_plot = []
-            X, Y, err, length = bootstrapper(item[0], item[1], item[3], item[4], age_bids)
+            X, Y, err, length = monte_carlo(item[0], item[1], item[3], item[4], age_bids)
             self.ages = X
             self.means.append(Y)
             self.errs.append(err)
@@ -178,12 +178,12 @@ class Main(hp):
                     Y_plot.append(Y[j])
             self.ax4.plot(X_plot, Y_plot, alpha = 1, color=item[2])
 
-        for key in self.color_dict_leg.keys():
-                self.ax4.scatter(-99, -99, alpha= 1, color = self.color_dict_leg[key][0], marker = self.color_dict_leg[key][2], s = self.color_dict_leg[key][1], label=key)
+        #for key in self.color_dict_leg.keys():
+        #        self.ax4.scatter(-99, -99, alpha= 1, color = self.color_dict_leg[key][0], marker = self.color_dict_leg[key][2], s = self.color_dict_leg[key][1], label=key)
         self.ax4.set_xticks(ages_const)
         for j, item in enumerate(class_list):
             self.ax4.scatter(-99, -99, alpha = 1, color=item[2], marker=item[5], s = 150, label=self.list_names_BPT[j])
-        #self.ax4.legend()
+        self.ax4.legend(loc=3, fontsize='13')
 
         #self.ax4.set_xlim(8, 10.1)
         #self.ax4.set_ylim(14, 26)
@@ -302,12 +302,12 @@ class Main(hp):
                     Y_plot.append(Y[j])
             self.ax5.plot(X_plot, Y_plot, alpha = 1, color=item[2])
             
-        for key in self.color_dict_WHAN.keys():
-            self.ax5.scatter(-99, -99, alpha= 0.7, color = self.color_dict_WHAN[key][0], marker = self.color_dict_WHAN[key][2], s = self.color_dict_WHAN[key][1], label=key)
+        #for key in self.color_dict_WHAN.keys():
+        #    self.ax5.scatter(-99, -99, alpha= 0.7, color = self.color_dict_WHAN[key][0], marker = self.color_dict_WHAN[key][2], s = self.color_dict_WHAN[key][1], label=key)
         self.ax5.set_xticks(ages_const)
         for j, item in enumerate(class_list):
             self.ax5.scatter(-99, -99, alpha = 1, color=item[2], marker=item[5], s = 150, label=self.list_names_WHAN[j])
-        #self.ax5.legend()
+        self.ax5.legend(loc=3, fontsize='13')
 
         #self.ax4.set_xlim(8, 10.1)
         #self.ax4.set_ylim(14, 26)
@@ -315,7 +315,7 @@ class Main(hp):
         #plt.show()
 
 if __name__ == '__main__':
-    obj = Main('E:\LICENSE\ProgsData\main\GAMAforOleg.txt', 'GAMA_ETG_OLA.csv')
+    obj = Main('E:\LICENSE\ProgsData\main\GAMAforOleg_1.txt', 'GAMA_ETG_OLA.csv')
     obj.reading()
     obj.matching()
     obj.plotting_mdms_age()

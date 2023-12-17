@@ -9,6 +9,8 @@ import astropy.units as u
 
 from AGN_reg_woe import *
 from __legpars__ import *
+from __stats__ import *
+from __plt__ import *
 
 # version 0.5 importing dust-correction
 
@@ -147,6 +149,7 @@ class Main(hp):
         self.HA_cont = []
         self.GAMAIDs = []
         self.lines_prob = []
+        self.ages = []
 
         self.radio_sources = [39495, 272962, 375530, 959586, 210108, 137037, 419441, 31076, 250557, 228288, 238593, 238593, 373280, 622622, 185507]
 
@@ -184,7 +187,7 @@ class Main(hp):
         with open(self.ola_file, 'r') as input:
             reader = csv.DictReader(input)
             for row in reader:
-                self.sample_dict.update({int(row['CATAID_1']): int(row['below=0/MS=1'])})
+                self.sample_dict.update({int(row['CATAID_1']): [int(row['below=0/MS=1']), float(row['ager_percentile50'])]})
 
     def samples_get(self):
         #data_dict = []
@@ -220,8 +223,9 @@ class Main(hp):
         galaxy_pars = line_out.split()
         CATAID = int(galaxy_pars[1])
         bms = -1
+        age = -1
         if CATAID in self.sample_dict.keys():
-            bms = self.sample_dict[CATAID]
+            bms, age = self.sample_dict[CATAID]
         else:
             return 1
 
@@ -295,7 +299,7 @@ class Main(hp):
 
         kwargs = [SURV, SURV_CODE, IS_BEST, IS_SBEST, CATAID,
                   [SFR_HA, SFR_HA_er], AGN, FLUXES, FLUXES_ER, bms, [RA, DEC, Z, SPEC_ID], [X, pair_x_flags, HA_EW, pair_HA], SC_WHAN,
-                  [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_OR, HA_EW_ERR], HgF_cont, HdF_cont, HA_cont]
+                  [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_OR, HA_EW_ERR], HgF_cont, HdF_cont, HA_cont, age]
         res_out_out = [res_out, kwargs]
         return res_out_out
 
@@ -372,12 +376,13 @@ class Main(hp):
         self.HgF_cont.append(pars[-1][15])
         self.HdF_cont.append(pars[-1][16])
         self.HA_cont.append(pars[-1][17])
+        self.ages.append(pars[-1][18])
 
     def file_out(self):
 
         Dict = {
             'SPECID' : self.SPEC_ID,
-            'GAMAID': self.GAMAID,
+            'CATAID_1': self.GAMAID,
             'SURVEY': self.SURV,
             'IS_BEST': self.IS_BEST,
             'IS_SBEST': self.IS_SBEST,
@@ -421,7 +426,7 @@ class Main(hp):
         df = pd.DataFrame(Dict)
         df.to_csv(self.filename_out, index=False)
 
-    def plotting_arrows(self, ax, dict, x, y, pair_x_flags, pair_y_flags, mode, m_x, m_y):
+    def plotting_arrows(self, ax, x, y, pair_x_flags, pair_y_flags, color, m_x, m_y, alpha):
 
         try:
             pair_x_flag = pair_x_flags[0]
@@ -446,67 +451,34 @@ class Main(hp):
         }
         try:
             ax.arrow(x, y, coord_dict[pair_x_flag][0], coord_dict[pair_x_flag][1], head_width=0.03,
-            head_length=0.03, color=dict[mode][0], alpha=1)
+            head_length=0.03, color=color, alpha=alpha)
         except:
             pass
 
         try:
             ax.arrow(x, y, coord_dict[pair_y_flag][0], coord_dict[pair_y_flag][1], head_width=0.03,
-            head_length=0.03, color=dict[mode][0], alpha=1)
+            head_length=0.03, color=color, alpha=alpha)
         except:
             pass
 
-    
-    # def plotting_arrows_WHAN(self, ax, dict, x, y, pair_x_flags, pair_y_flags, mode, m_x, m_y):
-
-    #     try:
-    #         pair_x_flag = pair_x_flags[0]
-    #     except:
-    #         pair_x_flag = ''
-
-    #     try:
-    #         pair_y_flag = pair_y_flags[0]
-    #     except:
-    #         pair_y_flag = ''
-
-    #     if pair_x_flag == 'down':
-    #         pair_x_flag = 'left'
-    #     elif pair_x_flag == 'up':
-    #         pair_x_flag = 'right'
-
-    #     coord_dict = {
-    #         'down' : [0, m_y*(-0.07)],
-    #         'left' : [m_x*(-0.1), 0],
-    #         'up' : [0, m_y*(0.07)],
-    #         'right' : [m_x*(0.1), 0]
-    #     }
-    #     try:
-    #         ax.arrow(x, y, coord_dict[pair_x_flag][0], coord_dict[pair_x_flag][1], head_width=0.03,
-    #         head_length=0.03, color=dict[mode][0], alpha=1)
-    #     except:
-    #         pass
-
-    #     try:
-    #         ax.arrow(x, y, coord_dict[pair_y_flag][0], coord_dict[pair_y_flag][1], head_width=0.03,
-    #         head_length=0.03, color=dict[mode][0], alpha=1)
-    #     except:
-    #         pass
-
     def plotting_BPT(self):
-        self.gs_top = plt.GridSpec(2, 2, wspace=0)
-        self.fig = plt.figure(figsize=(12, 12), tight_layout=True)
+        self.gs_top = plt.GridSpec(nrows=2, ncols=3, wspace=0)
+        #self.fig = plt.figure(figsize=(12, 12), tight_layout=True)
+        self.fig = plt.figure(figsize=(18, 12))
 
         self.ax4 = self.fig.add_subplot(self.gs_top[0,0])
         self.ax5 = self.fig.add_subplot(self.gs_top[0,1], sharey=self.ax4)
+        self.ax_med_BPT = self.fig.add_subplot(self.gs_top[0,2], sharey=self.ax4)
 
         self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in')
+        self.ax_med_BPT.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in')
         self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=True, left=True, direction='in')
 
-        self.topaxes = [self.ax5, self.ax4]
+        self.topaxes = [self.ax5, self.ax4, self.ax_med_BPT]
         for ax in self.topaxes:    
             ax.set_xlabel(r'$log(N[II]/H\alpha)$')
-            ax.set_xlim(-2.1, 1.3)
-            ax.set_ylim(-1.2, 2.1) 
+            ax.set_xlim(-2.1, 1.2)
+            ax.set_ylim(-1.2, 1.5) 
             X_1 = np.arange(-4, 0.4, 0.01)
             X_111 = np.arange(-4, 0, 0.01)
             X_11 = np.arange(-0.45, 1.5, 0.01)
@@ -517,32 +489,52 @@ class Main(hp):
             # https://adsabs.harvard.edu/full/2003MNRAS.346.1055K
             ax.plot(X_11, 1.01*X_11 + 0.48, c='r', linestyle='dotted')
             ax.text(-1.5, 1.2, 'AGN')
-            #self.ax1.text(0.1, 0.2, 'LINER')
             ax.text(0, -1, 'C')
             ax.text(-1.5, -0.5, 'SF')
             ax.text(0.5, -0.5, 'LINER')
-            ax.set_yticks(np.arange(-1, 2.5, 0.5))
-            ax.set_xticks(np.arange(-2, 1.5, 0.5))
+            ax.set_yticks(np.arange(-1, 2.1, 0.5))
+            ax.set_xticks(np.arange(-2, 1.2, 0.5))
+            ax.set_box_aspect(1)
 
         self.ax4.set_ylabel(r'$log(O[III]/H\beta)$')
 
-        ages = []
-        for pars in self.flux_er_mod9:
-            ages.append(pars[1])
+        norm = mpl.colors.Normalize(vmin=8.8,vmax=10.0)
+        c_m = mpl.cm.jet
+        self.s_m = mpl.cm.ScalarMappable(cmap=c_m, norm=norm)
+        self.s_m.set_array([])
+        
+        cmap = plt.cm.jet  
+        cmaplist = [cmap(i) for i in range(cmap.N)]
 
+        cmap_segment = mpl.colors.LinearSegmentedColormap.from_list(
+        'Custom cmap', cmaplist, cmap.N)
+
+        # define the bins and normalize
+        bounds = np.linspace(8.8, 10.0, 7)
+        norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
+        k = 0
+        
+        self.s_m_INT = mpl.cm.ScalarMappable(cmap=cmap_segment, norm=norm)
+        self.s_m_INT.set_array([])
+        
         # norm = mpl.colors.Normalize(vmin=8.8,vmax=10.25)
         # choose a colormap
         # c_m = mpl.cm.jet
         # create a ScalarMappable and initialize a data structure
         # self.s_m = mpl.cm.ScalarMappable(cmap=c_m, norm=norm)
         # self.s_m.set_array([])
-        k = 0
+        
+        X = []
+        Y = []
+        AGE = []
+        AGN_flags = []
 
         for pars in self.flux_er_mod9:
             plots = pars[0]
-            age = pars[-2]
+            
             AGN = pars[-1][6]
             SC_WHAN = pars[-1][12]
+            age = pars[-1][18]
 
             x = plots[0]
             x_er = plots[1]
@@ -562,53 +554,56 @@ class Main(hp):
                 SC_WHAN = SC_WHAN[:-1]
                 self.ax4.scatter(x, y, color='none', edgecolors='black', s=50)
                 self.ax5.scatter(x, y, color='none', edgecolors='black', s=50)
-
-            if len(pair_x_flags) == 0 and len(pair_y_flags) == 0:
-                try:
-                    self.ax4.scatter(
-                        x, y, s=1.5, color=self.color_dict[AGN][0], alpha=1)
-                    self.ax5.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker =self.cd_WHAN[SC_WHAN][2], alpha=1)
-
-                    k += 1
-                except KeyError:
-                    pass
+            if x != -100 and x != -99 and y != -99 and y != 100:
+                X.append(x)
+                Y.append(y)
+                AGE.append(age)
+                AGN_flags.append(AGN)
+                if len(pair_x_flags) == 0 and len(pair_y_flags) == 0:
+                    try:
+                        self.ax4.scatter(
+                            x, y, s=1.5, color=self.color_dict[AGN][0], alpha=1)
+                    #self.ax4.scatter(x, y, s=1.5, color=self.s_m.to_rgba(age), alpha=1)
+                        self.ax5.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker =self.cd_WHAN[SC_WHAN][2], alpha=1)
+                        #self.ax4.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker =self.cd_WHAN[SC_WHAN][2], alpha=0.5)
+                        #self.ax5.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.s_m.to_rgba(age), marker =self.cd_WHAN[SC_WHAN][2], alpha=0.5)
+                        self.ax_med_BPT.scatter(x, y, s=1.5, color=self.s_m.to_rgba(age), alpha=0.5)
+                        k += 1
+                    except KeyError:
+                        pass
                     # self.axes[i].scatter(plots[i][0], plots[i][1], s=1.5, color=self.s_m.to_rgba(age), alpha=1)
                     # self.axes[i].errorbar(plots[i][0], plots[i][1], xerr = plots[i][2], yerr = plots[i][3], fmt = 'o', color=self.s_m.to_rgba(age), markersize=2, alpha=0.2)
-            else:
-                Main.plotting_arrows(
-                    self, self.ax5, self.cd_WHAN, x, y, pair_x_flags, pair_y_flags, SC_WHAN, m_x = 1, m_y = 1)
-                Main.plotting_arrows(
-                    self, self.ax4, self.color_dict, x, y, pair_x_flags, pair_y_flags, AGN, m_x = 1, m_y = 1)
+                else:
+                    Main.plotting_arrows(self, self.ax5, x, y, pair_x_flags, pair_y_flags, self.cd_WHAN[SC_WHAN][0], m_x = 0.7, m_y = 0.7, alpha=1)
+                    #Main.plotting_arrows(self, self.ax4, x, y, pair_x_flags, pair_y_flags, self.cd_WHAN[SC_WHAN][0], m_x = 1, m_y = 1)
+                    #Main.plotting_arrows(self, self.ax5, x, y, pair_x_flags, pair_y_flags, self.s_m.to_rgba(age), m_x = 1, m_y = 1)
+                    Main.plotting_arrows(self, self.ax4, x, y, pair_x_flags, pair_y_flags, self.color_dict[AGN][0], m_x = 0.7, m_y = 0.7, alpha=1)
+                    Main.plotting_arrows(self, self.ax_med_BPT, x, y, pair_x_flags, pair_y_flags, self.s_m.to_rgba(age), m_x = 0.7, m_y = 0.7, alpha=0.5)
             
-            #self.ax1.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker =self.cd_WHAN[SC_WHAN][2], alpha=1)
-                
-            #if mod > 0:
-                #self.ax1.text(x, y, pars[-1])
-            #    self.ax1.scatter(x, y, color='black', marker="x")
-            #if mod == 0:
-            #    self.ax1.scatter(x, y, color='black', marker="x")
 
+        class_list = class_list_creator_wo_err(X, Y, AGE, AGN_flags, 'BPT')
+        
+        for item in class_list:
+            big_point_X, big_point_Y, big_point_age = median_position(item[0], item[1], item[2], [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]])
+            self.ax_med_BPT.scatter(big_point_X, big_point_Y, s = 150, color = self.s_m_INT.to_rgba(big_point_age), marker=item[3][1])
 
-        # self.fig.subplots_adjust(right=0.85)
-        # cbar_ax = self.fig.add_axes([0.85, 0.15, 0.05, 0.7])
-        # for map in self.axes:
-        #    self.fig.colorbar(self.s_m, cax=cbar_ax)
-
+        
+        for key in BPT_color_plt:
+            self.ax_med_BPT.scatter(-99, -99, alpha=1, color = BPT_color_plt[key][0], s = BPT_color_plt[key][1], marker= BPT_color_plt[key][2], label=key)
+        
+        self.ax_med_BPT.legend(loc =3, fontsize='13')
         print('Number of points on BPT: ', k)
 
-        self.ax4.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='o')
-        self.ax4.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s = 30, marker='o')
-        self.ax4.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s = 30, marker='o')
+        #self.ax4.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='o')
+        #self.ax4.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s = 30, marker='o')
+        #self.ax4.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s = 30, marker='o')
         #self.ax4.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
         #self.ax4.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
         #self.ax5.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
         #self.ax5.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
 
-        self.ax4.set_box_aspect(1)
-        self.ax5.set_box_aspect(1)
-
-        for key in self.cd_WHAN_leg.keys():
-            self.ax5.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = self.cd_WHAN_leg[key][1], label=key)
+        # for key in self.cd_WHAN_leg.keys():
+        #     self.ax5.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = self.cd_WHAN_leg[key][1], label=key)
 
         #self.ax5.legend(loc=3, fontsize="13")
         #self.ax4.legend(loc=3, fontsize="13")
@@ -621,6 +616,7 @@ class Main(hp):
 
         self.ax6 = self.fig.add_subplot(self.gs_top[1,0])
         self.ax7 = self.fig.add_subplot(self.gs_top[1,1], sharey=self.ax6)
+        self.ax_med_WHAN = self.fig.add_subplot(self.gs_top[1,2], sharey=self.ax6)
 
         # gs_top = plt.GridSpec(2, 1, hspace=0)
         # self.fig = plt.figure(figsize=(8,8), tight_layout=True)
@@ -628,52 +624,51 @@ class Main(hp):
         # self.ax6 = self.fig.add_subplot(gs_top[0,:])
         # self.ax7 = self.fig.add_subplot(gs_top[1,:], sharex=self.ax6)
 
-        self.topaxes = [self.ax7, self.ax6]
+        self.topaxes = [self.ax7, self.ax6, self.ax_med_WHAN]
 
         self.ax7.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in')
+        self.ax_med_WHAN.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in')
         self.ax6.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=True, left=True, direction='in')
         #for ax in self.topaxes[1:]:
         #plt.setp(ax.get_xticklabels(), visible=False)
 
         for ax in self.topaxes:    
-            ax.set_xlim([-2.1, 2.4])
-            ax.set_ylim([-3, 2.7])
+            ax.set_xlim([-2.1, 1.2])
+            ax.set_ylim([-2, 2.7])
             ax.axhline(y = 0.47712, color = 'black', linestyle='dashed')
             ax.axhline(y = -0.301, color = 'black', linestyle='dotted')
-            ax.text(1.5, 0, 'ELR')
-            ax.text(1.5, -2, 'LLR')
+            ax.text(0.8, 0, 'ELR')
+            ax.text(0.8, -1.5, 'LLR')
 
             X_wAGN = np.arange(-0.4, 2.5, 0.01)
             ax.plot(X_wAGN, 0.77815125+X_wAGN*0, 'black')
             ax.text(-1.5, 2, 'SF')
-            ax.text(1.5, 0.5, 'wAGN')
-            ax.text(1.5, 2, 'sAGN')
+            ax.text(0.8, 0.5, 'wAGN')
+            ax.text(0.8, 2, 'sAGN')
 
             Y_sAGN = np.arange(0.47712, 3, 0.01)
             ax.plot(-0.4+Y_sAGN*0, Y_sAGN, 'black')
             ax.set_xlabel(r"$log(N[II]/H\alpha)$")
-            ax.set_xticks(np.arange(-2, 2.5, 0.5))
-            ax.set_yticks(np.arange(-3, 3, 0.5))
+            ax.set_xticks(np.arange(-2.0, 1.2, 0.5))
+            ax.set_yticks(np.arange(-2, 3.0, 0.5))
+            ax.set_box_aspect(1)
         
-        self.ax7.set_yticks(np.arange(-3, 2.1, 1))
 
         self.ax6.set_ylabel(r"$log(EW_{H\alpha})$")
-
+        
         k = 0
-        # norm = mpl.colors.Normalize(vmin=8.8,vmax=10.25)
-        # choose a colormap
-        # c_m = mpl.cm.jet
-        # create a ScalarMappable and initialize a data structure
-        # self.s_m = mpl.cm.ScalarMappable(cmap=c_m, norm=norm)
-        # self.s_m.set_array([])
+        X = []
+        Y = []
+        AGE = []
+        AGN_flags = []
 
         for pars in self.flux_er_mod9:
+            age = pars[-1][18]
             coord = pars[-1][11]
             x = coord[0]
             pair_x_flags = coord[1]
             y = coord[2]
             pair_y_flags = coord[3]
-            age = pars[-2]
             AGN = pars[-1][6]
             SC_WHAN = pars[-1][12]
 
@@ -690,23 +685,34 @@ class Main(hp):
 
             if y >= -3 and y <= 3 and x >= -3.5 and x <= 2:
                 k += 1
-            if len(pair_x_flags) == 0 and len(pair_y_flags) == 0:
-                self.ax6.scatter(x, y, s=self.color_dict[AGN][1], color=self.color_dict[AGN][0], alpha=1, marker=self.color_dict[AGN][2])
-                self.ax7.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=1)
-                #if len(pair_x_flags) != 0:
-                #    Main.plotting_arrows(
-                #        self, self.ax6, x, y, pair_x_flags, [], AGN)
-                # self.ax6.scatter(plots[i][0], plots[i][1], color=self.s_m.to_rgba(age), marker="x")
-            else:
-                Main.plotting_arrows(
-                    self, self.ax7, self.cd_WHAN, x, y, pair_x_flags, pair_y_flags, SC_WHAN, m_y = 1, m_x = 0.8)
-                Main.plotting_arrows(
-                    self, self.ax6, self.color_dict, x, y, pair_x_flags, pair_y_flags, AGN, m_y = 1, m_x = 0.8)
+                
+            if x != -100 and x != -99 and y != -99 and y != 100:
+                X.append(x)
+                Y.append(y)
+                AGE.append(age)
+                AGN_flags.append(SC_WHAN)
+                if len(pair_x_flags) == 0 and len(pair_y_flags) == 0:
+                    self.ax6.scatter(x, y, s=self.color_dict[AGN][1], color=self.color_dict[AGN][0], alpha=1, marker=self.color_dict[AGN][2])
+                    self.ax_med_WHAN.scatter(x, y, s=self.color_dict[AGN][1], color=self.s_m.to_rgba(age), alpha=0.5, marker=self.color_dict[AGN][2])
+                    self.ax7.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=1)
+                    #self.ax6.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=0.5)
+                    #self.ax7.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.s_m.to_rgba(age), marker = '.', alpha=0.5)
+            
+                else:
+                    Main.plotting_arrows(self, self.ax7, x, y, pair_x_flags, pair_y_flags, self.cd_WHAN[SC_WHAN][0], m_y = 1, m_x = 0.8, alpha=1)
+                    Main.plotting_arrows(self, self.ax_med_WHAN, x, y, pair_x_flags, pair_y_flags, self.s_m.to_rgba(age), m_y = 1, m_x = 0.8, alpha=0.5)
+                    Main.plotting_arrows(self, self.ax6, x, y, pair_x_flags, pair_y_flags, self.color_dict[AGN][0], m_y = 1, m_x = 0.8, alpha = 1)
+                    #Main.plotting_arrows(self, self.ax6, x, y, pair_x_flags, pair_y_flags, self.cd_WHAN[SC_WHAN][0], m_y = 1, m_x = 0.8)
+                    
+        class_list = class_list_creator_wo_err(X, Y, AGE, AGN_flags, 'WHAN')
         
-        print(k)
-
-        self.ax6.set_box_aspect(1)
-        self.ax7.set_box_aspect(1)
+        sizes = [150, 100, 150, 150, 150, 100]
+        for j, item in enumerate(class_list):
+            big_point_X, big_point_Y, big_point_age = median_position(item[0], item[1], item[2], [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]])
+            self.ax_med_WHAN.scatter(big_point_X, big_point_Y, s = sizes[j], color = self.s_m.to_rgba(big_point_age), marker=item[3][1])
+        
+        for key in WHAN_color_plt:
+            self.ax_med_WHAN.scatter(-99, -99, alpha=1, color = WHAN_color_plt[key][0], s = WHAN_color_plt[key][1], marker= WHAN_color_plt[key][2], label=key)
 
         for key in self.cd_WHAN_leg.keys():
             self.ax7.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = self.cd_WHAN_leg[key][1], label=key)
@@ -714,83 +720,64 @@ class Main(hp):
         self.ax6.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='o')
         self.ax6.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s = 30, marker='o')
         self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s = 30, marker='o')
+        self.ax6.legend(loc=3, fontsize="13")
+        self.ax7.legend(loc=3, fontsize="13")
+        self.ax_med_WHAN.legend(loc=3, fontsize="13")
+        
+        
         #self.ax6.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
         #self.ax6.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
         #self.ax7.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
         #self.ax7.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
 
-        self.ax7.legend(loc=3, fontsize="13")
-        self.ax6.legend(loc=3, fontsize="13")
+        self.fig.subplots_adjust(right=0.9)
+        cbar_ax = self.fig.add_axes([0.9, 0.1, 0.05, 0.78])
+        self.fig.colorbar(self.s_m, cax=cbar_ax)
+        #self.ax7.legend(loc=3, fontsize="13")
+        
         self.fig.savefig('./FIGURES/BPT_WHAN.pdf')
         #self.fig.savefig('WHAN.pdf')
 
         # plt.show()
+        
+    def plotting_EW_age(self):
+        
+        self.gs_top = plt.GridSpec(1, 1, wspace=0)
+        #self.fig = plt.figure(figsize=(12, 12), tight_layout=True)
+        self.fig = plt.figure(figsize=(12, 12))
 
-
-    # def plotting_WHAN_age(self):
-        # 
-        # self.fig2 = plt.figure(figsize=(8,8))
-        # # self.ax4 = self.fig2.add_subplot()
-        # self.ax4.set_xlabel('log[N[II]/H_A]')
-        # self.ax4.set_ylabel('log(HA_EW)')
-
-        # norm = mpl.colors.Normalize(vmin=8.8,vmax=10.25)
-        # # choose a colormap
-        # c_m = mpl.cm.jet
-        # # create a ScalarMappable and initialize a data structure
-        # self.s_m = mpl.cm.ScalarMappable(cmap=c_m, norm=norm)
-        # self.s_m.set_array([])
-
-        # # norm = mpl.colors.Normalize(vmin=8.8,vmax=10.25)
-        # # choose a colormap
-        # # c_m = mpl.cm.jet
-        # # create a ScalarMappable and initialize a data structure
-        # # self.s_m = mpl.cm.ScalarMappable(cmap=c_m, norm=norm)
-        # # self.s_m.set_array([])
-
-        # for pars in self.flux_er_mod9:
-        #     coord = pars[-3][11]
-        #     x = coord[0]
-        #     pair_x_flags = coord[1]
-        #     y = coord[2]
-        #     age = pars[-2]
-        #     mod = pars[-1]
-        #     AGN = pars[-3][6]
-        #     if y != -99999.0:
-        #         self.ax4.scatter(
-        #             x, y, s=6, color=self.s_m.to_rgba(age), alpha=1, marker=self.color_dict[AGN][2])
-        #         #if len(pair_x_flags) != 0:
-        #         #    Main.plotting_arrows(
-        #         #        self, self.ax4, x, y, pair_x_flags, [], AGN)
-        #         if mod > 0:
-        #             self.ax4.text(x, y, pars[-1])
-        #         # self.ax4.scatter(plots[i][0], plots[i][1], color=self.s_m.to_rgba(age), marker="x")
-        #     # if mod == 0:
-        #         # i = 3
-        #         # self.ax4.scatter(plots[i][0], plots[i][1], color=self.s_m.to_rgba(age), marker="x")
-
-        # # self.fig2.subplots_adjust(right=0.85)
-        # # cbar_ax = self.fig2.add_axes([0.85, 0.15, 0.05, 0.7])
-        # # self.fig2.colorbar(self.s_m, cax=cbar_ax)
-
-        # self.fig2.subplots_adjust(right=0.85)
-        # cbar_ax = self.fig2.add_axes([0.85, 0.15, 0.05, 0.7])
-        # self.fig2.colorbar(self.s_m, cax=cbar_ax) 
-
-        # self.ax4.axhline(y = 0.47712, color = 'black', linestyle='dotted')
-        # self.ax4.axhline(y = -0.301, color = 'black', linestyle='dashed')
-        # self.ax4.text(0, 0, 'Retired galaxies')
-
-        # X_wAGN = np.arange(-0.4, 1, 0.01)
-        # self.ax4.plot(X_wAGN, 0.77815125+X_wAGN*0, 'black')
-        # self.ax4.text(-1.5, 1, 'SF')
-        # self.ax4.text(1, 0.5, 'wAGN')
-        # self.ax4.text(1, 2.5, 'sAGN')
-
-        # Y_sAGN = np.arange(0.47712, 3, 0.01)
-        # self.ax4.plot(-0.4+Y_sAGN*0, Y_sAGN, 'black')
-
-        # plt.show()
+        self.ax = self.fig.add_subplot(self.gs_top[0,0])
+        
+        self.ax.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=True, left=True, direction='in')
+        
+        self.ax.set_xlabel(r"$log(age/yr)$")
+        self.ax.set_xlim([8.7, 10.1])
+        self.ax.set_ylim([-3, 2.5])
+        self.ax.set_xticks(np.arange(8.8, 10.1, 0.2))
+        self.ax.set_yticks(np.arange(-3, 2.6, 0.5))
+        
+        self.ax.set_ylabel(r"$log(EW_{H\alpha})$")
+        
+        for pars in self.flux_er_mod9:
+            age = pars[-1][18]
+            coord = pars[-1][11]
+            x = age
+            pair_x_flags = []
+            y = coord[2]
+            pair_y_flags = coord[3]
+            AGN = pars[-1][6]
+            SC_WHAN = pars[-1][12]
+            
+            if len(pair_y_flags) == 0:
+                    #self.ax6.scatter(x, y, s=self.color_dict[AGN][1], color=self.s_m.to_rgba(age), alpha=1, marker=self.color_dict[AGN][2])
+                    #self.ax7.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=1)
+                self.ax.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=1)
+                #self.ax.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.s_m.to_rgba(age), marker = '.', alpha=0.5)
+            else:
+                Main.plotting_arrows(self, self.ax, x, y, pair_x_flags, pair_y_flags, self.cd_WHAN[SC_WHAN][0], m_y = 1, m_x = 0.8)
+        
+        self.ax.set_box_aspect(1)
+        self.fig.savefig('./FIGURES/EW_age.pdf')
 
 
 if __name__ == '__main__':
@@ -801,3 +788,4 @@ if __name__ == '__main__':
     obj.sorting()
     obj.plotting_BPT()
     obj.plotting_WHAN()
+    #obj.plotting_EW_age()

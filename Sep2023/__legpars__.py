@@ -40,4 +40,20 @@ cd_WHAN_leg = {
         }
 
 list_names_BPT = ['AGN', 'UNC', 'SF', 'NOEL']
-list_names_WHAN = ['sAGN', 'wAGN', 'SF','ELR', 'RG', 'LLR']
+list_names_WHAN = ['sAGN', 'wAGN', 'SF','ELR', 'RG', 'LLR', 'ALL']
+
+
+WHAN_color_plt = {
+    'sAGN' : ['gray', 150, 'P'],
+    'wAGN' : ['gray', 100, 'P'],
+    'SF' : ['gray', 150, '*'],
+    'ELR' : ['gray', 150, 'D'],
+    'RG' : ['gray', 150, 'o'],
+    'LLR' : ['gray', 100, 'o']
+}
+
+BPT_color_plt ={
+    'AGN' : ['gray', 150, 'P'],
+    'UNC' : ['gray', 150, 'H'],
+    'SF' : ['gray', 150, '*'],
+}

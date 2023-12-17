@@ -59,7 +59,7 @@ class Main(hp):
         self.list_names_BPT = ['AGN', 'UNC', 'SF', 'NOEL']
         self.list_names_WHAN = ['sAGN', 'wAGN', 'SF','ELR', 'RG', 'LLR']
 
-        self.color_dict_BPT = color_dict
+        self.color_dict_BPT = color_dict_BPT
         self.color_dict_WHAN = cd_WHAN
         self.color_dict_leg = color_dict_leg
 

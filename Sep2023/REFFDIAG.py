@@ -51,7 +51,7 @@ class Main:
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
-        fig.savefig('./FIGURES/APERTURE_DIAG_SDSS_Y.pdf')
+        fig.savefig('./FIGURES/APERTURE_DIAG_SDSS_r.pdf')
         plt.show()
 
     def sorting_forWHAN(self, keys):
@@ -202,6 +202,6 @@ class Main:
             figure.set(aspect='equal')
 
 if __name__ == '__main__':
-    obj = Main('E:/databases/GAMA_ETG_OLA_R_Y_1.csv')
+    obj = Main('E:/databases/GAMA_ETG_OLA_R_r_1.csv')
     obj.reading()
     obj.plotting()

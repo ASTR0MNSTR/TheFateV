@@ -3,6 +3,23 @@ import random
 from scipy.stats import bootstrap
 import numpy as np
 
+def median_position(xs, ys, par, x_bids):
+    y_values = [[], [], [], [], [], []]
+    x_values = [[], [], [], [], [], []]
+    for j, item in enumerate(par):
+        for i, pair in enumerate(x_bids):
+            if item >= pair[0] and item < pair[1]:
+                y_values[i].append(ys[j])
+                x_values[i].append(xs[j])
+    
+    X = [np.median(np.array(item)) if len(item) > 1 else -99 for item in x_values]    
+    Y = [np.median(np.array(item)) if len(item) > 1 else -99 for item in y_values]    
+    ages = [np.mean(np.array(item)) for item in x_bids]
+    
+    return X, Y, ages
+    
+    
+
 def monte_carlo(x, y_mid, y_up, y_down, x_bids):
         y_values = [[], [], [], [], [], []]
         stmeaner = []

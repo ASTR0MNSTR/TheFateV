@@ -48,28 +48,35 @@ class Main(hp):
         for line in lines_stripped:
             GAMAID = int(line.split()[0])
             X = float(line.split()[35])
-            Y = float(line.split()[95])
-            Y_up = float(line.split()[96])
-            Y_down = float(line.split()[94])
-            #SFR_up = float(line.split()[96])
-            #SFR_down = float(line.split()[94])
-            #SFR_er = [[abs(SFR_down-SFR_0)], [abs(SFR_up-SFR_0)]]
-            self.base_dict.update({GAMAID: [X, Y, Y_up, Y_down]})
+            try:
+                Y = np.log10(float(line.split()[1011]))
+                Y_err = float(line.split()[1012])
+                Y_up = np.log10(Y + Y_err)
+                Y_down = np.log10(Y - Y_err)
+                self.base_dict.update({GAMAID: [X, Y, Y_up, Y_down]})
+            except:
+                # print('NDA')
+                pass
+        
+        #print(self.base_dict)
 
         self.data_dict = []
 
         with open(self.out, 'r') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                self.data_dict.append({'GAMAID': int(row['GAMAID']), 'AGN': row['BPT'], 'SC_WHAN' : row['WHAN'], 'BMS' : int(row['BMS']), 'Z' : float(row['Z'])})
+                self.data_dict.append({'GAMAID': int(row['CATAID_1']), 'AGN': row['BPT'], 'SC_WHAN' : row['WHAN']})
+                
+        #print(self.data_dict)
 
     def matching(self):
         for item in self.data_dict:
             try:
-                X, Y, Y_up, Y_down = self.base_dict[item['GAMAID']]
-                item.update({'X' : X, 'Y' : Y, 'Y_up' : Y_up, 'Y_down' : Y_down})
-            except: 
-                print(item['GAMAID'])
+                self.base_dict[item['GAMAID']].extend([item['AGN'], item['SC_WHAN']])
+            except KeyError:
+                pass
+            
+        print(self.base_dict)
     
     def plotting_mdms_age(self):
         gs_top = plt.GridSpec(1, 2, wspace=0)
@@ -83,18 +90,18 @@ class Main(hp):
         self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
         self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in')
 
-        self.ax4.set_ylabel(r'$log(SFR - SFR_{MS} (M_s, z) / M_{\odot} yr^{-1})$')
+        self.ax4.set_ylabel(r'$log(\sigma), \: Mpc^{-2}$')
         for ax in self.topaxes:  
             ax.set_xlabel(r'$log(M_s / M_{\odot})$') 
             ax.set_xlim([9.9, 11.6])
-            ax.set_ylim([-3.1, 2.3])
+            ax.set_ylim([-2, 2])
 
-        Main.plotter_mdms_BPT(self, 'X', 'Y', 'Y_up', 'Y_down', 'AGN', False)
-        Main.plotter_mdms_WHAN(self, 'X', 'Y', 'Y_up', 'Y_down', 'SC_WHAN', False)
-        self.fig1.savefig('./FIGURES/SFRSM_DELTA.pdf')
+        Main.plotter_mdms_BPT(self, False)
+        Main.plotter_mdms_WHAN(self, False)
+        self.fig1.savefig('./FIGURES/SurfaceDensity.pdf')
         #plt.show()
 
-    def plotter_mdms_BPT(self, x, y, up, down, AGN_key, bids):
+    def plotter_mdms_BPT(self, bids):
 
         yes_temp = []
         UNC_temp = []
@@ -121,41 +128,40 @@ class Main(hp):
         tot_up = []
         tot_down = []
 
-        for item in self.data_dict:
-            X = item[x]
-            Y = hp.ms_func(item[y], item[x], item['Z'])
-            # Y = item[y]
-            Y_up = item[up]
-            Y_down = item[down]
-            AGN = item[AGN_key]
-            bms = item['BMS']
-            if AGN == 'NOEL':
-                self.ax4.scatter(X, Y, alpha= 1, color = self.color_dict_BPT[AGN][0], marker=self.BMS_dict[bms][0], s = self.BMS_dict[bms][1])
-            tot_age.append(X)
-            tot.append(Y)
-            tot_up.append(Y_up)
-            tot_down.append(Y_down)
-            #marker = self.color_dict[AGN][2]
-            # if AGN in ['AGNXY', 'AGNX', 'AGNY']:
-            #         yes_temp.append(Y)
-            #         yes_temp_age.append(X)
-            #         yes_temp_up.append(Y_up)
-            #         yes_temp_down.append(Y_down)
-            # elif AGN in ['UNCXY', 'UNCX', 'UNCY']:
-            #         UNC_temp.append(Y)
-            #         UNC_temp_age.append(X)
-            #         UNC_temp_up.append(Y_up)
-            #         UNC_temp_down.append(Y_down)
-            # elif AGN in ['SFXY', 'SFX', 'SFY']:
-            #         no_temp.append(Y)
-            #         no_temp_age.append(X)
-            #         no_temp_up.append(Y_up)
-            #         no_temp_down.append(Y_down)
-            # elif AGN == 'NOEL':
-            #         noel_temp.append(Y)
-            #         noel_temp_age.append(X)
-            #         noel_temp_up.append(Y_up)
-            #         noel_temp_down.append(Y_down)
+        for key in self.base_dict.keys():
+            if len(self.base_dict[key]) > 5:
+                X = self.base_dict[key][0]
+                Y = self.base_dict[key][1]
+                Y_up = self.base_dict[key][2]
+                Y_down = self.base_dict[key][3]
+                AGN = self.base_dict[key][4]
+                #Y = hp.ms_func(item[y], item[x], item['Z'])
+                self.ax4.scatter(X, Y, alpha= 1, color = self.color_dict_BPT[AGN][0], marker='.', s = 30)
+                tot_age.append(X)
+                tot.append(Y)
+                tot_up.append(Y_up)
+                tot_down.append(Y_down)
+                #marker = self.color_dict[AGN][2]
+                if AGN in ['AGNXY', 'AGNX', 'AGNY']:
+                        yes_temp.append(Y)
+                        yes_temp_age.append(X)
+                        yes_temp_up.append(Y_up)
+                        yes_temp_down.append(Y_down)
+                elif AGN in ['UNCXY', 'UNCX', 'UNCY']:
+                        UNC_temp.append(Y)
+                        UNC_temp_age.append(X)
+                        UNC_temp_up.append(Y_up)
+                        UNC_temp_down.append(Y_down)
+                elif AGN in ['SFXY', 'SFX', 'SFY']:
+                        no_temp.append(Y)
+                        no_temp_age.append(X)
+                        no_temp_up.append(Y_up)
+                        no_temp_down.append(Y_down)
+                elif AGN == 'NOEL':
+                        noel_temp.append(Y)
+                        noel_temp_age.append(X)
+                        noel_temp_up.append(Y_up)
+                        noel_temp_down.append(Y_down)
         
         class_list = [[yes_temp_age, yes_temp, 'midnightblue', yes_temp_down, yes_temp_up, 'P'], [UNC_temp_age, UNC_temp, 'springgreen', UNC_temp_down, UNC_temp_up, 'H'], [no_temp_age, no_temp, 'mediumvioletred', no_temp_down, no_temp_up, '*'], [noel_temp_age, noel_temp, 'orchid', noel_temp_down, noel_temp_up, 'o']]
 
@@ -169,7 +175,7 @@ class Main(hp):
             age_bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
             ages_const = np.arange(10, 11.5, 0.25)
         
-        for item in [class_list[-1]]:
+        for item in class_list:
             X_plot = []
             Y_plot = []
             X, Y, err, length = bootstrapper(item[0], item[1], item[3], item[4], age_bids)
@@ -193,8 +199,8 @@ class Main(hp):
 
         x = np.arange(6.9, 12, 0.1)
 
-        self.ax4.axhline(0, color = 'k', linestyle='solid')
-        self.ax4.axhline(-0.2, color = 'k', linestyle='dashed')
+        # self.ax4.axhline(0, color = 'k', linestyle='solid')
+        # self.ax4.axhline(-0.2, color = 'k', linestyle='dashed')
 
         # self.ax4.plot(x, (0.84 - 0.026*11.804604)*x - (6.51 - 0.11*11.804604), linestyle='dashed', color='k') #, label=r'$z = 0.13$')
         # self.ax4.plot(x, (0.84 - 0.026*11.804604)*x - (6.71 - 0.11*11.804604), linestyle='dotted', color='k') #, label=r'$z = 0.13$, $-0.2$')
@@ -210,7 +216,7 @@ class Main(hp):
         #self.fig.savefig(name_file + '.pdf')
         #plt.show()
     
-    def plotter_mdms_WHAN(self, x, y, up, down, AGN_key, bids):
+    def plotter_mdms_WHAN(self, bids):
 
         
         tot_age = []
@@ -246,51 +252,49 @@ class Main(hp):
         llr_temp_down = []
         wAGN_temp_down = []
 
-        for item in self.data_dict:
-            X = item[x]
-            # Y = item[y]
-            Y = hp.ms_func(item[y], item[x], item['Z'])
-            Y_up = item[up]
-            Y_down = item[down]
-            AGN = item[AGN_key]
-            bms = item['BMS']
-            if AGN == 'LLR' or AGN == 'RG':
-                self.ax5.scatter(X, Y, alpha= 1, color = self.color_dict_WHAN[AGN][0], marker=self.BMS_dict[bms][0], s = self.BMS_dict[bms][1])
-            tot_age.append(X)
-            tot.append(Y)
-            tot_up.append(Y_up)
-            tot_down.append(Y_down)
-            #marker = self.color_dict[AGN][2]
-            # if AGN in ['sAGN']:
-            #         yes_temp.append(Y)
-            #         yes_temp_age.append(X)
-            #         yes_temp_up.append(Y_up)
-            #         yes_temp_down.append(Y_down)
-            # elif AGN in ['ELR']:
-            #         UNC_temp.append(Y)
-            #         UNC_temp_age.append(X)
-            #         UNC_temp_up.append(Y_up)
-            #         UNC_temp_down.append(Y_down)
-            # elif AGN in ['SF']:
-            #         no_temp.append(Y)
-            #         no_temp_age.append(X)
-            #         no_temp_up.append(Y_up)
-            #         no_temp_down.append(Y_down)
-            # elif AGN in ['RG']:
-            #         noel_temp.append(Y)
-            #         noel_temp_age.append(X)
-            #         noel_temp_up.append(Y_up)
-            #         noel_temp_down.append(Y_down)
-            # elif AGN in ['LLR']:
-            #         llr_temp.append(Y)
-            #         llr_temp_age.append(X)
-            #         llr_temp_up.append(Y_up)
-            #         llr_temp_down.append(Y_down)
-            # elif AGN in ['wAGN']:
-            #         wAGN_temp.append(Y)
-            #         wAGN_temp_age.append(X)
-            #         wAGN_temp_up.append(Y_up)
-            #         wAGN_temp_down.append(Y_down)
+        for key in self.base_dict.keys():
+            if len(self.base_dict[key]) > 5:
+                X = self.base_dict[key][0]
+                Y = self.base_dict[key][1]
+                Y_up = self.base_dict[key][2]
+                Y_down = self.base_dict[key][3]
+                AGN = self.base_dict[key][5]
+                self.ax5.scatter(X, Y, alpha= 1, color = self.color_dict_WHAN[AGN][0], marker='.', s = 30)
+                tot_age.append(X)
+                tot.append(Y)
+                tot_up.append(Y_up)
+                tot_down.append(Y_down)
+                #marker = self.color_dict[AGN][2]
+                if AGN in ['sAGN']:
+                        yes_temp.append(Y)
+                        yes_temp_age.append(X)
+                        yes_temp_up.append(Y_up)
+                        yes_temp_down.append(Y_down)
+                elif AGN in ['ELR']:
+                        UNC_temp.append(Y)
+                        UNC_temp_age.append(X)
+                        UNC_temp_up.append(Y_up)
+                        UNC_temp_down.append(Y_down)
+                elif AGN in ['SF']:
+                        no_temp.append(Y)
+                        no_temp_age.append(X)
+                        no_temp_up.append(Y_up)
+                        no_temp_down.append(Y_down)
+                elif AGN in ['RG']:
+                        noel_temp.append(Y)
+                        noel_temp_age.append(X)
+                        noel_temp_up.append(Y_up)
+                        noel_temp_down.append(Y_down)
+                elif AGN in ['LLR']:
+                        llr_temp.append(Y)
+                        llr_temp_age.append(X)
+                        llr_temp_up.append(Y_up)
+                        llr_temp_down.append(Y_down)
+                elif AGN in ['wAGN']:
+                        wAGN_temp.append(Y)
+                        wAGN_temp_age.append(X)
+                        wAGN_temp_up.append(Y_up)
+                        wAGN_temp_down.append(Y_down)
         
         #class_list = [[yes_temp_age, yes_temp, 'midnightblue'], [UNC_temp_age, UNC_temp, 'red'], [no_temp_age, no_temp, 'mediumvioletred'], [noel_temp_age, noel_temp, 'orchid'], [llr_age, llr, 'maroon']]
         class_list = [[yes_temp_age, yes_temp, 'midnightblue', yes_temp_down, yes_temp_up, 'P'], [wAGN_temp_age, wAGN_temp, 'blue', wAGN_temp_down, wAGN_temp_up, 'P'], [no_temp_age, no_temp, 'mediumvioletred', no_temp_down, no_temp_up, '*'], [UNC_temp_age, UNC_temp, 'sandybrown', UNC_temp_down, UNC_temp_up, 'D'], [noel_temp_age, noel_temp, 'chocolate', noel_temp_down, noel_temp_up, 'o'], [llr_temp_age, llr_temp, 'maroon', llr_temp_down, llr_temp_up, 'o']]
@@ -305,7 +309,7 @@ class Main(hp):
             age_bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
             ages_const = np.arange(10, 11.5, 0.25)
 
-        for item in [class_list[-2], class_list[-1]]:
+        for item in class_list:
             X_plot = []
             Y_plot = []
             X, Y, err, length = bootstrapper(item[0], item[1], item[3], item[4], age_bids)
@@ -328,8 +332,8 @@ class Main(hp):
 
         x = np.arange(6.9, 12, 0.1)
 
-        self.ax5.axhline(0, color = 'k', linestyle='solid')
-        self.ax5.axhline(-0.2, color = 'k', linestyle='dashed')
+        # self.ax5.axhline(0, color = 'k', linestyle='solid')
+        # self.ax5.axhline(-0.2, color = 'k', linestyle='dashed')
         # self.ax5.plot(x, (0.84 - 0.026*11.804604)*x - (6.51 - 0.11*11.804604), linestyle='dashed', color='k', label=r'$z = 0.13$')
         # self.ax5.plot(x, (0.84 - 0.026*11.804604)*x - (6.71 - 0.11*11.804604), linestyle='dotted', color='k', label=r'$z = 0.13$, $-0.2$')
         # self.ax5.plot(x, (0.84 - 0.026*9.8615801)*x - (6.51 - 0.11*9.8615801), linestyle='solid', color='k', label=r'$z = 0.32$')
@@ -350,7 +354,7 @@ class Main(hp):
         #plt.show()
 
 if __name__ == '__main__':
-    obj = Main('E:\LICENSE\ProgsData\main\GAMAforOleg.txt', 'GAMA_ETG_OLA.csv')
+    obj = Main('E:\LICENSE\ProgsData\main\GAMAforOleg_1.txt', 'GAMA_ETG_OLA.csv')
     obj.reading()
     obj.matching()
     obj.plotting_mdms_age()
