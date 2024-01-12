@@ -100,7 +100,7 @@ class Main:
         
         axs[3, 0].remove()
         axs[3, 1].remove()
-        fig.savefig('./FIGURES/DIAG.pdf')
+        fig.savefig('./FIGURES_IN_PAPER/DIAG.pdf')
         plt.show()
 
     def sorting_forWHAN(self, keys):

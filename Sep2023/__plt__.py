@@ -51,12 +51,6 @@ def plotting(pars_dict):
         theor_lines([ax4, ax5], pars_dict['theor_lines'])
     except:
         pass
-
-    # if pars_dict['pacs'] == True:
-    #     print('Entered the PACS mode')
-    #     DataFrame = DataFrame[(DataFrame.P100_flux > 2*DataFrame.P100_fluxerr) & (DataFrame.P100_flux > 0) & (DataFrame.T_W_BC_percentile50 > 0)]
-
-    # print(DataFrame)
     
     if 'err' in pars_dict.keys():
         # ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']] + DataFrame[pars_dict['err']], DataFrame[pars_dict['y']] - DataFrame[pars_dict['err']], DataFrame['BPT'], bids, 'BPT', True)
