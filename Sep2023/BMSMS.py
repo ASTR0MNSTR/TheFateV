@@ -13,7 +13,7 @@ class Main:
     def __init__(self, file):
         self.file = file
         self.dataframe = None
-        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'RG']
+        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NLR']
         self.WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
 
         self.BPT_labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
@@ -62,7 +62,7 @@ class Main:
         sAGN = 0
         wAGN = 0
         UNC = 0
-        RG = 0
+        NLR = 0
         NDA = 0
         self.total1 = 0
         for i in range(len(self.dataframe['BMS'])):
@@ -80,8 +80,8 @@ class Main:
                     wAGN += 1
                 elif self.dataframe['WHAN'][i] == 'UNC':
                     UNC += 1
-                elif self.dataframe['WHAN'][i] == 'RG':
-                    RG += 1
+                elif self.dataframe['WHAN'][i] == 'NLR':
+                    NLR += 1
                 elif self.dataframe['WHAN'][i] == 'NDA':
                 #    NDA += 1
                     self.total1 -= 1
@@ -90,7 +90,7 @@ class Main:
         
         print(keys, self.total1)
         
-        return [sAGN, wAGN, UNC, SF, ELR, LLR, RG]
+        return [sAGN, wAGN, UNC, SF, ELR, LLR, NLR]
 
     def sorting_forBPT(self, keys):
         #SF
@@ -147,19 +147,19 @@ class Main:
     
     def merging_WHAN(self, list_obj):
 
-        sAGN, wAGN, UNC, SF, ELR, LLR, RG = list_obj
+        sAGN, wAGN, UNC, SF, ELR, LLR, NLR = list_obj
 
         AGN = sAGN + wAGN
         UNC = UNC
         SF = SF
-        ret = ELR + LLR + RG
+        ret = ELR + LLR + NLR
 
         return [AGN, UNC, SF, ret]
     
     def my_level_list(data, kwarg):
         list = []
         if kwarg == 'WHAN':
-            labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'RG']
+            labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NLR']
         elif kwarg == 'BPT':
             labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
 

@@ -7,7 +7,7 @@ import pandas as pd
 from astropy.cosmology import FlatLambdaCDM
 import astropy.units as u
 
-from AGN_reg_woe import *
+from __algo__new import *
 from __legpars__ import *
 from __stats__ import *
 from __plt__ import *
@@ -17,9 +17,6 @@ from __plt__ import *
 class hp:
     def log(figure):
         return math.log(figure, 10)
-
-    def log_er(item):
-        return [[abs(math.log(1-item, 10))], [abs(math.log(1+item, 10))]]
 
     def SFR(HA, HA_er, z):
         if HA == -99999.0 or HA_er < 0:
@@ -61,7 +58,7 @@ class hp:
             else:
                 print("Forgot me!")
         
-        return math.log(HA_ew, 10), HA_ew_err, pair_HA, HA_ew_or
+        return math.log(HA_ew, 10), HA_ew_err/(HA_ew*math.log(10)), pair_HA, HA_ew_or
 
 class Main(hp):
     def __init__(self, ola_file, gama_file, filename_out):
@@ -735,7 +732,7 @@ class Main(hp):
         self.fig.colorbar(self.s_m, cax=cbar_ax)
         #self.ax7.legend(loc=3, fontsize="13")
         
-        self.fig.savefig('./FIGURES/BPT_WHAN.pdf')
+        self.fig.savefig('./FIGURES/BPT_WHAN_err_w.pdf')
         #self.fig.savefig('WHAN.pdf')
 
         # plt.show()

@@ -4,8 +4,8 @@ from scipy.stats import bootstrap
 import numpy as np
 
 def median_position(xs, ys, par, x_bids):
-    y_values = [[], [], [], [], [], []]
-    x_values = [[], [], [], [], [], []]
+    y_values = empty(x_bids)
+    x_values = empty(x_bids)
     for j, item in enumerate(par):
         for i, pair in enumerate(x_bids):
             if item >= pair[0] and item < pair[1]:
@@ -17,11 +17,16 @@ def median_position(xs, ys, par, x_bids):
     ages = [np.mean(np.array(item)) for item in x_bids]
     
     return X, Y, ages
-    
-    
+
+def empty(bins):
+    listed = []
+    for item in bins:
+        listed.append([])
+    return listed
 
 def monte_carlo(x, y_mid, y_up, y_down, x_bids):
-        y_values = [[], [], [], [], [], []]
+
+        y_values = empty(x_bids)
         stmeaner = []
         stmean = []
         medians = [(pair[0] + pair[1])/2 for pair in x_bids]
@@ -55,7 +60,7 @@ def monte_carlo(x, y_mid, y_up, y_down, x_bids):
         return medians, stmean, stmeaner, length
     
 def bootstrapper(x, y_mid, y_up, y_down, x_bids):
-        y_values = [[], [], [], [], [], []]
+        y_values = empty(x_bids)
         stmeaner = []
         stmean = []
         x_values = [(pair[0] + pair[1])/2 for pair in x_bids]

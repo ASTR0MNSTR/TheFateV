@@ -7,17 +7,19 @@ def atten_coef(A_V):
     R_V = 4.05
     OIII_c = 2.659*(-2.156 + (1.509/0.5007) -
                         (0.198/(0.5007**2)) + (0.011/(0.5007**3))) + R_V
-    NII_c = 2.659*(-1.857 + (1.040/0.6583)) + R_V
-    SII_c = 2.659*(-1.857 + (1.040/0.6732)) + R_V
-    OI_c = 2.659*(-1.857 + (1.040/0.6300)) + R_V
+    
     HB_c = 2.659*(-2.156 + (1.509/0.4861) -
                       (0.198/(0.4861**2)) + (0.011/(0.4861**3))) + R_V
-    #HD_c = 2.659*(-2.156 + (1.509/0.4101734) -
-    #                  (0.198/(0.4101734**2)) + (0.011/(0.4101734**3))) + R_V
-    #    HG_c = 2.659*(-2.156 + (1.509/0.4340472) -
-    #                  (0.198/(0.4340472**2)) + (0.011/(0.4340472**3))) + R_V
+    
+    NII_c = 2.659*(-1.857 + (1.040/0.6584)) + R_V
+    SII_c = 2.659*(-1.857 + (1.040/0.6732)) + R_V
+    OI_c = 2.659*(-1.857 + (1.040/0.6300)) + R_V
     OII_c = 2.659*(-2.156 + (1.509/0.3727) -
                       (0.198/(0.3727**2)) + (0.011/(0.3727**3))) + R_V
+    
+    #HA_c = 2.659*(-1.857 + (1.040/0.6563)) + R_V #!!!!!!
+    #HA_c
+    
     res = [OIII_c, NII_c, SII_c, OI_c, HB_c, OII_c]
     res_out = [item*A_V/R_V for item in res]
     res_out_out = [10**(0.4*item) for item in res_out]
@@ -31,7 +33,7 @@ def dust_correction(HA, HA_er, HB, HB_er):
             f_HA = ((HA/HB)/2.86)**(2.114)
             A_V = 2.5*math.log(f_HA, 10)
             coefs = atten_coef(A_V)
-            coefs.append(f_HA)
+            coefs.append(f_HA) #!
         elif HA > SN*HA_er and HB < SN*HB_er:
             if HB + SN*HB_er < 0:
                 f_HA = ((HA/(2*HB_er))/2.86)**(2.114)
@@ -39,7 +41,7 @@ def dust_correction(HA, HA_er, HB, HB_er):
                 f_HA = ((HA/(HB + 2*HB_er))/2.86)**(2.114)
             A_V = 2.5*math.log(f_HA, 10)
             coefs = atten_coef(A_V)
-            coefs.append(f_HA)
+            coefs.append(f_HA) #!
             
     return coefs
 
@@ -60,15 +62,17 @@ def line_flagging(pair, spec_coefs):
             pair_flags.append(flags_dict[j])
             m += 1
             item[0] = SN*item[1]*spec_coefs[j]
+            item[1] *= spec_coefs[j]
             abs += 1
         elif item[0] <= SN*item[1]: #non-det
             pair_flags.append(flags_dict[j])
             m += 1
-            item[0] += SN*item[1]
             item[0] *= spec_coefs[j]
             item[1] *= spec_coefs[j]
+            item[0] += SN*item[1]
         elif item[0] > SN*item[1]: #det
             item[0] *= spec_coefs[j]
+            item[1] *= spec_coefs[j]
         else:
             print("SMTH WRONG")
     
@@ -185,9 +189,11 @@ def WHAN(X, pair_x_flags, HA_ew, pair_HA):
 def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, pair_HA):
 
     #for dust correction
+    
     coefs = dust_correction(HA, HA_er, HB, HB_er)
 
     #coefs = [1, 1, 1, 1, 1, 1, 1]
+    
     #coefs = [OIII_c, NII_c, SII_c, OI_c, HB_c, OII_c, HA_c]
     
     Y, pair_y_flags, abs_Y = line_flagging([[OIII, OIII_er], [HB, HB_er]], [coefs[0], coefs[4]])

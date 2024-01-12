@@ -5,7 +5,7 @@ cd_WHAN = {
             'SF' : ['mediumvioletred', 9, '.'],
             'wAGN' : ['blue', 15, '.'],
             'sAGN' : ['midnightblue', 15, '.'],
-            'RG' : ['chocolate', 9, '.']
+            'NLR' : ['chocolate', 9, '.']
         }
 
 color_dict_BPT ={
@@ -35,12 +35,13 @@ cd_WHAN_leg = {
             'UNC' : ['springgreen', 20, 'o'],
             'SF' : ['mediumvioletred', 20, 'o'],
             'ELR' : ['sandybrown', 20, 'o'],
-            'RG' : ['chocolate', 20, 'o'],
+            'NLR' : ['chocolate', 20, 'o'],
             'LLR' : ['maroon', 20, 'o']
         }
 
 list_names_BPT = ['AGN', 'UNC', 'SF', 'NOEL']
-list_names_WHAN = ['sAGN', 'wAGN', 'SF','ELR', 'RG', 'LLR', 'ALL']
+list_names_BPT_1 = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'SFXY', 'SFX', 'NOEL']
+list_names_WHAN = ['sAGN', 'wAGN', 'SF','ELR', 'NLR', 'LLR', 'ALL']
 
 
 WHAN_color_plt = {
@@ -48,7 +49,7 @@ WHAN_color_plt = {
     'wAGN' : ['gray', 100, 'P'],
     'SF' : ['gray', 150, '*'],
     'ELR' : ['gray', 150, 'D'],
-    'RG' : ['gray', 150, 'o'],
+    'NLR' : ['gray', 150, 'o'],
     'LLR' : ['gray', 100, 'o']
 }
 

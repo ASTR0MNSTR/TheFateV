@@ -40,7 +40,7 @@ class Main:
         self.file = file
         self.dataframe = None
 
-        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'RG']
+        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NLR']
         self.WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
 
         self.WHAN_colors_merged = ['royalblue', 'lime', 'hotpink', 'brown']
@@ -71,7 +71,7 @@ class Main:
         axs[0, 2].pie(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))[0], radius=1-size, colors=self.WHAN_colors_merged, autopct=Main.short_WHAN_in(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
         axs[0, 2].set(aspect='equal')
         
-        axs[0, 2].legend(title='WHAN classes:', loc="best", fontsize="13")
+        #axs[0, 2].legend(title='WHAN classes:', loc="best", fontsize="13")
         axs[0, 2].set(aspect='equal')
 
 ######################################
@@ -129,7 +129,7 @@ class Main:
                     wAGN += 1
                 elif self.dataframe['WHAN'][i] == 'UNC':
                     UNC += 1
-                elif self.dataframe['WHAN'][i] == 'RG':
+                elif self.dataframe['WHAN'][i] == 'NLR':
                     RG += 1
                 elif self.dataframe['WHAN'][i] == 'NDA':
                     NDA += 1
@@ -142,7 +142,7 @@ class Main:
     
     def my_level_list(data):
         list = []
-        WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'RG']
+        WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NLR']
         for i in range(len(data)):
             if (data[i]*100/np.sum(data)) > 2 : #2%
                 list.append(WHAN_labels[i])

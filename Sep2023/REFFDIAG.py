@@ -13,7 +13,7 @@ class Main:
     def __init__(self, file):
         self.file = file
         self.dataframe = None
-        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'RG']
+        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NLR']
         self.WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
 
         self.BPT_labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
@@ -45,9 +45,9 @@ class Main:
         Main.histo(self, ax2, [0], 'WHAN')
         Main.histo(self, ax4, [1], 'WHAN')
         Main.histo(self, ax6, [0, 1], 'WHAN')
-        ax1.set(title=r'$> 1 \; R_{eff}$ (1368 gal.)')
-        ax3.set(title=r'$< 1 \; R_{eff}$ (257 gal.)')
-        ax5.set(title='Total (1625 gal.)')     
+        ax1.set(title=r'$> 1 \; R_{eff}$ (969 gal.)')
+        ax3.set(title=r'$< 1 \; R_{eff}$ (652 gal.)')
+        ax5.set(title='Total (1621 gal.)')     
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
@@ -80,7 +80,7 @@ class Main:
                     wAGN += 1
                 elif self.dataframe['WHAN'][i] == 'UNC':
                     UNC += 1
-                elif self.dataframe['WHAN'][i] == 'RG':
+                elif self.dataframe['WHAN'][i] == 'NLR':
                     RG += 1
                 elif self.dataframe['WHAN'][i] == 'NDA':
                 #    NDA += 1
@@ -159,7 +159,7 @@ class Main:
     def my_level_list(data, kwarg):
         list = []
         if kwarg == 'WHAN':
-            labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'RG']
+            labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NLR']
         elif kwarg == 'BPT':
             labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
 

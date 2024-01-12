@@ -22,8 +22,8 @@ class Main(hp):
         self.color_dict_WHAN = cd_WHAN
         self.color_dict_leg = color_dict_leg
 
-        self.list_names_BPT = ['AGN', 'UNC', 'SF', 'NOEL']
-        self.list_names_WHAN = ['sAGN', 'ELR', 'SF', 'RG', 'LLR', 'wAGN']
+        self.list_names_BPT = list_names_BPT
+        self.list_names_WHAN = list_names_WHAN
 
         self.BMS_dict= {
             0 : ['o', 12], #bms
@@ -257,7 +257,7 @@ class Main(hp):
                     no_temp_age.append(X)
                     no_temp_up.append(Y_up)
                     no_temp_down.append(Y_down)
-                elif AGN in ['RG']:
+                elif AGN in ['NLR']:
                     noel_temp.append(Y)
                     noel_temp_age.append(X)
                     noel_temp_up.append(Y_up)
@@ -275,7 +275,7 @@ class Main(hp):
 
         
         #class_list = [[yes_temp_age, yes_temp, 'midnightblue'], [UNC_temp_age, UNC_temp, 'red'], [no_temp_age, no_temp, 'mediumvioletred'], [noel_temp_age, noel_temp, 'orchid'], [llr_age, llr, 'maroon']]
-        class_list = [[yes_temp_age, yes_temp, 'midnightblue', yes_temp_down, yes_temp_up, 'P'], [UNC_temp_age, UNC_temp, 'sandybrown', UNC_temp_down, UNC_temp_up, 'D'], [no_temp_age, no_temp, 'mediumvioletred', no_temp_down, no_temp_up, '*'], [noel_temp_age, noel_temp, 'chocolate', noel_temp_down, noel_temp_up, 'o'], [llr_temp_age, llr_temp, 'maroon', llr_temp_down, llr_temp_up, 'o'], [wAGN_temp_age, wAGN_temp, 'blue', wAGN_temp_down, wAGN_temp_up, 'P']]
+        class_list = [[yes_temp_age, yes_temp, 'midnightblue', yes_temp_down, yes_temp_up, 'P'], [wAGN_temp_age, wAGN_temp, 'blue', wAGN_temp_down, wAGN_temp_up, 'P'], [no_temp_age, no_temp, 'mediumvioletred', no_temp_down, no_temp_up, '*'], [UNC_temp_age, UNC_temp, 'sandybrown', UNC_temp_down, UNC_temp_up, 'D'], [noel_temp_age, noel_temp, 'chocolate', noel_temp_down, noel_temp_up, 'o'], [llr_temp_age, llr_temp, 'maroon', llr_temp_down, llr_temp_up, 'o']]
 
         self.means = []
         self.errs = []
@@ -290,7 +290,7 @@ class Main(hp):
         for item in class_list:
             X_plot = []
             Y_plot = []
-            X, Y, err, length = bootstrapper(item[0], item[1], item[3], item[4], age_bids)
+            X, Y, err, length = monte_carlo(item[0], item[1], item[3], item[4], age_bids)
             self.ages = X
             self.means.append(Y)
             self.errs.append(err)

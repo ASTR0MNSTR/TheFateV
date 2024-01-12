@@ -23,7 +23,7 @@ class Main:
     
     def reading_files(self):
         self.df = pd.read_csv(self.SDSS_from_GAMA)
-        for item in self.df['SPEC_ID']:
+        for item in self.df['SPECID']:
             self.spec_ids.append(str(item))
         print(type(self.spec_ids[3]))
 
@@ -43,8 +43,8 @@ class Main:
         SURVEY = line.split()[740]
         if SURVEY == 'SDSS' or SURVEY == 'GAMA':
             if SPEC_ID in self.spec_ids:
-                Y = float(line.split()[377])
-                ER = float(line.split()[384])
+                Y = float(line.split()[266])
+                ER = float(line.split()[273])
 
                 if ER == -9999.0 or 2*ER > Y:
                     Y = -99999.0
@@ -80,7 +80,7 @@ class Main:
             trust_val.append(self.reff_dict[key][2])
 
         Dict_for_dataframe ={
-            'SPEC_ID' : spec_ids_out,
+            'SPECID' : spec_ids_out,
             'GALRE_i' : reff,
             'GALREERR_i' : reff_err,
             'Aperture_1_Reff': trust_val
@@ -88,8 +88,8 @@ class Main:
 
         df2 = pd.DataFrame.from_dict(Dict_for_dataframe)
         
-        csv_out = pd.merge(self.df, df2, how="inner", on="SPEC_ID")
-        csv_out.to_csv('E:/databases/GAMA_ETG_OLA_R_Y_1.csv', index=False)
+        csv_out = pd.merge(self.df, df2, how="inner", on="SPECID")
+        csv_out.to_csv('E:/databases/GAMA_ETG_OLA_R_r_1.csv', index=False)
 
 if __name__ == '__main__':
     obj = Main(r'E:\backup\backup_BPT\GAMA_ETG_OLA.csv', r'E:\LICENSE\ProgsData\main\GAMAv3.txt')

@@ -27,7 +27,7 @@ class Main:
     
     def plotting(self):
 
-        fig, axs = plt.subplots(2, 4, figsize=(12, 8), tight_layout=True)
+        fig, axs = plt.subplots(2, 4, figsize=(16, 8), tight_layout=True)
         plt.subplots_adjust(wspace=0, hspace=0)
 
         ax1 = axs[0, 0]
