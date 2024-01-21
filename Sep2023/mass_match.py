@@ -8,7 +8,7 @@ from scipy.stats import sem
 import pandas as pd
 from scipy.optimize import curve_fit
 import random
-from _global_ import *
+from __legpars__ import *
 
 
 class Main:

@@ -303,6 +303,7 @@ class Main(hp):
     def sorting(self):
         counter_all = 0
         counter_best = 0
+        count_OIII = 0
         for pars in self.flux_er_mod:
             if type(pars) == list:
                 counter_all += 1
@@ -313,11 +314,14 @@ class Main(hp):
                     Main.exporting(self, pars)
                     counter_best += 1
                     self.flux_er_mod9.append(pars)
+                    if pars[-1][7][2] >= 3*pars[-1][8][2]:
+                        count_OIII += 1
             else:
                 pass
 
         print('All processed galaxies: ', counter_all)
         print('Galaxies with proper data: ', counter_best)
+        print('Galaxies with 3sigma OIII: ', count_OIII)
         Main.file_out(self)
 
     def exporting(self, pars):

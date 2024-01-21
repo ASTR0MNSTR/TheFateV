@@ -23,38 +23,43 @@ class Main:
         self.WHAN_colors_merged = ['royalblue', 'lime', 'hotpink', 'brown']
     
     def reading(self):
-        usecols= ['WHAN', 'BPT', 'Aperture_1_Reff']
-        self.dataframe = pd.read_csv(self.file, usecols=usecols)
+        self.dataframe = pd.read_csv(self.file)
     
     def plotting(self):
 
-        fig, axs = plt.subplots(2, 3, figsize=(12, 8), tight_layout=True)
+        fig, axs = plt.subplots(2, 4, figsize=(16, 8), tight_layout=True)
         plt.subplots_adjust(wspace=0, hspace=0)
 
         ax1 = axs[0, 0]
         ax3 = axs[0, 1]
         ax5 = axs[0, 2]
+        ax7 = axs[0, 3]
 
         ax2 = axs[1, 0]
         ax4 = axs[1, 1]
         ax6 = axs[1, 2]
+        ax8 = axs[1, 3]
 
-        Main.histo(self, ax1, [0], 'BPT')
-        Main.histo(self, ax3, [1], 'BPT')
-        Main.histo(self, ax5, [0, 1], 'BPT')
-        Main.histo(self, ax2, [0], 'WHAN')
-        Main.histo(self, ax4, [1], 'WHAN')
-        Main.histo(self, ax6, [0, 1], 'WHAN')
-        ax1.set(title=r'$> 1 \; R_{eff}$' + ' (969 gal.) \n [small galaxies]')
-        ax3.set(title=r'$< 1 \; R_{eff}$' + ' (652 gal.) \n [big galaxies]')
-        ax5.set(title='Total (1621 gal.)')     
+        Main.histo(self, ax1, 'OIII', 'OIII_er', 'BPT')
+        Main.histo(self, ax2, 'OIII', 'OIII_er', 'WHAN')
+        Main.histo(self, ax3, 'HB', 'HB_er', 'BPT')
+        Main.histo(self, ax4, 'HB', 'HB_er', 'WHAN')
+        Main.histo(self, ax5, 'NII', 'NII_er', 'BPT')
+        Main.histo(self, ax6, 'NII', 'NII_er', 'WHAN')
+        Main.histo(self, ax7, 'HA', 'HA_er', 'BPT')
+        Main.histo(self, ax8, 'HA', 'HA_er', 'WHAN')
+
+        ax1.set(title='OIII, 321 gal.')
+        ax3.set(title='HB, 777 gal.')
+        ax5.set(title='NII, 15 gal.')         
+        ax7.set(title='HA, 326 gal.')         
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
-        fig.savefig('./FIGURES_IN_PAPER/APERTURE_DIAG.pdf')
+        fig.savefig('./FIGURES-IN_PAPER/ABS.pdf')
         plt.show()
 
-    def sorting_forWHAN(self, keys):
+    def sorting_forWHAN(self, flux_key, flux_er_key):
         #SF
         SF = 0
         ELR = 0
@@ -65,8 +70,8 @@ class Main:
         RG = 0
         NDA = 0
         self.total1 = 0
-        for i in range(len(self.dataframe['Aperture_1_Reff'])):
-            if self.dataframe['Aperture_1_Reff'][i] in keys:
+        for i in range(len(self.dataframe['BMS'])):
+            if self.dataframe[flux_key][i] < (-2)*self.dataframe[flux_er_key][i]:
                 self.total1 += 1
                 if self.dataframe['WHAN'][i] == 'SF':
                     SF += 1
@@ -86,13 +91,13 @@ class Main:
                 #    NDA += 1
                     self.total1 -= 1
                 else:
-                    print(self.dataframe['WHAN'][i])
+                    print('AKHRANA, ATMENA')
         
-        print(keys, self.total1)
+        print('WHAN', flux_key, self.total1)
         
         return [sAGN, wAGN, UNC, SF, ELR, LLR, RG]
 
-    def sorting_forBPT(self, keys):
+    def sorting_forBPT(self, flux_key, flux_er_key):
         #SF
         SFX = 0
         SFY = 0
@@ -107,8 +112,8 @@ class Main:
         NOEL = 0
 
         self.total2 = 0
-        for i in range(len(self.dataframe['Aperture_1_Reff'])):
-            if self.dataframe['Aperture_1_Reff'][i] in keys:
+        for i in range(len(self.dataframe['BMS'])):
+            if self.dataframe[flux_key][i] < (-2)*self.dataframe[flux_er_key][i]:
                 self.total2 += 1
                 if self.dataframe['BPT'][i] in ['SFXY']:
                     SF += 1
@@ -132,9 +137,9 @@ class Main:
                 elif self.dataframe['BPT'][i] == 'NOEL':
                     NOEL += 1
                 else:
-                    print(self.dataframe['BPT'][i])
+                    print('AKHRANA, ATMENA')
         
-        print(keys, self.total2)
+        print('BPT', flux_key, self.total2)
         return [AGN, AGNX, UNC, UNCX, UNCY, SF, SFX, SFY, NOEL]
     
     def merging_BPT(self, list_obj):
@@ -190,18 +195,18 @@ class Main:
                 return (f'{pct:.2f}%')
         return my_format
     
-    def histo(self, figure, keys, kwarg):
+    def histo(self, figure, flux_key, flux_er_key, kwarg):
         size = 0.45
         if kwarg == 'WHAN':
-            figure.pie(Main.sorting_forWHAN(self, keys), radius=1, labels=Main.my_level_list(Main.sorting_forWHAN(self, keys), 'WHAN'), colors=self.WHAN_colors, autopct=Main.my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
-            figure.pie(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys)), radius=1-size, colors=self.WHAN_colors_merged, autopct=Main.short_WHAN_in(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
+            figure.pie(Main.sorting_forWHAN(self, flux_key, flux_er_key), radius=1, labels=Main.my_level_list(Main.sorting_forWHAN(self, flux_key, flux_er_key), 'WHAN'), colors=self.WHAN_colors, autopct=Main.my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+            figure.pie(Main.merging_WHAN(self, Main.sorting_forWHAN(self, flux_key, flux_er_key)), radius=1-size, colors=self.WHAN_colors_merged, autopct=Main.short_WHAN_in(Main.merging_WHAN(self, Main.sorting_forWHAN(self, flux_key, flux_er_key))), wedgeprops=dict(width=size, edgecolor='w'))
             figure.set(aspect='equal')
         elif kwarg == 'BPT':
-            figure.pie(Main.sorting_forBPT(self, keys), radius=1, labels=Main.my_level_list(Main.sorting_forBPT(self, keys), 'BPT'), colors=self.BPT_colors, autopct=Main.my_autopct_BPT, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
-            figure.pie(Main.merging_BPT(self, Main.sorting_forBPT(self, keys)), radius=1-size, colors=self.BPT_colors_merged, autopct=Main.short_BPT_in(Main.merging_BPT(self, Main.sorting_forBPT(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
+            figure.pie(Main.sorting_forBPT(self, flux_key, flux_er_key), radius=1, labels=Main.my_level_list(Main.sorting_forBPT(self, flux_key, flux_er_key), 'BPT'), colors=self.BPT_colors, autopct=Main.my_autopct_BPT, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+            figure.pie(Main.merging_BPT(self, Main.sorting_forBPT(self, flux_key, flux_er_key)), radius=1-size, colors=self.BPT_colors_merged, autopct=Main.short_BPT_in(Main.merging_BPT(self, Main.sorting_forBPT(self, flux_key, flux_er_key))), wedgeprops=dict(width=size, edgecolor='w'))
             figure.set(aspect='equal')
 
 if __name__ == '__main__':
-    obj = Main('E:/databases/GAMA_ETG_OLA_R_r_1.csv')
+    obj = Main('GAMA_ETG_OLA.csv')
     obj.reading()
     obj.plotting()

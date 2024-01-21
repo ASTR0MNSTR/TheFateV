@@ -12,12 +12,12 @@ def theor_lines(axes, key):
             a_all = 2.3152363967664957
             b_all = 5.276003555081468
             y = ((-(10**x)/10**9) / b_all) - a_all
-            ax.plot(x, y, color='k', linestyle='solid', label='Michałowski et.al. 2019')
+            ax.plot(x, y, color='k', linestyle='solid')
         elif key == 'sfrsm':
             x = np.arange(6.9, 12, 0.1)
-            ax.plot(x, (0.84 - 0.026*13.323023)*x - (6.51 - 0.11*13.323023), color='k', linestyle='dotted', label=r'$z = 0.01$')
-            ax.plot(x, (0.84 - 0.026*11.4074)*x - (6.51 - 0.11*11.4074), linestyle='dashed', color='k', label=r'$z = 0.19$')
-            ax.plot(x, (0.84 - 0.026*9.8615801)*x - (6.51 - 0.11*9.8615801), linestyle='solid', color='k', label=r'$z = 0.32$')
+            ax.plot(x, (0.84 - 0.026*13.323023)*x - (6.51 - 0.11*13.323023), color='k', linestyle='dotted')
+            ax.plot(x, (0.84 - 0.026*11.4074)*x - (6.51 - 0.11*11.4074), linestyle='dashed', color='k')
+            ax.plot(x, (0.84 - 0.026*9.8615801)*x - (6.51 - 0.11*9.8615801), linestyle='solid', color='k')
     
             
 def plotting(pars_dict):

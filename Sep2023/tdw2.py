@@ -7,6 +7,7 @@ import pandas as pd
 # from scipy.optimize import curve_fit
 from __legpars__ import *
 from __stats__ import *
+from __plt__ import *
 
 class hp:
     def log_er(item):
@@ -82,231 +83,93 @@ class Main(hp):
             ax.set_xlabel(r'$log(age/yr)$')
             #ax.set_yticks(np.arange(15, 25.9, 2))
 
-
-        Main.plotter_mdms_BPT(self, 'X', 'Y', 'Y_up', 'Y_down', 'AGN', True, 'P100', 'P100_er')
-        Main.plotter_mdms_WHAN(self, 'X', 'Y', 'Y_up', 'Y_down', 'SC_WHAN', True, 'P100', 'P100_er')
-        self.fig1.savefig('./FIGURES/TDW.pdf')
+        Main.plotter_mdms_BPT(self, 'X', 'Y', 'Y_up', 'Y_down', 'AGN', 'SC_WHAN', True, 'P100', 'P100_er')
+        
+        self.fig1.savefig('./FIGURES_IN_PAPER/TDW.pdf')
         #plt.show()
 
-    def plotter_mdms_BPT(self, x, y, up, down, AGN_key, bids, p100, p100_er):
-
-        yes_temp = []
-        UNC_temp = []
-        no_temp = []
-        noel_temp = []
-
-        yes_temp_age = []
-        UNC_temp_age = []
-        no_temp_age = []
-        noel_temp_age = []
-
-        yes_temp_up = []
-        UNC_temp_up = []
-        no_temp_up = []
-        noel_temp_up = []
-
-        yes_temp_down = []
-        UNC_temp_down = []
-        no_temp_down = []
-        noel_temp_down = []
-
-        tot_age = []
-        tot = []
-        tot_up = []
-        tot_down = []
-
+    def plotter_mdms_BPT(self, x, y, up, down, BPT_key, WHAN_key, bids_key, p100, p100_er):
+        XX = []
+        YY = []
+        Y_up = []
+        Y_down = []
+        BPT_keys = []
+        WHAN_keys = []
         for item in self.data_dict:
             X = item[x]
             Y = item[y]
-            Y_up = item[up]
-            Y_down = item[down]
-            AGN = item[AGN_key]
+            AGN = item[BPT_key]
+            WHAN = item[WHAN_key]
+            
             P100 = item[p100]
             P100_er = item[p100_er]
             if Y > 0 and P100 > 2*P100_er and P100_er >= 0:
+                XX.append(X)
+                YY.append(Y)
+                Y_up.append(item[up])
+                Y_down.append(item[down])
+                BPT_keys.append(AGN)
+                WHAN_keys.append(WHAN)
                 self.ax4.scatter(X, Y, alpha= 0.4, color = self.color_dict_BPT[AGN][0], marker='.', s = self.color_dict_BPT[AGN][1])
-                tot_age.append(X)
-                tot.append(Y)
-                tot_up.append(Y_up)
-                tot_down.append(Y_down)
-            #marker = self.color_dict[AGN][2]
-                if AGN in ['AGNXY', 'AGNX', 'AGNY']:
-                    yes_temp.append(Y)
-                    yes_temp_age.append(X)
-                    yes_temp_up.append(Y_up)
-                    yes_temp_down.append(Y_down)
-                elif AGN in ['UNCXY', 'UNCX', 'UNCY']:
-                    UNC_temp.append(Y)
-                    UNC_temp_age.append(X)
-                    UNC_temp_up.append(Y_up)
-                    UNC_temp_down.append(Y_down)
-                elif AGN in ['SFXY', 'SFX', 'SFY']:
-                    no_temp.append(Y)
-                    no_temp_age.append(X)
-                    no_temp_up.append(Y_up)
-                    no_temp_down.append(Y_down)
-                elif AGN == 'NOEL':
-                    noel_temp.append(Y)
-                    noel_temp_age.append(X)
-                    noel_temp_up.append(Y_up)
-                    noel_temp_down.append(Y_down)
+                self.ax5.scatter(X, Y, alpha= 0.4, color = self.color_dict_WHAN[WHAN][0], marker='.', s = self.color_dict_WHAN[WHAN][1])
         
-        class_list = [[yes_temp_age, yes_temp, 'midnightblue', yes_temp_down, yes_temp_up, 'P'], [UNC_temp_age, UNC_temp, 'springgreen', UNC_temp_down, UNC_temp_up, 'H'], [no_temp_age, no_temp, 'mediumvioletred', no_temp_down, no_temp_up, '*'], [noel_temp_age, noel_temp, 'orchid', noel_temp_down, noel_temp_up, 'o']]
+        class_list_BPT = class_list_creator_w_err(XX, YY, Y_up, Y_down, BPT_keys, 'BPT')
+        class_list_WHAN = class_list_creator_w_err(XX, YY, Y_up, Y_down, WHAN_keys, 'WHAN')
 
         self.means = []
         self.errs = []
         self.ages = []
-        if bids == True:
-            age_bids = [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
+        if bids_key == True:
+            bids = [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
             ages_const = np.arange(8.8, 10.2, 0.2)
         else:
-            age_bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
+            bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
             ages_const = np.arange(7, 12, 1)
 
-        for item in class_list:
+        errs = []
+        means = []
+        for item in class_list_BPT:
             X_plot = []
             Y_plot = []
-            X, Y, err, length = monte_carlo(item[0], item[1], item[3], item[4], age_bids)
-            self.ages = X
-            self.means.append(Y)
-            self.errs.append(err)
+            X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
+            means.append(Y)
+            errs.append(err)
             for j in range(len(X)):
                 if Y[j] != -99:
-                    self.ax4.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[2], fmt=item[5], ms = 12)
+                    self.ax4.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
                     self.ax4.text(X[j], Y[j], length[j], c = 'red')
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
-            self.ax4.plot(X_plot, Y_plot, alpha = 1, color=item[2])
+            self.ax4.plot(X_plot, Y_plot, alpha = 1, color=item[4][0])
 
         #for key in self.color_dict_leg.keys():
         #        self.ax4.scatter(-99, -99, alpha= 1, color = self.color_dict_leg[key][0], marker = self.color_dict_leg[key][2], s = self.color_dict_leg[key][1], label=key)
         self.ax4.set_xticks(ages_const)
-        for j, item in enumerate(class_list):
-            self.ax4.scatter(-99, -99, alpha = 1, color=item[2], marker=item[5], s = 150, label=self.list_names_BPT[j])
+        for j, item in enumerate(class_list_BPT):
+            self.ax4.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
         self.ax4.legend(loc=3, fontsize='13')
-
-        #self.ax4.set_xlim(8, 10.1)
-        #self.ax4.set_ylim(14, 26)
-        #self.fig.savefig(name_file + '.pdf')
-        #plt.show()
-    
-    def plotter_mdms_WHAN(self, x, y, up, down, AGN_key, bids, p100, p100_er):
-
         
-        tot_age = []
-        tot = []
-        tot_up = []
-        tot_down = []
-
-        yes_temp = []
-        UNC_temp = []
-        no_temp = []
-        noel_temp = []
-        llr_temp = []
-
-        yes_temp_age = []
-        UNC_temp_age = []
-        no_temp_age = []
-        noel_temp_age = []
-        llr_temp_age = []
-
-        yes_temp_up = []
-        UNC_temp_up = []
-        no_temp_up = []
-        noel_temp_up = []
-        llr_temp_up = []
-
-        yes_temp_down = []
-        UNC_temp_down = []
-        no_temp_down = []
-        noel_temp_down = []
-        llr_temp_down = []
-
-        wAGN_temp = []
-        wAGN_temp_age = []
-        wAGN_temp_down = []
-        wAGN_temp_up = []
-
-        for item in self.data_dict:
-            X = item[x]
-            Y = item[y]
-            Y_up = item[up]
-            Y_down = item[down]
-            AGN = item[AGN_key]
-            P100 = item[p100]
-            P100_er = item[p100_er]
-            if Y > 0 and P100 > 2*P100_er and P100_er >= 0:
-                self.ax5.scatter(X, Y, alpha= 0.4, color = self.color_dict_WHAN[AGN][0], marker='.', s = self.color_dict_WHAN[AGN][1])
-                tot_age.append(X)
-                tot.append(Y)
-                tot_up.append(Y_up)
-                tot_down.append(Y_down)
-            #marker = self.color_dict[AGN][2]
-                if AGN in ['sAGN']:
-                    yes_temp.append(Y)
-                    yes_temp_age.append(X)
-                    yes_temp_up.append(Y_up)
-                    yes_temp_down.append(Y_down)
-                elif AGN in ['ELR']:
-                    UNC_temp.append(Y)
-                    UNC_temp_age.append(X)
-                    UNC_temp_up.append(Y_up)
-                    UNC_temp_down.append(Y_down)
-                elif AGN in ['SF']:
-                    no_temp.append(Y)
-                    no_temp_age.append(X)
-                    no_temp_up.append(Y_up)
-                    no_temp_down.append(Y_down)
-                elif AGN in ['NLR']:
-                    noel_temp.append(Y)
-                    noel_temp_age.append(X)
-                    noel_temp_up.append(Y_up)
-                    noel_temp_down.append(Y_down)
-                elif AGN in ['LLR']:
-                    llr_temp.append(Y)
-                    llr_temp_age.append(X)
-                    llr_temp_up.append(Y_up)
-                    llr_temp_down.append(Y_down)
-                elif AGN in ['wAGN']:
-                    wAGN_temp.append(Y)
-                    wAGN_temp_age.append(X)
-                    wAGN_temp_up.append(Y_up)
-                    wAGN_temp_down.append(Y_down)
-
-        
-        #class_list = [[yes_temp_age, yes_temp, 'midnightblue'], [UNC_temp_age, UNC_temp, 'red'], [no_temp_age, no_temp, 'mediumvioletred'], [noel_temp_age, noel_temp, 'orchid'], [llr_age, llr, 'maroon']]
-        class_list = [[yes_temp_age, yes_temp, 'midnightblue', yes_temp_down, yes_temp_up, 'P'], [wAGN_temp_age, wAGN_temp, 'blue', wAGN_temp_down, wAGN_temp_up, 'P'], [no_temp_age, no_temp, 'mediumvioletred', no_temp_down, no_temp_up, '*'], [UNC_temp_age, UNC_temp, 'sandybrown', UNC_temp_down, UNC_temp_up, 'D'], [noel_temp_age, noel_temp, 'chocolate', noel_temp_down, noel_temp_up, 'o'], [llr_temp_age, llr_temp, 'maroon', llr_temp_down, llr_temp_up, 'o']]
-
-        self.means = []
-        self.errs = []
-        self.ages = []
-        if bids == True:
-            age_bids = [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
-            ages_const = np.arange(8.8, 10.2, 0.2)
-        else:
-            age_bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
-            ages_const = np.arange(7, 12, 1)
-
-        for item in class_list:
+        errs = []
+        means = []
+        for item in class_list_WHAN:
             X_plot = []
             Y_plot = []
-            X, Y, err, length = monte_carlo(item[0], item[1], item[3], item[4], age_bids)
-            self.ages = X
-            self.means.append(Y)
-            self.errs.append(err)
+            X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
+            means.append(Y)
+            errs.append(err)
             for j in range(len(X)):
                 if Y[j] != -99:
-                    self.ax5.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[2], fmt=item[5], ms = 12)
+                    self.ax5.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
                     self.ax5.text(X[j], Y[j], length[j], c = 'red')
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
-            self.ax5.plot(X_plot, Y_plot, alpha = 1, color=item[2])
-            
-        #for key in self.color_dict_WHAN.keys():
-        #    self.ax5.scatter(-99, -99, alpha= 0.7, color = self.color_dict_WHAN[key][0], marker = self.color_dict_WHAN[key][2], s = self.color_dict_WHAN[key][1], label=key)
+            self.ax5.plot(X_plot, Y_plot, alpha = 1, color=item[4][0])
+
+        #for key in self.color_dict_leg.keys():
+        #        self.ax4.scatter(-99, -99, alpha= 1, color = self.color_dict_leg[key][0], marker = self.color_dict_leg[key][2], s = self.color_dict_leg[key][1], label=key)
         self.ax5.set_xticks(ages_const)
-        for j, item in enumerate(class_list):
-            self.ax5.scatter(-99, -99, alpha = 1, color=item[2], marker=item[5], s = 150, label=self.list_names_WHAN[j])
+        for j, item in enumerate(class_list_WHAN):
+            self.ax5.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
         self.ax5.legend(loc=3, fontsize='13')
 
         #self.ax4.set_xlim(8, 10.1)

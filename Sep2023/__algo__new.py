@@ -171,20 +171,20 @@ def WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA):
     if HA_ew == -99999.0:
         return 'NDA'
     else:
-        if HA_ew + HA_ew_err <= -0.307:
+        if (HA_ew + HA_ew_err <= -0.307 and len(pair_HA) == 0) or (HA_ew <= -0.307 and len(pair_HA) != 0):
             return 'LLR'
         elif HA_ew - HA_ew_err > -0.307 and HA_ew + HA_ew_err < 0.47712 and len(pair_HA) == 0:
             return 'ELR'
-        elif HA_ew + HA_ew_err < 0.47712 and len(pair_HA) != 0:
+        elif (HA_ew + HA_ew_err < 0.47712 and len(pair_HA) == 0) or (HA_ew < 0.47712 and len(pair_HA) != 0):
             return 'NLR'
         else:
             if X == -99:
                 return 'LLR'
-            elif HA_ew - HA_ew_err > 0.47712 and X + X_er < -0.4 and 'up' not in pair_x_flags:
+            elif HA_ew - HA_ew_err > 0.47712 and X + X_er < -0.4 and 'up' not in pair_x_flags and len(pair_HA) == 0:
                 return 'SF'
-            elif HA_ew - HA_ew_err > 0.47712 and X - X_er > -0.4 and HA_ew + HA_ew_err < 0.77815125 and len(pair_x_flags) == 0:
+            elif HA_ew - HA_ew_err > 0.47712 and X - X_er > -0.4 and HA_ew + HA_ew_err < 0.77815125 and len(pair_x_flags) == 0 and len(pair_HA) == 0:
                 return 'wAGN'
-            elif HA_ew - HA_ew_err > 0.47712 and X - X_er > -0.4 and HA_ew - HA_ew_err >= 0.77815125 and len(pair_x_flags) == 0:
+            elif HA_ew - HA_ew_err > 0.47712 and X - X_er > -0.4 and HA_ew - HA_ew_err >= 0.77815125 and len(pair_x_flags) == 0 and len(pair_HA) == 0:
                 return 'sAGN'
             else:
                 return 'UNC'
