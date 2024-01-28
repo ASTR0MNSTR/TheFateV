@@ -98,7 +98,7 @@ class Main(hp):
 
         Main.plotter_mdms_BPT(self, False)
         Main.plotter_mdms_WHAN(self, False)
-        self.fig1.savefig('./FIGURES/SurfaceDensity.pdf')
+        self.fig1.savefig('./FIGURES_IN_PAPER/SurfaceDensity.pdf')
         #plt.show()
 
     def plotter_mdms_BPT(self, bids):

@@ -86,10 +86,10 @@ class Main(hp):
         self.IS_BEST = []
         self.IS_SBEST = []
         self.GAMAID = []
-        self.SFR_HA = []
-        self.SFR_HA_er = []
+        # self.SFR_HA = []
+        # self.SFR_HA_er = []
         self.coef = []
-        self.met = []
+        # self.met = []
         self.col1 = []
         self.col2 = []
         self.AGE = []
@@ -97,21 +97,21 @@ class Main(hp):
 
         self.HA_l = []
         self.HB_l = []
-        self.OI_l = []
+        # self.OI_l = []
         self.OIII_l = []
         self.NII_l = []
-        self.SII_l = []
-        self.HA_EW_l = []
-        self.OII_l = []
+        # self.SII_l = []
+        # self.HA_EW_l = []
+        # self.OII_l = []
 
         self.HA_l_er = []
         self.HB_l_er = []
-        self.OI_l_er = []
+        # self.OI_l_er = []
         self.OIII_l_er = []
         self.NII_l_er = []
-        self.SII_l_er = []
-        self.HA_EW_l_er = []
-        self.OII_l_er = []
+        # self.SII_l_er = []
+        # self.HA_EW_l_er = []
+        # self.OII_l_er = []
 
         self.BMS = []
         self.NOEL_flags = []
@@ -124,57 +124,38 @@ class Main(hp):
         self.SM = []
         self.SC_WHAN = []
 
-        self.HdA = []
-        self.HdA_er = []
-        self.HdF = []
-        self.HdF_er = []
-        self.HgA = []
-        self.HgA_er = []
-        self.HgF = []
-        self.HgF_er = []
+        # self.HdA = []
+        # self.HdA_er = []
+        # self.HdF = []
+        # self.HdF_er = []
+        # self.HgA = []
+        # self.HgA_er = []
+        # self.HgF = []
+        # self.HgF_er = []
 
         self.count_1 = 0
         self.count_2 = 0
         self.count_3 = 0
         self.count_4 = 0
         
-        self.SN_HdF = []
-        self.SN_HgF = []
+        # self.SN_HdF = []
+        # self.SN_HgF = []
 
-        self.HgF_cont = []
-        self.HdF_cont = []
-        self.HA_cont = []
+        # self.HgF_cont = []
+        # self.HdF_cont = []
+        # self.HA_cont = []
         self.GAMAIDs = []
         self.lines_prob = []
         self.ages = []
+        
+        self.LAGNs = []
+        self.LAGNs_er = []
 
-        self.radio_sources = [39495, 272962, 375530, 959586, 210108, 137037, 419441, 31076, 250557, 228288, 238593, 238593, 373280, 622622, 185507]
+        # self.radio_sources = [39495, 272962, 375530, 959586, 210108, 137037, 419441, 31076, 250557, 228288, 238593, 238593, 373280, 622622, 185507]
 
-        #self.color_dict ={
-        #    'AGN' : ['midnightblue', 15, '.'],
-        #    'AGNX' : ['midnightblue', 27, '>'],
-        #    'AGNY' : ['midnightblue', 27, '^'],
-        #    'UNC' : ['springgreen', 3, '.'],
-        #    'UNCX' : ['springgreen', 9, 's'],
-        #    'UNCY' : ['springgreen', 9, 'D'],
-        #    'SF' : ['mediumvioletred', 3, '.'],
-        #    'SFX' : ['mediumvioletred', 9, '<'],
-        #    'SFY' : ['mediumvioletred', 9, 'v'],
-        #    'NOEL' : ['orchid', 3, '.'],
-        #     'NDA' : ['slategrey', 3, '.']
-        #}
         size = 3
         self.color_dict = color_dict_BPT
 
-        #self.cd_WHAN = {
-        #    'NOEL' : ['orchid', 24, '.'],
-        #    'NDA' : ['gold', 24, '.'],
-        #    'LLR' : ['maroon', 24, '.'],
-        #    'ELR' : ['red', 24, '.'],
-        #    'SF' : ['mediumvioletred', 24, '.'],
-        #    'wAGN' : ['blue', 24, '.'],
-        #    'sAGN' : ['midnightblue', 24, '.'],
-        #}
         self.cd_WHAN = cd_WHAN
 
         self.cd_WHAN_leg = cd_WHAN_leg
@@ -271,7 +252,7 @@ class Main(hp):
 
         # dust_correction module:
         
-        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, pair_HA)
+        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, pair_HA, Z)
 
         X_er = 0
         Y_er = 0
@@ -296,7 +277,7 @@ class Main(hp):
 
         kwargs = [SURV, SURV_CODE, IS_BEST, IS_SBEST, CATAID,
                   [SFR_HA, SFR_HA_er], AGN, FLUXES, FLUXES_ER, bms, [RA, DEC, Z, SPEC_ID], [X, pair_x_flags, HA_EW, pair_HA], SC_WHAN,
-                  [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_OR, HA_EW_ERR], HgF_cont, HdF_cont, HA_cont, age]
+                  [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_OR, HA_EW_ERR], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er]
         res_out_out = [res_out, kwargs]
         return res_out_out
 
@@ -330,8 +311,8 @@ class Main(hp):
         self.IS_BEST.append(pars[-1][2])
         self.IS_SBEST.append(pars[-1][3])
         self.GAMAID.append(pars[-1][4])
-        self.SFR_HA.append(pars[-1][5][0])
-        self.SFR_HA_er.append(pars[-1][5][1])
+        # self.SFR_HA.append(pars[-1][5][0])
+        # self.SFR_HA_er.append(pars[-1][5][1])
 
         # changed line
         self.AGN.append(pars[-1][6])
@@ -340,17 +321,17 @@ class Main(hp):
         self.HB_l.append(pars[-1][7][1])
         self.OIII_l.append(pars[-1][7][2])
         self.NII_l.append(pars[-1][7][3])
-        self.SII_l.append(pars[-1][7][4])
-        self.OI_l.append(pars[-1][7][5])
-        self.OII_l.append(pars[-1][7][6])
+        # self.SII_l.append(pars[-1][7][4])
+        # self.OI_l.append(pars[-1][7][5])
+        # self.OII_l.append(pars[-1][7][6])
 
         self.HA_l_er.append(pars[-1][8][0])
         self.HB_l_er.append(pars[-1][8][1])
         self.OIII_l_er.append(pars[-1][8][2])
         self.NII_l_er.append(pars[-1][8][3])
-        self.SII_l_er.append(pars[-1][8][4])
-        self.OI_l_er.append(pars[-1][8][5])
-        self.OII_l_er.append(pars[-1][8][6])
+        # self.SII_l_er.append(pars[-1][8][4])
+        # self.OI_l_er.append(pars[-1][8][5])
+        # self.OII_l_er.append(pars[-1][8][6])
 
         self.BMS.append(pars[-1][9])
         self.RA.append(pars[-1][10][0])
@@ -359,25 +340,27 @@ class Main(hp):
         self.SPEC_ID.append(pars[-1][10][3])
         self.SC_WHAN.append(pars[-1][12])
 
-        self.HdA.append(pars[-1][13][0])
-        self.HdA_er.append(pars[-1][13][1])
-        self.HdF.append(pars[-1][13][2])
-        self.HdF_er.append(pars[-1][13][3])
-        self.HgA.append(pars[-1][13][4])
-        self.HgA_er.append(pars[-1][13][5])
-        self.HgF.append(pars[-1][13][6])
-        self.HgF_er.append(pars[-1][13][7])
+        # self.HdA.append(pars[-1][13][0])
+        # self.HdA_er.append(pars[-1][13][1])
+        # self.HdF.append(pars[-1][13][2])
+        # self.HdF_er.append(pars[-1][13][3])
+        # self.HgA.append(pars[-1][13][4])
+        # self.HgA_er.append(pars[-1][13][5])
+        # self.HgF.append(pars[-1][13][6])
+        # self.HgF_er.append(pars[-1][13][7])
 
-        self.SN_HdF.append(pars[-1][13][2]/pars[-1][13][3])
-        self.SN_HgF.append(pars[-1][13][6]/pars[-1][13][7])
+        # self.SN_HdF.append(pars[-1][13][2]/pars[-1][13][3])
+        # self.SN_HgF.append(pars[-1][13][6]/pars[-1][13][7])
 
-        self.HA_EW_l.append(pars[-1][14][0])
-        self.HA_EW_l_er.append(pars[-1][14][1])
+        # self.HA_EW_l.append(pars[-1][14][0])
+        # self.HA_EW_l_er.append(pars[-1][14][1])
 
-        self.HgF_cont.append(pars[-1][15])
-        self.HdF_cont.append(pars[-1][16])
-        self.HA_cont.append(pars[-1][17])
+        # self.HgF_cont.append(pars[-1][15])
+        # self.HdF_cont.append(pars[-1][16])
+        # self.HA_cont.append(pars[-1][17])
         self.ages.append(pars[-1][18])
+        self.LAGNs.append(pars[-1][19])
+        self.LAGNs_er.append(pars[-1][20])
 
     def file_out(self):
 
@@ -392,18 +375,18 @@ class Main(hp):
             'Z' : self.Z,
             'BPT': self.AGN,
             'WHAN' : self.SC_WHAN,
-            'SN_HgF' : self.SN_HgF,
-            'SN_HdF' : self.SN_HdF,
-            'HgF' : self.HgF,
-            'HgF_cont' : self.HgF_cont,
-            'HgF_er' : self.HgF_er,
-            'HdF' : self.HdF,
-            'HdF_cont' : self.HdF_cont,
-            'HdF_er' : self.HdF_er,
-            'HA_EW' : self.HA_EW_l,
-            'HA_EW_ERR' : self.HA_EW_l_er,
+            # 'SN_HgF' : self.SN_HgF,
+            # 'SN_HdF' : self.SN_HdF,
+            # 'HgF' : self.HgF,
+            # 'HgF_cont' : self.HgF_cont,
+            # 'HgF_er' : self.HgF_er,
+            # 'HdF' : self.HdF,
+            # 'HdF_cont' : self.HdF_cont,
+            # 'HdF_er' : self.HdF_er,
+            # 'HA_EW' : self.HA_EW_l,
+            # 'HA_EW_ERR' : self.HA_EW_l_er,
             'HA': self.HA_l,
-            'HA_cont' : self.HA_cont,
+            # 'HA_cont' : self.HA_cont,
             'HA_er': self.HA_l_er,
             'HB': self.HB_l,
             'HB_er': self.HB_l_er,
@@ -411,17 +394,19 @@ class Main(hp):
             'OIII_er': self.OIII_l_er,
             'NII': self.NII_l,
             'NII_er': self.NII_l_er,
-            'HdA' : self.HdA,
-            'HdA_er' : self.HdA_er,
-            'HgA' : self.HgA,
-            'HgA_er' : self.HgA_er, 
-            'SII' : self.SII_l,
-            'SII_er' : self.SII_l_er,
-            'OI' : self.OI_l,
-            'OI_er' : self.OI_l_er,
-            'OII' : self.OII_l,
-            'OII_er' : self.OII_l_er,
-            'BMS': self.BMS
+            # 'HdA' : self.HdA,
+            # 'HdA_er' : self.HdA_er,
+            # 'HgA' : self.HgA,
+            # 'HgA_er' : self.HgA_er, 
+            # 'SII' : self.SII_l,
+            # 'SII_er' : self.SII_l_er,
+            # 'OI' : self.OI_l,
+            # 'OI_er' : self.OI_l_er,
+            # 'OII' : self.OII_l,
+            # 'OII_er' : self.OII_l_er,
+            'BMS': self.BMS,
+            'LAGN' : self.LAGNs,
+            'LAGN_er' : self.LAGNs_er
         }
 
         df = pd.DataFrame(Dict)
@@ -736,7 +721,7 @@ class Main(hp):
         self.fig.colorbar(self.s_m, cax=cbar_ax)
         #self.ax7.legend(loc=3, fontsize="13")
         
-        self.fig.savefig('./FIGURES/BPT_WHAN_err_w.pdf')
+        self.fig.savefig('./FIGURES_IN_PAPER/BPT_WHAN_err_w.pdf')
         #self.fig.savefig('WHAN.pdf')
 
         # plt.show()

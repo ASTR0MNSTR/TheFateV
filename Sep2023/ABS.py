@@ -56,7 +56,7 @@ class Main:
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
-        fig.savefig('./FIGURES-IN_PAPER/ABS.pdf')
+        fig.savefig('./FIGURES_IN_PAPER/ABS.pdf')
         plt.show()
 
     def sorting_forWHAN(self, flux_key, flux_er_key):

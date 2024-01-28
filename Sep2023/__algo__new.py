@@ -1,4 +1,7 @@
 import math
+from astropy.cosmology import Planck13 as cosmo
+import astropy.units as u
+import numpy as np
 
 def err_estim(x, y, x_er, y_er):
     return math.sqrt((x_er*y)**2 + (y_er*x)**2)/(x*y*math.log(10))
@@ -30,19 +33,68 @@ def dust_correction(HA, HA_er, HB, HB_er):
     if HA_er > 0 and HB_er > 0 and HA != -99999.0 and HB != -99999.0:
         if HA > SN*HA_er and HB > SN*HB_er and HA/HB > 2.86:
             f_HA = ((HA/HB)/2.86)**(2.114)
-            A_V = 2.5*math.log(f_HA, 10)
-            coefs = atten_coef(A_V)
-            # coefs.append(f_HA) #!
-        elif HA > SN*HA_er and HB < SN*HB_er:
-            if HB + SN*HB_er < 0:
-                f_HA = ((HA/(2*HB_er))/2.86)**(2.114)
-            else:
-                f_HA = ((HA/(HB + 2*HB_er))/2.86)**(2.114)
-            A_V = 2.5*math.log(f_HA, 10)
-            coefs = atten_coef(A_V)
-            # coefs.append(f_HA) #!
+            # A_V = 2.5*math.log(f_HA, 10)
+            # coefs = atten_coef(A_V)
+            
+        #COMMENT JUST FOR EXPERIMENT#
+        
+        # elif HA > SN*HA_er and HB < SN*HB_er:
+        #     if HB + SN*HB_er < 0 and HA/(2*HB_er) > 2.86:
+        #         f_HA = ((HA/(2*HB_er))/2.86)**(2.114)
+        #     elif HB + SN*HB_er > 0 and HA/(HB + 2*HB_er) > 2.86:
+        #         f_HA = ((HA/(HB + 2*HB_er))/2.86)**(2.114)
+        #     else:
+        #         f_HA = 1
+        #     A_V = 2.5*math.log(f_HA, 10)
+        #     coefs = atten_coef(A_V)
+        
+        elif HA > SN*HA_er and HB < SN*HB_er and HA/(2*HB_er) > 2.86:
+            f_HA = ((HA/(2*HB_er))/2.86)**(2.114)
+        else:
+            f_HA = 1
+        A_V = 2.5*math.log(f_HA, 10)
+        coefs = atten_coef(A_V)
+        
+        # else:
+        #     f_HA = 1
+        #     A_V = 2.5*math.log(f_HA, 10)
+        #     coefs = atten_coef(A_V)
             
     return coefs
+
+def luminosity_calcularor(OIII, OIII_er, z, LAGN_er):
+    # cosmo = FlatLambdaCDM(H0=70 * u.km / u.s / u.Mpc, Om0=0.3)
+    dist_Q = cosmo.luminosity_distance(z)
+    distance = dist_Q.to(u.cm).value
+    
+    LAGN = 3500 * 4 * np.pi * (distance**2) * OIII / (10**(60)) #erg/s
+    if LAGN_er == None:
+        LAGN_er = 3500 * 4 * np.pi * (distance**2) * OIII_er / (10**(60))
+    return LAGN, LAGN_er
+    
+def AGN_lum(OIII, OIII_er, coef, z):
+    SN = 2
+    if OIII == -99999.0 or OIII_er < 0:
+        return -99999.0, -99999.0
+    elif OIII < 0 and OIII_er > 0 and SN*OIII_er + OIII < 0: #absorption
+        OIII = SN*OIII_er*coef
+        OIII_er *= coef
+        LAGN_er = 'upAbs'
+    elif OIII <= SN*OIII_er: #non-detection
+        OIII *= coef
+        OIII_er *= coef
+        OIII += SN*OIII_er
+        LAGN_er = 'upNon'
+    elif OIII > SN*OIII_er:
+        OIII *= coef
+        OIII_er *= coef
+        LAGN_er = None
+    else:
+        print('SMTH WRONG!')
+    
+    LAGN, LAGN_err = luminosity_calcularor(OIII, OIII_er, z, LAGN_er)
+    return LAGN, LAGN_err
+    
 
 def line_flagging(pair, spec_coefs):
     SN = 2
@@ -189,7 +241,7 @@ def WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA):
             else:
                 return 'UNC'
             
-def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, pair_HA):
+def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, pair_HA, z):
 
     #for dust correction
     
@@ -224,6 +276,9 @@ def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, 
     #if abs_X > 0 or abs_Y > 0:
     #    AGN += '!'
     #    SC_WHAN += '!'
+    
+    #AGN Luminosity estimation
+    LAGN, LAGN_er = AGN_lum(OIII, OIII_er, coefs[0], z)
 
-    return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN
+    return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er
 
