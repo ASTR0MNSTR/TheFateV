@@ -13,7 +13,7 @@ class Main:
     def __init__(self, file):
         self.file = file
         self.dataframe = None
-        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NLR']
+        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NER']
         self.WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
 
         self.BPT_labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
@@ -80,7 +80,7 @@ class Main:
                     wAGN += 1
                 elif self.dataframe['WHAN'][i] == 'UNC':
                     UNC += 1
-                elif self.dataframe['WHAN'][i] == 'NLR':
+                elif self.dataframe['WHAN'][i] == 'NER':
                     RG += 1
                 elif self.dataframe['WHAN'][i] == 'NDA':
                 #    NDA += 1
@@ -159,7 +159,7 @@ class Main:
     def my_level_list(data, kwarg):
         list = []
         if kwarg == 'WHAN':
-            labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NLR']
+            labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NER']
         elif kwarg == 'BPT':
             labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
 

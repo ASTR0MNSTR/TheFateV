@@ -7,7 +7,7 @@ import pandas as pd
 from astropy.cosmology import FlatLambdaCDM
 import astropy.units as u
 
-from __algo__new import *
+from __algo__ import *
 from __legpars__ import *
 from __stats__ import *
 from __plt__ import *
@@ -101,8 +101,8 @@ class Main(hp):
         self.OIII_l = []
         self.NII_l = []
         # self.SII_l = []
-        # self.HA_EW_l = []
-        # self.OII_l = []
+        self.HA_EW_l = []
+        self.OII_l = []
 
         self.HA_l_er = []
         self.HB_l_er = []
@@ -110,8 +110,8 @@ class Main(hp):
         self.OIII_l_er = []
         self.NII_l_er = []
         # self.SII_l_er = []
-        # self.HA_EW_l_er = []
-        # self.OII_l_er = []
+        self.HA_EW_l_er = []
+        self.OII_l_er = []
 
         self.BMS = []
         self.NOEL_flags = []
@@ -123,7 +123,7 @@ class Main(hp):
         self.SPEC_ID = []
         self.SM = []
         self.SC_WHAN = []
-
+        
         # self.HdA = []
         # self.HdA_er = []
         # self.HdF = []
@@ -150,6 +150,26 @@ class Main(hp):
         
         self.LAGNs = []
         self.LAGNs_er = []
+        self.k_OIII = []
+        self.logLAGN = []
+        self.k_HA = []
+        self.E_B_V = []
+        
+        self.RA_m = []
+        self.DEC_m = []
+        self.OIII_m = []
+        self.OIII_er_m = []
+        self.LAGN_m = []
+        self.LAGN_max_m = []
+        self.out_m = []
+        self.out_m_off = []
+        
+        self.OIII_m_out = []
+        self.OIII_er_m_out = []
+        self.LAGN_m_out = []
+        self.LAGN_max_m_out = []
+        self.out_m_out = []
+        self.out_m_off_out = []
 
         # self.radio_sources = [39495, 272962, 375530, 959586, 210108, 137037, 419441, 31076, 250557, 228288, 238593, 238593, 373280, 622622, 185507]
 
@@ -168,21 +188,24 @@ class Main(hp):
                 self.sample_dict.update({int(row['CATAID_1']): [int(row['below=0/MS=1']), float(row['ager_percentile50'])]})
 
     def samples_get(self):
-        #data_dict = []
-        pass
-        #with open(self.sample_file, 'r') as csvfile:
-        #    reader = csv.DictReader(csvfile)
-        #    for row in reader:
-        #        data_dict.append(
-        #            {'OI': row['OI'], 'GAMAID': row['GAMAID'], 'age': row['age']})
-
-        #for galaxy in data_dict:
-        #    if galaxy['OI'] == '':
-        #        IND = 0
-        #    else:
-        #        IND = int(galaxy['OI'])
-        #    self.sample_dict.update(
-        #        {int(galaxy['GAMAID']): [float(galaxy['age']), -1, IND, -99.9]})
+        with open(r'E:\backup\backup_BPT\Sep2023\outflow4OR_1.txt', 'r') as f:
+            header = f.readline()
+            print(header)
+            lines = f.readlines()
+            lines_strip = [item.strip() for item in lines]
+            for line in lines_strip:
+                self.RA_m.append(float(line.split()[0]))
+                self.DEC_m.append(float(line.split()[1]))
+                self.OIII_m.append(float(line.split()[2]))
+                self.OIII_er_m.append(float(line.split()[3]))
+                self.LAGN_m.append(float(line.split()[4]))
+                self.LAGN_max_m.append(float(line.split()[5]))
+                self.out_m_off.append(float(line.split()[6]))
+                try:
+                    self.out_m.append(float(line.split()[7]))
+                except:
+                    self.out_m.append(-99)
+        print(self.RA_m)            
 
     def gama_reading(self):
         count = 0
@@ -200,27 +223,48 @@ class Main(hp):
         line_out = line.strip()
         galaxy_pars = line_out.split()
         CATAID = int(galaxy_pars[1])
+        RA = float(galaxy_pars[2])
+        DEC = float(galaxy_pars[3])
         bms = -1
         age = -1
         if CATAID in self.sample_dict.keys():
             bms, age = self.sample_dict[CATAID]
         else:
             return 1
-
+        
+        # k = 0
+        OIII = float(galaxy_pars[167])
+        
+        # for i in range(len(self.RA_m)):
+        #     if abs(self.RA_m[i] - RA) <= 0.01 and abs(self.DEC_m[i] - DEC) <= 0.01 and abs(self.OIII_m[i] - OIII) <= 0.01:
+        #         k = 1
+        #         print('Gotcha')
+        #         OIII_m = self.OIII_m[i]
+        #         OIII_er_m = self.OIII_er_m[i]
+        #         LAGN_m = self.LAGN_m[i]
+        #         LAGN_max = self.LAGN_max_m[i]
+        #         out_m = self.out_m[i]
+        #         out_m_off = self.out_m_off[i]
+        #         break
+        
+        # if k == 0:
+        #     return 1
+                
         Z = float(galaxy_pars[4])
-        RA = float(galaxy_pars[2])
-        DEC = float(galaxy_pars[3])
+
         SPEC_ID = galaxy_pars[0]
         HA = float(galaxy_pars[82])
         HA_er = float(galaxy_pars[81])
-        HA_cont = float(galaxy_pars[78])
         HB = float(galaxy_pars[182])
         HB_er = float(galaxy_pars[181])
         OIII = float(galaxy_pars[167])
         OIII_er = float(galaxy_pars[166])  # OIIIR, 5007
+        OIIIB = float(galaxy_pars[172])
+        OIIIB_er = float(galaxy_pars[171])
         NII = float(galaxy_pars[72])
         NII_er = float(galaxy_pars[71])  # NIIR, 6583
 
+        HA_cont = float(galaxy_pars[78])
         HdA = float(galaxy_pars[262])
         HdA_er = float(galaxy_pars[261])
 
@@ -235,8 +279,8 @@ class Main(hp):
         HgF_er = float(galaxy_pars[226])
         HgF_cont = float(galaxy_pars[223])
 
-        HA_EW = float(galaxy_pars[80])
-        HA_EW_ERR = float(galaxy_pars[79])
+        HA_EW_1 = float(galaxy_pars[80])
+        HA_EW_ERR_1 = float(galaxy_pars[79])
         
         OII = float(galaxy_pars[267]) # OII 3727
         OII_er = float(galaxy_pars[266])
@@ -248,14 +292,18 @@ class Main(hp):
         SII_er = float(galaxy_pars[66])
 
 
-        HA_EW, HA_EW_ERR, pair_HA, HA_EW_OR = hp.ew_proc(HA_EW, HA_EW_ERR)
+        HA_EW, HA_EW_ERR, pair_HA, HA_EW_OR = hp.ew_proc(HA_EW_1, HA_EW_ERR_1)
 
         # dust_correction module:
         
-        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, pair_HA, Z)
+        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, k_OIII, k_HA, E_B_V = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, pair_HA, Z)
 
         X_er = 0
         Y_er = 0
+        try:
+            log_LAGN = math.log10(LAGN*(10**43))
+        except ValueError:
+            log_LAGN = -99999.0
 
         SFR_HA, SFR_HA_er = hp.SFR(HA, HA_er, Z)
 
@@ -267,17 +315,12 @@ class Main(hp):
         FLUXES = [HA, HB, OIII, NII, SII, OI, OII]
         FLUXES_ER = [HA_er, HB_er, OIII_er, NII_er, SII_er, OI_er, OII_er]
 
-        #par_met_0 = [[OIII, OIII_er], [HB, HB_er]]
-        #par_met_1 = [[NII, NII_er], [HA, HA_er]]
-
-        #par_mets = [hp.indexing(par) for par in [par_met_0, par_met_1]]
-        #met_out = hp.metallicity(hp.val_mist([par_mets[0], par_mets[1]]))
-
         res_out = [X, X_er, pair_x_flags, Y, Y_er, pair_y_flags]
 
         kwargs = [SURV, SURV_CODE, IS_BEST, IS_SBEST, CATAID,
                   [SFR_HA, SFR_HA_er], AGN, FLUXES, FLUXES_ER, bms, [RA, DEC, Z, SPEC_ID], [X, pair_x_flags, HA_EW, pair_HA], SC_WHAN,
-                  [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_OR, HA_EW_ERR], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er]
+                  [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_1, HA_EW_ERR_1], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er]
+                #   [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_1, HA_EW_ERR_1], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er, k_OIII, log_LAGN, k_HA, E_B_V, OIII_m, OIII_er_m, LAGN_m, out_m, LAGN_max, out_m_off]
         res_out_out = [res_out, kwargs]
         return res_out_out
 
@@ -289,7 +332,7 @@ class Main(hp):
             if type(pars) == list:
                 counter_all += 1
                 if pars[-1][2] == 'true' and pars[-1][3] == 'true' and (pars[-1][0] == 'GAMA' or pars[-1][0] == 'SDSS') and pars[-1][6] != 'NDA': #!!!!
-                #if pars[-1][2] == 'true' and pars[-1][3] == 'true': #!!!!
+                # if pars[-1][2] == 'true' and pars[-1][3] == 'true': #!!!!
                     # if pars[-1][4] in self.radio_sources:
                     #     print(pars[-1][4], pars[-1][10][3], pars[-1][6], pars[-1][12])
                     Main.exporting(self, pars)
@@ -297,8 +340,8 @@ class Main(hp):
                     self.flux_er_mod9.append(pars)
                     if pars[-1][7][2] >= 3*pars[-1][8][2]:
                         count_OIII += 1
-            else:
-                pass
+                else:
+                    pass
 
         print('All processed galaxies: ', counter_all)
         print('Galaxies with proper data: ', counter_best)
@@ -323,7 +366,7 @@ class Main(hp):
         self.NII_l.append(pars[-1][7][3])
         # self.SII_l.append(pars[-1][7][4])
         # self.OI_l.append(pars[-1][7][5])
-        # self.OII_l.append(pars[-1][7][6])
+        self.OII_l.append(pars[-1][7][6])
 
         self.HA_l_er.append(pars[-1][8][0])
         self.HB_l_er.append(pars[-1][8][1])
@@ -331,7 +374,7 @@ class Main(hp):
         self.NII_l_er.append(pars[-1][8][3])
         # self.SII_l_er.append(pars[-1][8][4])
         # self.OI_l_er.append(pars[-1][8][5])
-        # self.OII_l_er.append(pars[-1][8][6])
+        self.OII_l_er.append(pars[-1][8][6])
 
         self.BMS.append(pars[-1][9])
         self.RA.append(pars[-1][10][0])
@@ -352,8 +395,8 @@ class Main(hp):
         # self.SN_HdF.append(pars[-1][13][2]/pars[-1][13][3])
         # self.SN_HgF.append(pars[-1][13][6]/pars[-1][13][7])
 
-        # self.HA_EW_l.append(pars[-1][14][0])
-        # self.HA_EW_l_er.append(pars[-1][14][1])
+        self.HA_EW_l.append(pars[-1][14][0])
+        self.HA_EW_l_er.append(pars[-1][14][1])
 
         # self.HgF_cont.append(pars[-1][15])
         # self.HdF_cont.append(pars[-1][16])
@@ -361,6 +404,12 @@ class Main(hp):
         self.ages.append(pars[-1][18])
         self.LAGNs.append(pars[-1][19])
         self.LAGNs_er.append(pars[-1][20])
+        # self.OIII_m_out.append(pars[-1][25])
+        # self.OIII_er_m_out.append(pars[-1][26])
+        # self.LAGN_m_out.append(pars[-1][27])
+        # self.out_m_out.append(pars[-1][28])
+        # self.LAGN_max_m_out.append(pars[-1][29])
+        # self.out_m_off_out.append(pars[-1][30])
 
     def file_out(self):
 
@@ -383,15 +432,17 @@ class Main(hp):
             # 'HdF' : self.HdF,
             # 'HdF_cont' : self.HdF_cont,
             # 'HdF_er' : self.HdF_er,
-            # 'HA_EW' : self.HA_EW_l,
-            # 'HA_EW_ERR' : self.HA_EW_l_er,
+            'HA_EW' : self.HA_EW_l,
+            'HA_EW_ERR' : self.HA_EW_l_er,
             'HA': self.HA_l,
             # 'HA_cont' : self.HA_cont,
             'HA_er': self.HA_l_er,
             'HB': self.HB_l,
             'HB_er': self.HB_l_er,
             'OIII': self.OIII_l,
+            # 'OIII_MM' :self.OIII_m_out,
             'OIII_er': self.OIII_l_er,
+            # 'OIII_er_MM' : self.OIII_er_m_out,
             'NII': self.NII_l,
             'NII_er': self.NII_l_er,
             # 'HdA' : self.HdA,
@@ -404,9 +455,14 @@ class Main(hp):
             # 'OI_er' : self.OI_l_er,
             # 'OII' : self.OII_l,
             # 'OII_er' : self.OII_l_er,
-            'BMS': self.BMS,
+            # 'log(LAGN)' : self.logLAGN,
             'LAGN' : self.LAGNs,
-            'LAGN_er' : self.LAGNs_er
+            # 'LAGN_MM_max' : self.LAGN_max_m_out,
+            'LAGN_er' : self.LAGNs_er,
+            'BMS': self.BMS,
+            # 'LAGN_MM' : self.LAGN_m_out,
+            # 'OUT_MM' : self.out_m_out,
+            # 'OUT_MM_mol' : self.out_m_off_out
         }
 
         df = pd.DataFrame(Dict)
@@ -721,7 +777,7 @@ class Main(hp):
         self.fig.colorbar(self.s_m, cax=cbar_ax)
         #self.ax7.legend(loc=3, fontsize="13")
         
-        self.fig.savefig('./FIGURES_IN_PAPER/BPT_WHAN_err_w.pdf')
+        self.fig.savefig('./FIGURES_IN_PAPER/BPT_WHAN.pdf')
         #self.fig.savefig('WHAN.pdf')
 
         # plt.show()
@@ -767,11 +823,11 @@ class Main(hp):
 
 
 if __name__ == '__main__':
-    obj = Main('E:\LICENSE\ProgsData\main\Oleg_GAMA_belowMS.csv', 'E:\LICENSE\ProgsData\main\DirectSummationv05', r'E:/backup/backup_BPT/GAMA_ETG_OLA.csv')
+    obj = Main('E:\LICENSE\ProgsData\main\Oleg_GAMA_belowMS.csv', 'E:\LICENSE\ProgsData\main\DirectSummationv05', r'E:\backup\backup_BPT\GAMA_ETG_OLA.csv')
     obj.ola_reading()
-    obj.samples_get()
+    # obj.samples_get()
     obj.gama_reading()
     obj.sorting()
-    obj.plotting_BPT()
-    obj.plotting_WHAN()
+    # obj.plotting_BPT()
+    # obj.plotting_WHAN()
     #obj.plotting_EW_age()

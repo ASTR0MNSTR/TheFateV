@@ -110,8 +110,10 @@ def class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT):
         keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
         colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['deeppink', '*'], ['orchid', 'o']]
     elif WHAN_or_BPT == 'WHAN':
-        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NLR'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NLR', 'LLR']]
-        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o'], ['black', 'h']]
+        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
+        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']]
+        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
+        # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o'], ['black', 'h']]
     class_list = []
     
     for j, chain in enumerate(keys):
@@ -136,7 +138,7 @@ def class_list_creator_wo_err(x, y, age, AGN_keys, WHAN_or_BPT):
         keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
         colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['deeppink', '*'], ['orchid', 'o']]
     elif WHAN_or_BPT == 'WHAN':
-        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NLR'], ['LLR']]
+        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
         colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
     class_list = []
     
@@ -323,7 +325,7 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
     NOEL = empty()
     ELR = empty()
     LLR = empty()
-    NLR = empty()
+    NER = empty()
     NDA = empty()
     SAMPLE = empty()
 
@@ -352,8 +354,8 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
                     ELR[i] += 1
                 elif SC_WHAN[j] == 'LLR':
                     LLR[i] += 1
-                elif SC_WHAN[j] == 'NLR':
-                    NLR[i] += 1
+                elif SC_WHAN[j] == 'NER':
+                    NER[i] += 1
                 elif SC_WHAN[j] in ['NDA', 'NDA0', 'NDA1']:
                     #NDA[i] += 1
                     SAMPLE[i] -= 1
@@ -363,13 +365,13 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
     for j in range(len(SAMPLE)):
         try:
             LLR_perc[j] = (LLR[j]/SAMPLE[j])*100
-            RG_perc[j] = ((LLR[j] + NLR[j])/SAMPLE[j])*100
-            ELR_perc[j] = (LLR[j] + NLR[j] + ELR[j])*100/SAMPLE[j]
-            SF_perc[j] = (LLR[j] + NLR[j] + ELR[j]+SF[j])*100/SAMPLE[j]
-            NDA_perc[j] = (NDA[j] + NLR[j] + LLR[j] + ELR[j]+SF[j])*100/SAMPLE[j]
-            NOEL_perc[j] = (NDA[j] + NLR[j] + LLR[j] + ELR[j]+SF[j]+NOEL[j])*100/SAMPLE[j]
-            wAGN_perc[j] = (NDA[j] + NLR[j] + LLR[j] + ELR[j]+SF[j]+NOEL[j] + wAGN[j])*100/SAMPLE[j]
-            sAGN_perc[j] = (NDA[j] + NLR[j] + LLR[j] + ELR[j]+SF[j]+NOEL[j] + wAGN[j] + sAGN[j])*100/SAMPLE[j]
+            RG_perc[j] = ((LLR[j] + NER[j])/SAMPLE[j])*100
+            ELR_perc[j] = (LLR[j] + NER[j] + ELR[j])*100/SAMPLE[j]
+            SF_perc[j] = (LLR[j] + NER[j] + ELR[j]+SF[j])*100/SAMPLE[j]
+            NDA_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SF[j])*100/SAMPLE[j]
+            NOEL_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SF[j]+NOEL[j])*100/SAMPLE[j]
+            wAGN_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SF[j]+NOEL[j] + wAGN[j])*100/SAMPLE[j]
+            sAGN_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SF[j]+NOEL[j] + wAGN[j] + sAGN[j])*100/SAMPLE[j]
         except:
             pass
     
@@ -383,7 +385,7 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
     axes.bar(br1, NOEL_perc, color ='springgreen', width = barWidth, edgecolor ='grey', label ='UNC')
     axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SF')
     axes.bar(br1, ELR_perc, color ='sandybrown', width = barWidth, edgecolor ='grey', label ='ELR')
-    axes.bar(br1, RG_perc, color ='chocolate', width = barWidth, edgecolor ='grey', label ='NLR')
+    axes.bar(br1, RG_perc, color ='chocolate', width = barWidth, edgecolor ='grey', label ='NER')
     axes.bar(br1, LLR_perc, color ='maroon', width = barWidth, edgecolor ='grey', label ='LLR')
  
         # Adding Xticks
@@ -396,7 +398,7 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
         height = rect.get_height()
         axes.text(rect.get_x() + rect.get_width() / 2.0, height, str(SAMPLE[k]), ha='center', va='bottom')
         k+=1
-    all = [sAGN, wAGN, NOEL, SF, ELR, NLR, LLR, SAMPLE]
+    all = [sAGN, wAGN, NOEL, SF, ELR, NER, LLR, SAMPLE]
 
     for group in all:
         for i, item in enumerate(group):

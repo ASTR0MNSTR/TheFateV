@@ -1,5 +1,5 @@
 import math
-from __algo__new import *
+from __algo__ import *
 
 def ew_proc(HA_ew, HA_ew_err):
     pair_HA = []

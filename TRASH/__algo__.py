@@ -173,7 +173,7 @@ def WHAN(X, pair_x_flags, HA_ew, pair_HA):
         elif HA_ew < 0.47712 and len(pair_HA) == 0:
             return 'ELR'
         elif HA_ew < 0.47712 and len(pair_HA) != 0:
-            return 'NLR'
+            return 'NER'
         else:
             if X == -99:
                 return 'LLR'

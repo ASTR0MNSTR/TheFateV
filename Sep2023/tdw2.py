@@ -54,7 +54,7 @@ class Main(hp):
         with open(self.out, 'r') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                self.data_dict.append({'GAMAID': int(row['CATAID_1']), 'AGN': row['BPT'], 'SC_WHAN' : row['WHAN'], 'BMS' : int(row['BMS'])})
+                self.data_dict.append({'GAMAID': int(row['CATAID_1']), 'AGN': row['BPT'], 'SC_WHAN' : row['WHAN']})
 
     def matching(self):
         for item in self.data_dict:

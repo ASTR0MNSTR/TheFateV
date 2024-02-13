@@ -40,7 +40,7 @@ class Main:
         self.file = file
         self.dataframe = None
 
-        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NLR']
+        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NER']
         self.WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
 
         self.WHAN_colors_merged = ['royalblue', 'lime', 'hotpink', 'brown']
@@ -129,7 +129,7 @@ class Main:
                     wAGN += 1
                 elif self.dataframe['WHAN'][i] == 'UNC':
                     UNC += 1
-                elif self.dataframe['WHAN'][i] == 'NLR':
+                elif self.dataframe['WHAN'][i] == 'NER':
                     RG += 1
                 elif self.dataframe['WHAN'][i] == 'NDA':
                     NDA += 1
@@ -142,7 +142,7 @@ class Main:
     
     def my_level_list(data):
         list = []
-        WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NLR']
+        WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NER']
         for i in range(len(data)):
             if (data[i]*100/np.sum(data)) > 2 : #2%
                 list.append(WHAN_labels[i])

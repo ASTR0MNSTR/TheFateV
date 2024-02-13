@@ -33,7 +33,7 @@ class Main(hp):
         self.color_dict_leg = color_dict_leg
 
         self.list_names_BPT = ['AGN', 'UNC', 'SF', 'NOEL']
-        self.list_names_WHAN = ['sAGN', 'wAGN', 'SF', 'ELR', 'NLR', 'LLR']
+        self.list_names_WHAN = ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']
 
         self.BMS_dict= {
             0 : ['.', 25], #bms
@@ -280,7 +280,7 @@ class Main(hp):
                         no_temp_age.append(X)
                         no_temp_up.append(Y_up)
                         no_temp_down.append(Y_down)
-                elif AGN in ['NLR']:
+                elif AGN in ['NER']:
                         noel_temp.append(Y)
                         noel_temp_age.append(X)
                         noel_temp_up.append(Y_up)
