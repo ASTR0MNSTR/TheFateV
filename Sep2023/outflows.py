@@ -93,6 +93,10 @@ class Main:
         self.DataFrame['OUTFLOW'] = OUTFLOW_off
         self.DataFrame['OUTFLOW_up'] = OUTFLOW_up_off
         self.DataFrame['OUTFLOW_down'] = OUTFLOW_down_off
+        
+        # self.DataFrame['OUTFLOW'] = OUTFLOW
+        # self.DataFrame['OUTFLOW_up'] = OUTFLOW_up
+        # self.DataFrame['OUTFLOW_down'] = OUTFLOW_down
     
     def plotting(self):
         gs_top = plt.GridSpec(1, 2, wspace=0)
@@ -114,9 +118,9 @@ class Main:
             # ax.set_yscale('log')
             #ax.set_yticks(np.arange(15, 25.9, 2))
 
-        self.fig1.suptitle('W AGN', fontsize=16)
+        # self.fig1.suptitle('W AGN', fontsize=16)
         Main.plotter(self, 'ager_percentile50', 'OUTFLOW', 'OUTFLOW_up', 'OUTFLOW_down', 'BPT', 'WHAN', True)
-        self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW_wo_AGN.pdf')
+        self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW_wo.pdf')
         #plt.show()
 
     def plotter(self, x, y, up, down, BPT_key, WHAN_key, bids_key):
@@ -189,7 +193,7 @@ class Main:
         self.ax4.set_xticks(ages_const)
         for j, item in enumerate(class_list_BPT):
             self.ax4.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
-        self.ax4.legend(loc=3, fontsize='13')
+        # self.ax4.legend(loc=3, fontsize='13')
         
         errs = []
         means = []
@@ -210,7 +214,7 @@ class Main:
         self.ax5.set_xticks(ages_const)
         for j, item in enumerate(class_list_WHAN):
             self.ax5.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
-        self.ax5.legend(loc=3, fontsize='13')
+        # self.ax5.legend(loc=3, fontsize='13')
         
         
         ages = np.arange(8.8, 10, 0.05)
