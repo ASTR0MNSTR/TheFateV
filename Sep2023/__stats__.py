@@ -29,7 +29,7 @@ def monte_carlo(x, y_mid, y_up, y_down, x_bids):
         y_values = empty(x_bids)
         stmeaner = []
         stmean = []
-        medians = [(pair[0] + pair[1])/2 for pair in x_bids]
+        bidding = [(pair[0] + pair[1])/2 for pair in x_bids]
 
         for j, item in enumerate(x):
             for i, pair in enumerate(x_bids):
@@ -44,20 +44,20 @@ def monte_carlo(x, y_mid, y_up, y_down, x_bids):
                 stmean.append(-99)
                 stmeaner.append(0)
             else:
-                data = []
-                for i in range(100):
-                    av = []
+                medians = []
+                for i in range(1001):
+                    data = []
                     for pair in mean:
                         if random.random() > 0.5:
-                            av.append(pair[2] + abs(random.gauss(0, pair[1])))
+                            data.append(pair[2] + abs(random.gauss(0, pair[1])))
                         else:
-                            av.append(pair[2] - abs(random.gauss(0, pair[0])))
-                    data.append(np.mean(av)) #from st to np
-                
-                data.sort()
-                stmean.append(data[49])
-                stmeaner.append([[data[49] - data[15]], [data[83] - data[49]]])
-        return medians, stmean, stmeaner, length
+                            data.append(pair[2] - abs(random.gauss(0, pair[0])))
+                    medians.append(np.median(data))
+
+                medians = np.asarray(medians)
+                stmean.append(np.median(medians))
+                stmeaner.append([[np.median(medians) - np.percentile(medians, 16)], [np.percentile(medians, 84) - np.median(medians)]])
+        return bidding, stmean, stmeaner, length
     
 def bootstrapper(x, y_mid, y_up, y_down, x_bids):
         y_values = empty(x_bids)

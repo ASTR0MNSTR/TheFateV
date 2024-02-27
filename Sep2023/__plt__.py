@@ -83,16 +83,34 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
     for item in class_list:
         X_plot = []
         Y_plot = []
+        err_plot = []
+        err_up = []
+        err_down = []
         X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
         means.append(Y)
         errs.append(err)
         for j in range(len(X)):
             if Y[j] != -99:
-                axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
+                # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
+                # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
                 axis.text(X[j], Y[j], length[j], c = 'red')
                 X_plot.append(X[j])
                 Y_plot.append(Y[j])
-        axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0])
+                err_plot.append(err[j])
+                
+        X_plot = np.asarray(X_plot)
+        Y_plot = np.asarray(Y_plot)
+        for err in err_plot:
+            err_up.append(err[1][0])
+            err_down.append(err[0][0])
+        err_up = np.asarray(err_up)
+        err_down = np.asarray(err_down)
+        
+        axis.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
+        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+        axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
+        axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
+        axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
     
     if leg == True:
         for j, item in enumerate(class_list):

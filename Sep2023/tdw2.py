@@ -131,16 +131,34 @@ class Main(hp):
         for item in class_list_BPT:
             X_plot = []
             Y_plot = []
+            err_plot = []
+            err_up = []
+            err_down = []
             X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
             means.append(Y)
             errs.append(err)
             for j in range(len(X)):
                 if Y[j] != -99:
-                    self.ax4.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
+                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
+                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
                     self.ax4.text(X[j], Y[j], length[j], c = 'red')
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
-            self.ax4.plot(X_plot, Y_plot, alpha = 1, color=item[4][0])
+                    err_plot.append(err[j])
+                    
+            X_plot = np.asarray(X_plot)
+            Y_plot = np.asarray(Y_plot)
+            for err in err_plot:
+                err_up.append(err[1][0])
+                err_down.append(err[0][0])
+            err_up = np.asarray(err_up)
+            err_down = np.asarray(err_down)
+            
+            self.ax4.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
+            self.ax4.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+            self.ax4.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
+            self.ax4.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
+            self.ax4.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
 
         #for key in self.color_dict_leg.keys():
         #        self.ax4.scatter(-99, -99, alpha= 1, color = self.color_dict_leg[key][0], marker = self.color_dict_leg[key][2], s = self.color_dict_leg[key][1], label=key)
@@ -154,16 +172,34 @@ class Main(hp):
         for item in class_list_WHAN:
             X_plot = []
             Y_plot = []
+            err_plot = []
+            err_up = []
+            err_down = []
             X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
             means.append(Y)
             errs.append(err)
             for j in range(len(X)):
                 if Y[j] != -99:
-                    self.ax5.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
+                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
+                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
                     self.ax5.text(X[j], Y[j], length[j], c = 'red')
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
-            self.ax5.plot(X_plot, Y_plot, alpha = 1, color=item[4][0])
+                    err_plot.append(err[j])
+                    
+            X_plot = np.asarray(X_plot)
+            Y_plot = np.asarray(Y_plot)
+            for err in err_plot:
+                err_up.append(err[1][0])
+                err_down.append(err[0][0])
+            err_up = np.asarray(err_up)
+            err_down = np.asarray(err_down)
+            
+            self.ax5.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
+            self.ax5.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+            self.ax5.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
+            self.ax5.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
+            self.ax5.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
 
         #for key in self.color_dict_leg.keys():
         #        self.ax4.scatter(-99, -99, alpha= 1, color = self.color_dict_leg[key][0], marker = self.color_dict_leg[key][2], s = self.color_dict_leg[key][1], label=key)

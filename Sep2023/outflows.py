@@ -24,6 +24,54 @@ def outflow_woAGN(SFR, MS):
     except:
         return -99
     
+def fit(x, y_mid, y_up, y_down):
+    n_sim = 50
+    a_list= []
+    b_list = []
+    b_err_list = []
+    a_err_list = []
+    for i in range(1001):
+        data = []
+        x_fit = []
+        for j in range(len(x)):  
+            pair = [y_mid[j] - y_down[j], y_up[j] - y_mid[j], y_mid[j]]
+            if random.random() > 0.5:
+                data.append(pair[2] + abs(random.gauss(0, pair[1])))
+            else:
+                data.append(pair[2] - abs(random.gauss(0, pair[0])))
+
+            x_fit.append(x[j])
+
+        x_fit = np.array(x_fit)
+        y_fit = np.array(data)
+        popt, pcov = curve_fit(func, x_fit, y_fit)
+
+        a_list.append(popt[0])
+        b_list.append(popt[1])
+        a_err_list.append(np.sqrt(np.diag(pcov))[0])
+        b_err_list.append(np.sqrt(np.diag(pcov))[1])
+        
+    a_list = np.asarray(a_list)    
+    b_list = np.asarray(b_list)    
+    a_err_list = np.asarray(a_err_list)    
+    b_err_list = np.asarray(b_err_list)    
+    
+    a = np.median(a_list)
+    a_up = np.percentile(a_list, 84)
+    a_down = np.percentile(a_list, 16)
+    
+    b = np.median(b_list)
+    b_up = np.percentile(b_list, 84)
+    b_down = np.percentile(b_list, 16)
+
+    a_i = np.where(a_list == a)[0][0]
+    b_i = np.where(b_list == b)[0][0]
+    
+    a_err = [[math.sqrt(a_err_list[a_i]**2 + (a - a_down)**2)], [math.sqrt(a_err_list[a_i]**2 + (a_up - a)**2)]]
+    b_err = [[math.sqrt(b_err_list[b_i]**2 + (b - b_down)**2)], [math.sqrt(b_err_list[b_i]**2 + (b_up - b)**2)]]
+    
+    return a, a_err, b, b_err 
+    
 def func(x, A, B):
     return np.log10(A) + (-1*(10**x)/B)*math.log10(math.exp(1))
     
@@ -45,6 +93,11 @@ class Main:
         }
         
         self.DataFrame = None
+        
+        self.ax4 = None
+        self.ax5 = None
+        self.ax1 = None
+        self.ax2 = None
     
     def reading(self):
         source_path = r'E:/LICENSE/ProgsData/main/GAMAv3_1.txt'
@@ -94,36 +147,85 @@ class Main:
         self.DataFrame['OUTFLOW_up'] = OUTFLOW_up_off
         self.DataFrame['OUTFLOW_down'] = OUTFLOW_down_off
         
-        # self.DataFrame['OUTFLOW'] = OUTFLOW
-        # self.DataFrame['OUTFLOW_up'] = OUTFLOW_up
-        # self.DataFrame['OUTFLOW_down'] = OUTFLOW_down
+        Main.plotting_init(self,
+            {'X' : 'ager_percentile50',
+             'Y' : 'OUTFLOW',
+             'Y_up' : 'OUTFLOW_up',
+             'Y_down' : 'OUTFLOW_down',
+             'axes' : [self.ax4, self.ax5],
+             'xlabel' : r'$log(age/yr)$',
+             'ylabel' : r'$log(M_{H_2}/(M_\odot/yr))$',
+             'xlim' : [8.7, 10.0],
+             'ylim' : [-3, 4],
+             'filename' : './FIGURES_IN_PAPER/OUTFLOW_wo.pdf',
+             'bids_chain' : [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
+             }
+        )
+        
+        self.DataFrame['OUTFLOW'] = OUTFLOW
+        self.DataFrame['OUTFLOW_up'] = OUTFLOW_up
+        self.DataFrame['OUTFLOW_down'] = OUTFLOW_down   
+        
+        Main.plotting_init(self,
+            {'X' : 'ager_percentile50',
+             'Y' : 'OUTFLOW',
+             'Y_up' : 'OUTFLOW_up',
+             'Y_down' : 'OUTFLOW_down',
+             'axes' : [self.ax4, self.ax5],
+             'xlabel' : r'$log(age/yr)$',
+             'ylabel' : r'$log(M_{H_2}/(M_\odot/yr))$',
+             'xlim' : [8.7, 10.0],
+             'ylim' : [-3, 4],
+             'filename' : './FIGURES_IN_PAPER/OUTFLOW_w.pdf',
+             'bids_chain' : [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
+             }
+        )
+        
+        # Main.plotting_init(self,
+        #     {'X' : 'SFR_0_1Gyr_percentile50',
+        #      'Y' : 'OUTFLOW',
+        #      'Y_up' : 'OUTFLOW_up',
+        #      'Y_down' : 'OUTFLOW_down',
+        #      'axes' : [self.ax4, self.ax5],
+        #      'xlabel' : r'$log(SFR/(M_\odot/yr))$',
+        #      'ylabel' : r'$log(M_{H_2}/(M_\odot/yr))$',
+        #      'xlim' : [-3.5, 3.5],
+        #      'ylim' : [-3.5, 3.5],
+        #      'filename' : './FIGURES_IN_PAPER/OUT_AGN_SFR.pdf',
+        #      'bids_chain' : [[-3, -2], [-2, -1], [-1, 0], [0, 1], [1, 2], [2, 3]]
+        #      }
+        # )
+        
+     
     
-    def plotting(self):
+    def plotting_init(self, pars):
         gs_top = plt.GridSpec(1, 2, wspace=0)
         self.fig1 = plt.figure(figsize=(12, 6), tight_layout=True)
 
-        self.ax4 = self.fig1.add_subplot(gs_top[:,0])
-        self.ax5 = self.fig1.add_subplot(gs_top[:,1], sharey=self.ax4)
+        axes = pars['axes']
+        
+        axes[0] = self.fig1.add_subplot(gs_top[:,0])
+        axes[1] = self.fig1.add_subplot(gs_top[:,1], sharey=axes[0])
 
-        self.topaxes = [self.ax5, self.ax4]
+        self.topaxes = [axes[1], axes[0]]
 
-        self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
-        self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in')
+        axes[0].tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
+        axes[1].tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in')
 
-        self.ax4.set_ylabel(r'$log(M_{H_2}/(M_\odot/yr))$')
+        axes[0].set_ylabel(pars['ylabel'])
         for ax in self.topaxes:    
-            ax.set_xlim([8.7, 10.0])
-            ax.set_ylim([-3, 5])
-            ax.set_xlabel(r'$log(age/yr)$')
+            ax.set_xlim(pars['xlim'])
+            ax.set_ylim(pars['ylim'])
+            ax.set_xlabel(pars['xlabel'])
             # ax.set_yscale('log')
             #ax.set_yticks(np.arange(15, 25.9, 2))
 
         # self.fig1.suptitle('W AGN', fontsize=16)
-        Main.plotter(self, 'ager_percentile50', 'OUTFLOW', 'OUTFLOW_up', 'OUTFLOW_down', 'BPT', 'WHAN', True)
-        self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW_wo.pdf')
-        #plt.show()
+        Main.plotter(self, [axes[0], axes[1]], pars['X'], pars['Y'], pars['Y_up'], pars['Y_down'], 'BPT', 'WHAN', pars['bids_chain'])
+        self.fig1.savefig(pars['filename'])
+        plt.show()
 
-    def plotter(self, x, y, up, down, BPT_key, WHAN_key, bids_key):
+    def plotter(self, axes, x, y, up, down, BPT_key, WHAN_key, bids_chain):
         XX = []
         YY = []
         Y_ups = []
@@ -140,11 +242,11 @@ class Main:
             Y_down = self.DataFrame[down][i]
             
             if Y_up == 'upNon':
-                self.ax4.arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=0.5)
-                self.ax5.arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.5)
+                axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=0.3)
+                axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.3)
             elif Y_up == 'upAbs':
-                self.ax4.arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=0.1)
-                self.ax5.arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.1)
+                axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=0.1)
+                axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.1)
             else:
                 XX.append(X)
                 YY.append(Y)
@@ -152,13 +254,13 @@ class Main:
                 Y_downs.append(Y_down)
                 BPT_keys.append(AGN)
                 WHAN_keys.append(WHAN)
-                # self.ax4.errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_BPT[AGN][0], marker = '.')
-                # self.ax5.errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_WHAN[WHAN][0], marker = '.')
-                self.ax4.scatter(X, Y, alpha = 0.5, color = self.color_dict_BPT[AGN][0], marker = '.')
-                self.ax5.scatter(X, Y, alpha = 0.5, color = self.color_dict_WHAN[WHAN][0], marker = '.')
+                # axes[0].errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_BPT[AGN][0], marker = '.')
+                # axes[1].errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_WHAN[WHAN][0], marker = '.')
+                axes[0].scatter(X, Y, alpha = 0.3, color = self.color_dict_BPT[AGN][0], marker = '.')
+                axes[1].scatter(X, Y, alpha = 0.3, color = self.color_dict_WHAN[WHAN][0], marker = '.')
                 
-        self.ax4.axhline(y = 0, color = 'black', linestyle='dashed')        
-        self.ax5.axhline(y = 0, color = 'black', linestyle='dashed')
+        axes[0].axhline(y = 0, color = 'black', linestyle='dashed')        
+        axes[1].axhline(y = 0, color = 'black', linestyle='dashed')
                
         
         class_list_BPT = class_list_creator_w_err(XX, YY, Y_ups, Y_downs, BPT_keys, 'BPT')
@@ -167,86 +269,110 @@ class Main:
         self.means = []
         self.errs = []
         self.ages = []
-        if bids_key == True:
-            bids = [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
-            ages_const = np.arange(8.8, 10.2, 0.2)
-        else:
-            bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
-            ages_const = np.arange(7, 12, 1)
+        
 
+        bids = bids_chain
+        
+        # ages_const = np.arange(7, 12, 1)
+
+        # axes[0].set_xticks(ages_const)
+        # axes[1].set_xticks(ages_const)
+        
         errs = []
         means = []
         for item in class_list_BPT:
             X_plot = []
             Y_plot = []
+            err_plot = []
+            err_up = []
+            err_down = []
             X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
             means.append(Y)
             errs.append(err)
             for j in range(len(X)):
                 if Y[j] != -99:
-                    self.ax4.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
-                    self.ax4.text(X[j], Y[j], length[j], c = 'red')
+                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
+                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+                    axes[0].text(X[j], Y[j], length[j], c = 'red')
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
-            self.ax4.plot(X_plot, Y_plot, alpha = 1, color=item[4][0])
+                    err_plot.append(err[j])
+                    
+            X_plot = np.asarray(X_plot)
+            Y_plot = np.asarray(Y_plot)
+            for err in err_plot:
+                err_up.append(err[1][0])
+                err_down.append(err[0][0])
+            err_up = np.asarray(err_up)
+            err_down = np.asarray(err_down)
+            
+            axes[0].fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
+            axes[0].scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+            axes[0].plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
+            axes[0].plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
+            axes[0].plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
 
-        self.ax4.set_xticks(ages_const)
         for j, item in enumerate(class_list_BPT):
-            self.ax4.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
-        # self.ax4.legend(loc=3, fontsize='13')
+            axes[0].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
+        axes[0].legend(loc=3, fontsize='13')
         
         errs = []
         means = []
         for item in class_list_WHAN:
             X_plot = []
             Y_plot = []
+            err_plot = []
+            err_up = []
+            err_down = []
             X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
             means.append(Y)
             errs.append(err)
             for j in range(len(X)):
                 if Y[j] != -99:
-                    self.ax5.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
-                    self.ax5.text(X[j], Y[j], length[j], c = 'red')
+                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
+                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+                    axes[1].text(X[j], Y[j], length[j], c = 'red')
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
-            self.ax5.plot(X_plot, Y_plot, alpha = 1, color=item[4][0])
+                    err_plot.append(err[j])
+                    
+            X_plot = np.asarray(X_plot)
+            Y_plot = np.asarray(Y_plot)
+            for err in err_plot:
+                err_up.append(err[1][0])
+                err_down.append(err[0][0])
+            err_up = np.asarray(err_up)
+            err_down = np.asarray(err_down)
+            
+            axes[1].fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
+            axes[1].scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+            axes[1].plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
+            axes[1].plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
+            axes[1].plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
 
-        self.ax5.set_xticks(ages_const)
+            
         for j, item in enumerate(class_list_WHAN):
-            self.ax5.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
-        # self.ax5.legend(loc=3, fontsize='13')
+            axes[1].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
+        axes[1].legend(loc=3, fontsize='13')
         
+        
+        # for ax in axes:
+        #     ax.plot([-3.5, 3.5], [-3.5, 3.5], c = 'k', linestyle = '--')
+        
+        #fancy functions part#
         
         ages = np.arange(8.8, 10, 0.05)
-        # self.ax4.plot(ages, np.log10(12*np.exp( -1*(10**ages) / (1.37*(10**9)) )), c='k', linestyle=':') 
-        # self.ax5.plot(ages, np.log10(12*np.exp( -1*(10**ages) / (1.37*(10**9)) )), c='k', linestyle=':') 
         
-        #self.ax4.set_xlim(8, 10.1)
-        #self.ax4.set_ylim(14, 26)
-        #self.fig.savefig(name_file + '.pdf')
-        XX_data = np.asarray(XX)
-        YY_data = np.asarray(YY)
+        a, SE_A, b, SE_B = fit(XX, YY, Y_ups, Y_downs)
         
-        print(XX_data)
-        print(YY_data)
+        print('a : {:3e}, +: {:3e} -: {:3e}'.format(a, SE_A[0][0], SE_A[1][0]))
+        print('b : {:3e}, +: {:3e} -: {:3e}'.format(b, SE_B[0][0], SE_B[1][0]))
         
-        pars, covariance = curve_fit(func, XX_data, YY_data)
-        a = pars[0]
-        b = pars[1]
-        
-        SE = np.sqrt(np.diag(covariance))   
-        SE_A = SE[0]
-        SE_B = SE[1]
-        
-        print('a : {:3e}, a_err : {:3e}'.format(a, SE_A))
-        print('b : {:3e}, b_err : {:3e}'.format(b, SE_B))
-        
-        self.ax4.plot(ages, np.log10(a) + (-1*(10**ages)/b)*math.log10(math.exp(1)), c='k', linestyle=':') 
-        self.ax5.plot(ages, np.log10(a) + (-1*(10**ages)/b)*math.log10(math.exp(1)), c='k', linestyle=':') 
-        
-        plt.show()
+        axes[0].plot(ages, np.log10(a) + (-1*(10**ages)/b)*math.log10(math.exp(1)), c='k') 
+        axes[1].plot(ages, np.log10(a) + (-1*(10**ages)/b)*math.log10(math.exp(1)), c='k') 
+
 
 if __name__ == '__main__':
     obj = Main('GAMA_ETG_OLA.csv')
     obj.reading()
-    obj.plotting()
+    # obj.plotting()
