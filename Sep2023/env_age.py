@@ -52,7 +52,7 @@ class Main(hp):
         for line in lines_stripped:
             GAMAID = int(line.split()[0])
             try:
-                X = float(line.split()[35])
+                X = float(line.split()[125])
                 Y = float(line.split()[1011])
                 Y_err = float(line.split()[1012])
                 if Y_err*2 < Y and Y + Y_err > 0:
@@ -97,14 +97,14 @@ class Main(hp):
 
         self.ax4.set_ylabel(r'$log(\sigma), \: Mpc^{-2}$')
         for ax in self.topaxes:  
-            ax.set_xlabel(r'$log(M_s / M_{\odot})$') 
-            ax.set_xlim([9.9, 11.6])
+            ax.set_xlabel(r'$log(age/yr)$') 
+            ax.set_xlim([8.7, 10.0])
             ax.set_ylim([-2, 3])
 
-        bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
+        bids = [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
         Main.plotter_mdms_BPT(self, bids)
         Main.plotter_mdms_WHAN(self, bids)
-        self.fig1.savefig('./FIGURES_IN_PAPER/SurfaceDensity.pdf')
+        self.fig1.savefig('./FIGURES_IN_PAPER/SurfaceDensity_age.pdf')
         #plt.show()
 
     def plotter_mdms_BPT(self, bids):

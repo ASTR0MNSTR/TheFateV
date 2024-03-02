@@ -174,6 +174,35 @@ def class_list_creator_wo_err(x, y, age, AGN_keys, WHAN_or_BPT):
         class_list.append([X, Y, AGE, colors_markers[j]])
     return class_list
 
+def class_list_creator_w_err_out(x, y, up, down, AGN_keys, WHAN_or_BPT, ks):
+    if WHAN_or_BPT == 'BPT':
+        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['deeppink', '*'], ['orchid', 'o']]
+    elif WHAN_or_BPT == 'WHAN':
+        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
+        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']]
+        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
+        # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o'], ['black', 'h']]
+    class_list = []
+    
+    for j, chain in enumerate(keys):
+        X = []
+        Y = []
+        Y_up = []
+        Y_down = []
+        KS = []
+        for i, item in enumerate(y):
+            AGN = AGN_keys[i]
+            if AGN in chain:
+                X.append(x[i])
+                Y.append(y[i])
+                Y_up.append(up[i])
+                Y_down.append(down[i])
+                KS.append(ks[i])
+        
+        class_list.append([X, Y, Y_down, Y_up, colors_markers[j], KS])
+    return class_list
+
 def bin_stats(pars_dict):
     
     DataFrame = pd.read_csv(pars_dict['input_path'])
@@ -198,8 +227,8 @@ def bin_stats(pars_dict):
 
     plotter_histo_WHAN(ax4, [0,1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
 
-    ax2.legend(fontsize="10", loc='lower left')
-    ax5.legend(fontsize="13", loc='lower left')
+    ax2.legend(fontsize="10", loc='lower right')
+    ax5.legend(fontsize="13", loc='lower right')
 
     top_axes = [ax2, ax3, ax5]
     for item in top_axes:

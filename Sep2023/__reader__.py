@@ -15,6 +15,14 @@ def merge_phys_databases_outflow(source_path, input_path, output_path):
     MergedDataFrame = pd.merge(InputDataFrame, SourceDataFrame, how='inner', on='SPECID')
     print(MergedDataFrame.shape)
     MergedDataFrame.to_csv(output_path, index=False)
+
+def merge_phys_databases_all(source_path, input_path, output_path):
+
+    SourceDataFrame = pd.read_csv(source_path, sep="\s{2,}", header=0, index_col=0, engine='python')
+    InputDataFrame = pd.read_csv(input_path)
+    MergedDataFrame = pd.merge(InputDataFrame, SourceDataFrame, how='inner', on='SPECID')
+    print(MergedDataFrame.shape)
+    MergedDataFrame.to_csv(output_path, index=False)
     
 def calculating_mdms(output_path):
     DataFrame = pd.read_csv(output_path)

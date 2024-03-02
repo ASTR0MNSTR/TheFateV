@@ -828,6 +828,6 @@ if __name__ == '__main__':
     # obj.samples_get()
     obj.gama_reading()
     obj.sorting()
-    # obj.plotting_BPT()
-    # obj.plotting_WHAN()
+    obj.plotting_BPT()
+    obj.plotting_WHAN()
     #obj.plotting_EW_age()
