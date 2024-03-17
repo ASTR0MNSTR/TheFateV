@@ -74,30 +74,6 @@ def fit(x, y_mid, y_up, y_down):
     
 def func(x, A, B):
     return np.log10(A) + (-1*(10**x)/B)*math.log10(math.exp(1))
-
-def empty_out(bins):
-    listed = []
-    for item in bins:
-        listed.append([])
-    return listed
-
-def up_lim_analysis(x, ks, x_bids):
-    y_values = empty_out(x_bids)
-    result = []
-
-    for j, item in enumerate(x):
-        for i, pair in enumerate(x_bids):
-            if item >= pair[0] and item < pair[1]:
-                y_values[i].append(ks[j])
-                break
-                
-    for bin in y_values:
-        k = 0
-        for element in bin:
-            if element == 1:
-                k += 1
-        result.append(k < 0.5*len(bin))
-    return result
     
 class Main:
     def __init__(self, file):
@@ -332,7 +308,7 @@ class Main:
                 if Y[j] != -99:
                     # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
                     # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-                    axes[0].text(X[j], Y[j], length[j], c = 'red')
+                    # axes[0].text(X[j], Y[j], length[j], c = 'red')
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
                     err_plot.append(err[j])
@@ -376,7 +352,7 @@ class Main:
                 if Y[j] != -99:
                     # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
                     # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-                    axes[1].text(X[j], Y[j], length[j], c = 'red')
+                    # axes[1].text(X[j], Y[j], length[j], c = 'red')
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
                     err_plot.append(err[j])

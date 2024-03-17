@@ -46,6 +46,8 @@ class Main(hp):
         }
     
     def reading(self):
+        k = 0
+        t = 0
         with open(self.ola_file, 'r') as input:
             lines = input.readlines()
         lines_stripped = [line.strip() for line in lines]
@@ -55,13 +57,12 @@ class Main(hp):
                 X = float(line.split()[35])
                 Y = float(line.split()[1011])
                 Y_err = float(line.split()[1012])
-                if Y_err*2 < Y and Y + Y_err > 0:
-                    Y_up = np.log10(Y + Y_err)
-                    Y_down = np.log10(Y - Y_err)
-                    Y = np.log10(Y)
-                    self.base_dict.update({GAMAID: [X, Y, Y_up, Y_down]})
+                self.base_dict.update({GAMAID: [X, Y, Y_err]})
+                t += 1
             except:
                 pass
+        
+        print(f'All galaxies with data: {t}')
    
         #print(self.base_dict)
 
@@ -100,53 +101,82 @@ class Main(hp):
             ax.set_xlabel(r'$log(M_s / M_{\odot})$') 
             ax.set_xlim([9.9, 11.6])
             ax.set_ylim([-2, 3])
+            ax.axhline(1, color = 'k', linestyle='-')
+            ax.set_xticks(np.arange(10.0, 11.6, 0.25))
 
         bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
-        Main.plotter_mdms_BPT(self, bids)
-        Main.plotter_mdms_WHAN(self, bids)
+        Main.plotter(self, bids)
         self.fig1.savefig('./FIGURES_IN_PAPER/SurfaceDensity.pdf')
         #plt.show()
 
-    def plotter_mdms_BPT(self, bids):
+    def plotter(self, bids):
 
         tot_age = []
         tot = []
         tot_up = []
         tot_down = []
         BPT_keys = []
+        WHAN_keys = []
+        ks = []
 
         for key in self.base_dict.keys():
-            if len(self.base_dict[key]) > 5:
+            if len(self.base_dict[key]) == 5:
                 X = self.base_dict[key][0]
                 Y = self.base_dict[key][1]
-                Y_up = self.base_dict[key][2]
-                Y_down = self.base_dict[key][3]
-                AGN = self.base_dict[key][4]
-                #Y = hp.ms_func(item[y], item[x], item['Z'])
-                self.ax4.scatter(X, Y, alpha= 0.3, color = self.color_dict_BPT[AGN][0], marker='.', s = 30)
+                Y_er = self.base_dict[key][2]
+                BPT = self.base_dict[key][3]
+                WHAN = self.base_dict[key][4]
+                if Y > 0 and Y_er > 0 and Y - 2*Y_er >= 0:
+                    Y_up = np.log10(Y + Y_er)
+                    Y_down = np.log10(Y - Y_er)
+                    Y = np.log10(Y)
+                    self.ax4.scatter(X, Y, alpha= 0.5, color = self.color_dict_BPT[BPT][0], marker='.', s = 30)
+                    self.ax5.scatter(X, Y, alpha= 0.5, color = self.color_dict_WHAN[WHAN][0], marker='.', s = 30)
+                    k = 1
+                elif Y > 0 and Y_er == -999.9: #case 2
+                    Y_up = np.log10(Y)
+                    Y_down = np.log10(Y)
+                    Y = np.log10(Y)
+                    self.ax4.arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[BPT][0], alpha=0.5)
+                    self.ax5.arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.5)
+                    k = 0
+                    
+                elif Y > 0 and Y_er > 0 and Y - 2*Y_er < 0:
+                    Y_up = np.log10(Y + 2*Y_er)
+                    Y_down = np.log10(Y + 2*Y_er)
+                    Y = np.log10(Y + 2*Y_er)
+                    self.ax4.arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[BPT][0], alpha=0.5)
+                    self.ax5.arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.5)
+                    k = -1
+                    
                 tot_age.append(X)
                 tot.append(Y)
                 tot_up.append(Y_up)
                 tot_down.append(Y_down)
-                BPT_keys.append(AGN)
+                BPT_keys.append(BPT)
+                WHAN_keys.append(WHAN)
+                ks.append(k)
+
+                
+                #Y = hp.ms_func(item[y], item[x], item['Z'])
+
                 #marker = self.color_dict[AGN][2]
         
-        print(len(tot))
-        
-        class_list = class_list_creator_w_err(tot_age, tot, tot_up, tot_down, BPT_keys, 'BPT')
+        class_list_BPT = class_list_creator_w_err_out(tot_age, tot, tot_up, tot_down, BPT_keys, 'BPT', ks)
+        class_list_WHAN = class_list_creator_w_err_out(tot_age, tot, tot_up, tot_down, WHAN_keys, 'WHAN', ks)
         
         errs = []
         means = []
-        for item in class_list:
+        for item in class_list_BPT:
             X_plot = []
             Y_plot = []
             err_plot = []
             err_up = []
             err_down = []
-            # up_lim_end = []
+            up_lim_end = []
             
             X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
-            # up_lim = up_lim_analysis(item[0], item[5], bids)
+            up_lim = up_lim_analysis(item[0], item[5], bids)
             means.append(Y)
             errs.append(err)
             for j in range(len(X)):
@@ -157,7 +187,7 @@ class Main(hp):
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
                     err_plot.append(err[j])
-                    # up_lim_end.append(up_lim[j])
+                    up_lim_end.append(up_lim[j])
                     
             X_plot = np.asarray(X_plot)
             Y_plot = np.asarray(Y_plot)
@@ -169,62 +199,28 @@ class Main(hp):
             
             self.ax4.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
             self.ax4.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-            # for i, elem in enumerate(up_lim_end):
-            #     if elem:
-            #         self.ax4.arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
+            for i, elem in enumerate(up_lim_end):
+                if elem:
+                    self.ax4.arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
             self.ax4.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
             self.ax4.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
             self.ax4.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
 
-        for j, item in enumerate(class_list):
+        for j, item in enumerate(class_list_BPT):
             self.ax4.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
         self.ax4.legend(loc=3, fontsize='13')
-
-    
-    def plotter_mdms_WHAN(self, bids):
-
         
-        tot_age = []
-        tot = []
-        tot_up = []
-        tot_down = []
-        WHAN_keys = []
-
-        for key in self.base_dict.keys():
-            if len(self.base_dict[key]) > 5:
-                X = self.base_dict[key][0]
-                Y = self.base_dict[key][1]
-                Y_up = self.base_dict[key][2]
-                Y_down = self.base_dict[key][3]
-                AGN = self.base_dict[key][5]
-                self.ax5.scatter(X, Y, alpha= 0.3, color = self.color_dict_WHAN[AGN][0], marker='.', s = 30)
-                tot_age.append(X)
-                tot.append(Y)
-                tot_up.append(Y_up)
-                tot_down.append(Y_down)
-                #marker = self.color_dict[AGN][2]
-                WHAN_keys.append(AGN)
-        
-        #class_list = [[yes_temp_age, yes_temp, 'midnightblue'], [UNC_temp_age, UNC_temp, 'red'], [no_temp_age, no_temp, 'mediumvioletred'], [noel_temp_age, noel_temp, 'orchid'], [llr_age, llr, 'maroon']]
-        
-        class_list = class_list_creator_w_err(tot_age, tot, tot_up, tot_down, WHAN_keys, 'WHAN')
-        self.means = []
-        self.errs = []
-        self.ages = []
-
-        errs = []
-        means = []
-        for item in class_list:
+        for item in class_list_WHAN:
             X_plot = []
             Y_plot = []
             err_plot = []
             err_up = []
             err_down = []
-            # up_lim_end = []
+            up_lim_end = []
             
             X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
             
-            # up_lim = up_lim_analysis(item[0], item[5], bids)
+            up_lim = up_lim_analysis(item[0], item[5], bids)
             means.append(Y)
             errs.append(err)
             for j in range(len(X)):
@@ -235,7 +231,7 @@ class Main(hp):
                     X_plot.append(X[j])
                     Y_plot.append(Y[j])
                     err_plot.append(err[j])
-                    # up_lim_end.append(up_lim[j])
+                    up_lim_end.append(up_lim[j])
                     
             X_plot = np.asarray(X_plot)
             Y_plot = np.asarray(Y_plot)
@@ -247,14 +243,14 @@ class Main(hp):
             
             self.ax5.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
             self.ax5.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-            # for i, elem in enumerate(up_lim_end):
-            #     if elem:
-            #         self.ax5.arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
+            for i, elem in enumerate(up_lim_end):
+                if elem:
+                    self.ax5.arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
             self.ax5.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
             self.ax5.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
             self.ax5.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
 
-        for j, item in enumerate(class_list):
+        for j, item in enumerate(class_list_WHAN):
             self.ax5.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
         self.ax5.legend(loc=3, fontsize='13')
 

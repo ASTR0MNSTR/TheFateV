@@ -279,8 +279,8 @@ class Main(hp):
         HgF_er = float(galaxy_pars[226])
         HgF_cont = float(galaxy_pars[223])
 
-        HA_EW_1 = float(galaxy_pars[80])
-        HA_EW_ERR_1 = float(galaxy_pars[79])
+        HA_EW = float(galaxy_pars[80])
+        HA_EW_ERR = float(galaxy_pars[79])
         
         OII = float(galaxy_pars[267]) # OII 3727
         OII_er = float(galaxy_pars[266])
@@ -291,12 +291,9 @@ class Main(hp):
         SII = float(galaxy_pars[67]) #SIIB, 6716 A
         SII_er = float(galaxy_pars[66])
 
-
-        HA_EW, HA_EW_ERR, pair_HA, HA_EW_OR = hp.ew_proc(HA_EW_1, HA_EW_ERR_1)
-
         # dust_correction module:
         
-        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, k_OIII, k_HA, E_B_V = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, pair_HA, Z)
+        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, pair_HA = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, Z)
 
         X_er = 0
         Y_er = 0
@@ -319,7 +316,7 @@ class Main(hp):
 
         kwargs = [SURV, SURV_CODE, IS_BEST, IS_SBEST, CATAID,
                   [SFR_HA, SFR_HA_er], AGN, FLUXES, FLUXES_ER, bms, [RA, DEC, Z, SPEC_ID], [X, pair_x_flags, HA_EW, pair_HA], SC_WHAN,
-                  [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_1, HA_EW_ERR_1], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er]
+                  [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW, HA_EW_ERR], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er]
                 #   [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_1, HA_EW_ERR_1], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er, k_OIII, log_LAGN, k_HA, E_B_V, OIII_m, OIII_er_m, LAGN_m, out_m, LAGN_max, out_m_off]
         res_out_out = [res_out, kwargs]
         return res_out_out

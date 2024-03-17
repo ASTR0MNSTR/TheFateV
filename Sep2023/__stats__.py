@@ -87,3 +87,27 @@ def bootstrapper(x, y_mid, y_up, y_down, x_bids):
                 medians = np.sort(medians)
                 stmeaner.append([[np.median(medians) - medians[160]], [medians[840] - np.median(medians)]])
         return x_values, stmean, stmeaner, length
+
+def empty_out(bins):
+    listed = []
+    for item in bins:
+        listed.append([])
+    return listed
+
+def up_lim_analysis(x, ks, x_bids):
+    y_values = empty_out(x_bids)
+    result = []
+
+    for j, item in enumerate(x):
+        for i, pair in enumerate(x_bids):
+            if item >= pair[0] and item < pair[1]:
+                y_values[i].append(ks[j])
+                break
+                
+    for bin in y_values:
+        k = 0
+        for element in bin:
+            if element == 1:
+                k += 1
+        result.append(k < 0.5*len(bin))
+    return result

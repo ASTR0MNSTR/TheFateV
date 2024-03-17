@@ -93,7 +93,7 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
             if Y[j] != -99:
                 # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
                 # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-                axis.text(X[j], Y[j], length[j], c = 'red')
+                # axis.text(X[j], Y[j], length[j], c = 'red')
                 X_plot.append(X[j])
                 Y_plot.append(Y[j])
                 err_plot.append(err[j])
@@ -179,10 +179,10 @@ def class_list_creator_w_err_out(x, y, up, down, AGN_keys, WHAN_or_BPT, ks):
         keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
         colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['deeppink', '*'], ['orchid', 'o']]
     elif WHAN_or_BPT == 'WHAN':
-        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
-        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']]
-        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
-        # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o'], ['black', 'h']]
+        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
+        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']]
+        # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
+        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o'], ['black', 'h']]
     class_list = []
     
     for j, chain in enumerate(keys):

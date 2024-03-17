@@ -29,6 +29,29 @@ def err_estim(x, y, x_er, y_er):
     
 #     return res_out_out
 
+def ew_proc(HA_ew, HA_ew_err):
+    pair_HA = []
+    HA_ew_or = HA_ew
+    SN = 2
+    if HA_ew == -99999.0 or HA_ew_err < 0:
+        return -99999.0, -99999.0, pair_HA
+    else:
+        if HA_ew > 0 and HA_ew < SN*HA_ew_err:
+            pair_HA = ['down']
+            HA_ew += SN*HA_ew_err
+        elif HA_ew < 0 and HA_ew + SN*HA_ew_err <= 0:
+            pair_HA = ['down']
+            HA_ew = SN*HA_ew_err
+        elif HA_ew < 0 and HA_ew + SN*HA_ew_err > 0:
+            pair_HA = ['down']
+            HA_ew += SN*HA_ew_err
+        elif HA_ew > 0 and HA_ew >= SN*HA_ew_err:
+            pair_HA = []
+        else:
+            print("Forgot me!")
+        
+        return math.log(HA_ew, 10), HA_ew_err/(HA_ew*math.log(10)), pair_HA
+
 def atten_coef(E_B_V):
 
     R_V = 4.05
@@ -263,9 +286,11 @@ def WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA):
             else:
                 return 'UNC'
             
-def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, pair_HA, z):
+def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, z):
 
     #for dust correction
+    
+    HA_ew, HA_ew_err, pair_HA = ew_proc(HA_ew, HA_ew_err)
     
     coefs, E_B_V = dust_correction(HA, HA_er, HB, HB_er)
 
@@ -302,5 +327,5 @@ def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, 
     #AGN Luminosity estimation
     LAGN, LAGN_er = AGN_lum(OIII, OIII_er, z)
 
-    return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, coefs[0], coefs[-1], E_B_V
+    return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, pair_HA
 
