@@ -597,9 +597,9 @@ class Main(hp):
         X_1 = np.arange(-4, 0.3, 0.01)
         X_111 = np.arange(-4, 0, 0.01)
         X_11 = np.arange(-0.45, 0.3, 0.01)
-        self.ax1.plot(X_1, (0.61/(X_1 - 0.47)) + 1.19, c='deeppink') #Kewley, 2001
-        self.ax1.plot(X_111, (0.61/(X_111 - 0.05)) + 1.3, c='deeppink', linestyle='dashed') #Kauffman, 2003
-        self.ax1.plot(X_11, (2.145*(X_11+0.45)) - 0.5, c='deeppink', linestyle='dotted') #https://adsabs.harvard.edu/full/2003MNRAS.346.1055K
+        self.ax1.plot(X_1, (0.61/(X_1 - 0.47)) + 1.19, c='crimson') #Kewley, 2001
+        self.ax1.plot(X_111, (0.61/(X_111 - 0.05)) + 1.3, c='crimson', linestyle='dashed') #Kauffman, 2003
+        self.ax1.plot(X_11, (2.145*(X_11+0.45)) - 0.5, c='crimson', linestyle='dotted') #https://adsabs.harvard.edu/full/2003MNRAS.346.1055K
         self.ax1.text(-1, 1.5, 'AGN/Seyfert')
         self.ax1.text(0.1, 0.2, 'LINER')
         self.ax1.text(-0.1, -1.5, 'Comp')
@@ -609,8 +609,8 @@ class Main(hp):
 
         X_2 = np.arange(-4, 0.15, 0.01)
         X_22 = np.arange(-0.3, 0.5, 0.01)
-        self.ax2.plot(X_2, (0.72/(X_2 - 0.32)) + 1.3, c='deeppink')
-        self.ax2.plot(X_22, (1.89*X_22) + 0.76, c='deeppink', linestyle='dotted')
+        self.ax2.plot(X_2, (0.72/(X_2 - 0.32)) + 1.3, c='crimson')
+        self.ax2.plot(X_22, (1.89*X_22) + 0.76, c='crimson', linestyle='dotted')
         self.ax2.text(-0.7, 1.5, 'Seyfert')
         self.ax2.text(0.1, 0.2, 'LINER')
         self.ax2.text(-1.7, -1.5, 'SF')
@@ -618,8 +618,8 @@ class Main(hp):
 
         X_3 = np.arange(-4, -0.7, 0.01)
         X_33 = np.arange(-1.1, 0.5, 0.01)
-        self.ax3.plot(X_3, (0.73/(X_3 + 0.59)) + 1.33, c='deeppink')
-        self.ax3.plot(X_33, (1.18*X_33) + 1.3, c='deeppink', linestyle='dotted')
+        self.ax3.plot(X_3, (0.73/(X_3 + 0.59)) + 1.33, c='crimson')
+        self.ax3.plot(X_33, (1.18*X_33) + 1.3, c='crimson', linestyle='dotted')
         self.ax3.text(-1.5, 1.5, 'Seyfert')
         self.ax3.text(-0.5, -0.5, 'LINER')
         self.ax3.text(-1.7, -1.5, 'SF')

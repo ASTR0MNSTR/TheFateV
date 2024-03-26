@@ -4,6 +4,12 @@ from __legpars__ import *
 from __stats__ import *
 import pandas as pd
 
+def adjusting_plotting_pars():
+    plt.rcParams['font.size'] = 15
+    
+def generating_annotation(axis, x, y, text):
+    axis.text(x, y, text)
+
 def theor_lines(axes, key):
     
     for ax in axes:
@@ -28,15 +34,16 @@ def plotting(pars_dict):
     DataFrame = pd.read_csv(pars_dict['input_path'], usecols=cols)
     gs_top = plt.GridSpec(1, 2, wspace=0)
     fig1 = plt.figure(figsize=(12, 6), tight_layout=True)
+    adjusting_plotting_pars()
 
     ax4 = fig1.add_subplot(gs_top[:,0])
     ax5 = fig1.add_subplot(gs_top[:,1], sharey=ax4)
-
+    
     topaxes = [ax5, ax4]
 
     ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
     ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in')
-
+    
     ax4.set_ylabel(pars_dict['ylabel'])
     for ax in topaxes:    
         ax.set_xlim(pars_dict['xlim'])
@@ -44,7 +51,10 @@ def plotting(pars_dict):
         ax.set_yticks(pars_dict['yticks'])
         ax.set_xticks(pars_dict['xticks'])
         ax.set_xlabel(pars_dict['xlabel'])
-            
+    
+    k = 0.85
+    generating_annotation(ax4, pars_dict['xlim'][0] + k*(pars_dict['xlim'][1] - pars_dict['xlim'][0]), pars_dict['ylim'][0] + k*(pars_dict['ylim'][1] - pars_dict['ylim'][0]), 'BPT')    
+    generating_annotation(ax5, pars_dict['xlim'][0] + k*(pars_dict['xlim'][1] - pars_dict['xlim'][0]), pars_dict['ylim'][0] + k*(pars_dict['ylim'][1] - pars_dict['ylim'][0]), 'WHAN')    
     bids = pars_dict['bids']
     
     try:
@@ -62,6 +72,84 @@ def plotting(pars_dict):
         ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['WHAN'], bids, 'WHAN', True)
 
     fig1.savefig(pars_dict['save_path'])
+    
+def classlist_plotter(axis, classlist, bids):
+    errs = []
+    means = []
+    for item in classlist:
+        X_plot = []
+        Y_plot = []
+        err_plot = []
+        err_up = []
+        err_down = []
+        X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
+        means.append(Y)
+        errs.append(err)
+        for j in range(len(X)):
+            if Y[j] != -99:
+                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
+                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+                # axis.text(X[j], Y[j], length[j], c = 'red')
+                X_plot.append(X[j])
+                Y_plot.append(Y[j])
+                err_plot.append(err[j])
+                    
+        X_plot = np.asarray(X_plot)
+        Y_plot = np.asarray(Y_plot)
+        for err in err_plot:
+            err_up.append(err[1][0])
+            err_down.append(err[0][0])
+        err_up = np.asarray(err_up)
+        err_down = np.asarray(err_down)
+            
+        axis.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
+        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+        axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
+        axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
+        axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+
+def classlist_plotter_uplim(axis, classlist, bids):
+    errs = []
+    means = []
+    pert = np.linspace(-0.05, 0.05, num=len(classlist))
+    for i, item in enumerate(classlist):
+        X_plot = []
+        Y_plot = []
+        err_plot = []
+        err_up = []
+        err_down = []
+        up_lim_end = []
+            
+        X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
+        up_lim = up_lim_analysis(item[0], item[5], bids)
+        means.append(Y)
+        errs.append(err)
+        for j in range(len(X)):
+            if Y[j] != -99:
+                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
+                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+                    # self.ax4.text(X[j], Y[j], length[j], c = 'red')
+                X_plot.append(X[j] + pert[i])
+                Y_plot.append(Y[j])
+                err_plot.append(err[j])
+                up_lim_end.append(up_lim[j])
+                    
+        X_plot = np.asarray(X_plot)
+        Y_plot = np.asarray(Y_plot)
+        for err in err_plot:
+            err_up.append(err[1][0])
+            err_down.append(err[0][0])
+        err_up = np.asarray(err_up)
+        err_down = np.asarray(err_down)
+            
+        axis.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
+        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+        for i, elem in enumerate(up_lim_end):
+            if elem:
+                axis.arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
+        axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
+        axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
+        axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
 
 def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):    
 
@@ -77,40 +165,7 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
                     
     class_list = class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT)
     
-    errs = []
-    means = []
-    
-    for item in class_list:
-        X_plot = []
-        Y_plot = []
-        err_plot = []
-        err_up = []
-        err_down = []
-        X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
-        means.append(Y)
-        errs.append(err)
-        for j in range(len(X)):
-            if Y[j] != -99:
-                # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
-                # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-                # axis.text(X[j], Y[j], length[j], c = 'red')
-                X_plot.append(X[j])
-                Y_plot.append(Y[j])
-                err_plot.append(err[j])
-                
-        X_plot = np.asarray(X_plot)
-        Y_plot = np.asarray(Y_plot)
-        for err in err_plot:
-            err_up.append(err[1][0])
-            err_down.append(err[0][0])
-        err_up = np.asarray(err_up)
-        err_down = np.asarray(err_down)
-        
-        axis.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-        axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
-        axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
-        axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+    classlist_plotter(axis, class_list, bids)
     
     if leg == True:
         for j, item in enumerate(class_list):
@@ -119,19 +174,19 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
             elif WHAN_or_BPT == 'WHAN':
                 list_names = list_names_WHAN
             axis.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names[j])
-        axis.legend(loc=3, fontsize="13")
+        axis.legend(loc=3)
     
     return axis   
 
 def class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT):
     if WHAN_or_BPT == 'BPT':
         keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
-        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['deeppink', '*'], ['orchid', 'o']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['orchid', 'o']]
     elif WHAN_or_BPT == 'WHAN':
+        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
         keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
-        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']]
-        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
-        # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o'], ['black', 'h']]
+        # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
+        colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v']]
     class_list = []
     
     for j, chain in enumerate(keys):
@@ -154,10 +209,10 @@ def class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT):
 def class_list_creator_wo_err(x, y, age, AGN_keys, WHAN_or_BPT):
     if WHAN_or_BPT == 'BPT':
         keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
-        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['deeppink', '*'], ['orchid', 'o']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['orchid', 'o']]
     elif WHAN_or_BPT == 'WHAN':
         keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
-        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
+        colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v']]
     class_list = []
     
     for j, chain in enumerate(keys):
@@ -177,12 +232,12 @@ def class_list_creator_wo_err(x, y, age, AGN_keys, WHAN_or_BPT):
 def class_list_creator_w_err_out(x, y, up, down, AGN_keys, WHAN_or_BPT, ks):
     if WHAN_or_BPT == 'BPT':
         keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
-        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['deeppink', '*'], ['orchid', 'o']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['orchid', 'o']]
     elif WHAN_or_BPT == 'WHAN':
         # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
         keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']]
         # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
-        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o'], ['black', 'h']]
+        colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v'], ['black', 'h']]
     class_list = []
     
     for j, chain in enumerate(keys):
@@ -350,7 +405,7 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         axes.bar(br1, UNCY_perc, color ='limegreen', width = barWidth, edgecolor ='grey', label ='UNCY')
         axes.bar(br1, NOEL_perc, color ='white', width = barWidth, edgecolor ='grey', label ='NOEL')
         axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SFXY')
-        axes.bar(br1, SFX_perc, color ='deeppink', width = barWidth, edgecolor ='grey', label ='SFX')
+        axes.bar(br1, SFX_perc, color ='crimson', width = barWidth, edgecolor ='grey', label ='SFX')
         axes.bar(br1, SFY_perc, color ='fuchsia', width = barWidth, edgecolor ='grey', label ='SFY')
         
         axes.set_ylabel(f'{y_name}')
@@ -361,7 +416,7 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         k = 0
         for rect in bar1:
             height = rect.get_height()
-            axes.text(rect.get_x() + rect.get_width() / 2.0, height, str(SAMPLE[k]), ha='center', va='bottom')
+            axes.text(rect.get_x() + rect.get_width() / 2.0, height, str(SAMPLE[k]), ha='center', va='bottom', fontsize='13')
             k+=1
 
 def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
@@ -443,7 +498,7 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
     k = 0
     for rect in bar1:
         height = rect.get_height()
-        axes.text(rect.get_x() + rect.get_width() / 2.0, height, str(SAMPLE[k]), ha='center', va='bottom')
+        axes.text(rect.get_x() + rect.get_width() / 2.0, height, str(SAMPLE[k]), ha='center', va='bottom', fontsize='13')
         k+=1
     all = [sAGN, wAGN, NOEL, SF, ELR, NER, LLR, SAMPLE]
 

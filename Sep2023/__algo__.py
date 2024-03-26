@@ -327,5 +327,5 @@ def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, 
     #AGN Luminosity estimation
     LAGN, LAGN_er = AGN_lum(OIII, OIII_er, z)
 
-    return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, pair_HA
+    return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, HA_ew, HA_ew_err, pair_HA
 

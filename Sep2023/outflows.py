@@ -243,8 +243,8 @@ class Main:
             Y_down = self.DataFrame[down][i]
             
             if Y_up == 'upNon':
-                axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=0.3)
-                axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.3)
+                axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=0.1)
+                axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.1)
                 k = 0
                 Y_up = 0
                 Y_down = 0
@@ -257,8 +257,8 @@ class Main:
             else:
                 # axes[0].errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_BPT[AGN][0], marker = '.')
                 # axes[1].errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_WHAN[WHAN][0], marker = '.')
-                axes[0].scatter(X, Y, alpha = 0.3, color = self.color_dict_BPT[AGN][0], marker = '.')
-                axes[1].scatter(X, Y, alpha = 0.3, color = self.color_dict_WHAN[WHAN][0], marker = '.')
+                axes[0].scatter(X, Y, alpha = 0.1, color = self.color_dict_BPT[AGN][0], marker = '.')
+                axes[1].scatter(X, Y, alpha = 0.1, color = self.color_dict_WHAN[WHAN][0], marker = '.')
                 k = 1
             
             if Y > -10:
@@ -289,93 +289,13 @@ class Main:
         # axes[0].set_xticks(ages_const)
         # axes[1].set_xticks(ages_const)
         
-        errs = []
-        means = []
-        for item in class_list_BPT:
-            X_plot = []
-            Y_plot = []
-            err_plot = []
-            err_up = []
-            err_down = []
-            up_lim_end = []
-            
-            X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
-            
-            up_lim = up_lim_analysis(item[0], item[5], bids)
-            means.append(Y)
-            errs.append(err)
-            for j in range(len(X)):
-                if Y[j] != -99:
-                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
-                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-                    # axes[0].text(X[j], Y[j], length[j], c = 'red')
-                    X_plot.append(X[j])
-                    Y_plot.append(Y[j])
-                    err_plot.append(err[j])
-                    up_lim_end.append(up_lim[j])
-                    
-            X_plot = np.asarray(X_plot)
-            Y_plot = np.asarray(Y_plot)
-            for err in err_plot:
-                err_up.append(err[1][0])
-                err_down.append(err[0][0])
-            err_up = np.asarray(err_up)
-            err_down = np.asarray(err_down)
-            
-            axes[0].fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-            axes[0].scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-            for i, elem in enumerate(up_lim_end):
-                if elem:
-                    axes[0].arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
-            axes[0].plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
-            axes[0].plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
-            axes[0].plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+        classlist_plotter_uplim(axes[0], class_list_BPT, bids)
+        classlist_plotter_uplim(axes[1], class_list_WHAN, bids)
 
         for j, item in enumerate(class_list_BPT):
             axes[0].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
         axes[0].legend(loc=3, fontsize='13')
-        
-        errs = []
-        means = []
-        for item in class_list_WHAN:
-            X_plot = []
-            Y_plot = []
-            err_plot = []
-            err_up = []
-            err_down = []
-            up_lim_end = []
-            X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
-            up_lim = up_lim_analysis(item[0], item[5], bids)
-            means.append(Y)
-            errs.append(err)
-            for j in range(len(X)):
-                if Y[j] != -99:
-                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
-                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-                    # axes[1].text(X[j], Y[j], length[j], c = 'red')
-                    X_plot.append(X[j])
-                    Y_plot.append(Y[j])
-                    err_plot.append(err[j])
-                    up_lim_end.append(up_lim[j])
-                    
-            X_plot = np.asarray(X_plot)
-            Y_plot = np.asarray(Y_plot)
-            for err in err_plot:
-                err_up.append(err[1][0])
-                err_down.append(err[0][0])
-            err_up = np.asarray(err_up)
-            err_down = np.asarray(err_down)
-            
-            axes[1].fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-            axes[1].scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-            for i, elem in enumerate(up_lim_end):
-                if elem:
-                    axes[1].arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
-            axes[1].plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
-            axes[1].plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
-            axes[1].plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
 
-            
         for j, item in enumerate(class_list_WHAN):
             axes[1].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
         axes[1].legend(loc=3, fontsize='13')

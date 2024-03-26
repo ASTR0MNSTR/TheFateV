@@ -64,9 +64,11 @@ class Main(hp):
             except: 
                 print(item['GAMAID'])
     
-    def plotting_mdms_age(self):
+    def plotting(self):
+        
         gs_top = plt.GridSpec(1, 2, wspace=0)
         self.fig1 = plt.figure(figsize=(12, 6), tight_layout=True)
+        adjusting_plotting_pars()
 
         self.ax4 = self.fig1.add_subplot(gs_top[:,0])
         self.ax5 = self.fig1.add_subplot(gs_top[:,1], sharey=self.ax4)
@@ -75,7 +77,7 @@ class Main(hp):
 
         self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
         self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in')
-
+        
         self.ax4.set_ylabel(r'$T_{warm \; dust}, K$')
         for ax in self.topaxes:    
             ax.set_xlim([8.7, 10.1])
@@ -83,12 +85,12 @@ class Main(hp):
             ax.set_xlabel(r'$log(age/yr)$')
             #ax.set_yticks(np.arange(15, 25.9, 2))
 
-        Main.plotter_mdms_BPT(self, 'X', 'Y', 'Y_up', 'Y_down', 'AGN', 'SC_WHAN', True, 'P100', 'P100_er')
+        Main.subplotting(self, 'X', 'Y', 'Y_up', 'Y_down', 'AGN', 'SC_WHAN', True, 'P100', 'P100_er')
         
         self.fig1.savefig('./FIGURES_IN_PAPER/TDW.pdf')
         #plt.show()
 
-    def plotter_mdms_BPT(self, x, y, up, down, BPT_key, WHAN_key, bids_key, p100, p100_er):
+    def subplotting(self, x, y, up, down, BPT_key, WHAN_key, bids_key, p100, p100_er):
         XX = []
         YY = []
         Y_up = []
@@ -126,95 +128,22 @@ class Main(hp):
             bids = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
             ages_const = np.arange(7, 12, 1)
 
-        errs = []
-        means = []
-        for item in class_list_BPT:
-            X_plot = []
-            Y_plot = []
-            err_plot = []
-            err_up = []
-            err_down = []
-            X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
-            means.append(Y)
-            errs.append(err)
-            for j in range(len(X)):
-                if Y[j] != -99:
-                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
-                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-                    self.ax4.text(X[j], Y[j], length[j], c = 'red')
-                    X_plot.append(X[j])
-                    Y_plot.append(Y[j])
-                    err_plot.append(err[j])
-                    
-            X_plot = np.asarray(X_plot)
-            Y_plot = np.asarray(Y_plot)
-            for err in err_plot:
-                err_up.append(err[1][0])
-                err_down.append(err[0][0])
-            err_up = np.asarray(err_up)
-            err_down = np.asarray(err_down)
-            
-            self.ax4.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-            self.ax4.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-            self.ax4.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
-            self.ax4.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
-            self.ax4.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+        classlist_plotter(self.ax4, class_list_BPT, bids)
 
-        #for key in self.color_dict_leg.keys():
-        #        self.ax4.scatter(-99, -99, alpha= 1, color = self.color_dict_leg[key][0], marker = self.color_dict_leg[key][2], s = self.color_dict_leg[key][1], label=key)
         self.ax4.set_xticks(ages_const)
         for j, item in enumerate(class_list_BPT):
             self.ax4.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
         self.ax4.legend(loc=3, fontsize='13')
         
-        errs = []
-        means = []
-        for item in class_list_WHAN:
-            X_plot = []
-            Y_plot = []
-            err_plot = []
-            err_up = []
-            err_down = []
-            X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
-            means.append(Y)
-            errs.append(err)
-            for j in range(len(X)):
-                if Y[j] != -99:
-                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
-                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-                    self.ax5.text(X[j], Y[j], length[j], c = 'red')
-                    X_plot.append(X[j])
-                    Y_plot.append(Y[j])
-                    err_plot.append(err[j])
-                    
-            X_plot = np.asarray(X_plot)
-            Y_plot = np.asarray(Y_plot)
-            for err in err_plot:
-                err_up.append(err[1][0])
-                err_down.append(err[0][0])
-            err_up = np.asarray(err_up)
-            err_down = np.asarray(err_down)
-            
-            self.ax5.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-            self.ax5.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-            self.ax5.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
-            self.ax5.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
-            self.ax5.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+        classlist_plotter(self.ax5, class_list_WHAN, bids)
 
-        #for key in self.color_dict_leg.keys():
-        #        self.ax4.scatter(-99, -99, alpha= 1, color = self.color_dict_leg[key][0], marker = self.color_dict_leg[key][2], s = self.color_dict_leg[key][1], label=key)
         self.ax5.set_xticks(ages_const)
         for j, item in enumerate(class_list_WHAN):
             self.ax5.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
         self.ax5.legend(loc=3, fontsize='13')
 
-        #self.ax4.set_xlim(8, 10.1)
-        #self.ax4.set_ylim(14, 26)
-        #self.fig.savefig(name_file + '.pdf')
-        #plt.show()
-
 if __name__ == '__main__':
     obj = Main('E:\LICENSE\ProgsData\main\GAMAforOleg_1.txt', 'GAMA_ETG_OLA.csv')
     obj.reading()
     obj.matching()
-    obj.plotting_mdms_age()
+    obj.plotting()

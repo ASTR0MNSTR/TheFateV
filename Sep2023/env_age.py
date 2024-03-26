@@ -87,7 +87,7 @@ class Main(hp):
     def plotting_mdms_age(self):
         gs_top = plt.GridSpec(1, 2, wspace=0)
         self.fig1 = plt.figure(figsize=(12, 6), tight_layout=True)
-
+        adjusting_plotting_pars()
         self.ax4 = self.fig1.add_subplot(gs_top[:,0])
         self.ax5 = self.fig1.add_subplot(gs_top[:,1], sharey=self.ax4)
 
@@ -103,6 +103,10 @@ class Main(hp):
             ax.set_ylim([-2, 3])
             ax.axhline(1, color = 'k', linestyle='-')
 
+        k = 0.85
+        generating_annotation(self.ax4, 8.7 + k*(10.1 - 8.7), -2 + k*(3 - (-2)), 'BPT')    
+        generating_annotation(self.ax5, 8.7 + k*(10.1 - 8.7), -2 + k*(3 - (-2)), 'WHAN')
+        
         bids = [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
         Main.plotter(self, bids)
         self.fig1.savefig('./FIGURES_IN_PAPER/SurfaceDensity_age.pdf')
@@ -164,90 +168,12 @@ class Main(hp):
         class_list_BPT = class_list_creator_w_err_out(tot_age, tot, tot_up, tot_down, BPT_keys, 'BPT', ks)
         class_list_WHAN = class_list_creator_w_err_out(tot_age, tot, tot_up, tot_down, WHAN_keys, 'WHAN', ks)
         
-        errs = []
-        means = []
-        for item in class_list_BPT:
-            X_plot = []
-            Y_plot = []
-            err_plot = []
-            err_up = []
-            err_down = []
-            up_lim_end = []
-            
-            X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
-            up_lim = up_lim_analysis(item[0], item[5], bids)
-            means.append(Y)
-            errs.append(err)
-            for j in range(len(X)):
-                if Y[j] != -99:
-                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
-                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-                    # self.ax4.text(X[j], Y[j], length[j], c = 'red')
-                    X_plot.append(X[j])
-                    Y_plot.append(Y[j])
-                    err_plot.append(err[j])
-                    up_lim_end.append(up_lim[j])
-                    
-            X_plot = np.asarray(X_plot)
-            Y_plot = np.asarray(Y_plot)
-            for err in err_plot:
-                err_up.append(err[1][0])
-                err_down.append(err[0][0])
-            err_up = np.asarray(err_up)
-            err_down = np.asarray(err_down)
-            
-            self.ax4.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-            self.ax4.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-            for i, elem in enumerate(up_lim_end):
-                if elem:
-                    self.ax4.arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
-            self.ax4.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
-            self.ax4.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
-            self.ax4.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+        classlist_plotter_uplim(self.ax4, class_list_BPT, bids)
+        classlist_plotter_uplim(self.ax5, class_list_WHAN, bids)
 
         for j, item in enumerate(class_list_BPT):
             self.ax4.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
         self.ax4.legend(loc=3, fontsize='13')
-        
-        for item in class_list_WHAN:
-            X_plot = []
-            Y_plot = []
-            err_plot = []
-            err_up = []
-            err_down = []
-            up_lim_end = []
-            
-            X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
-            
-            up_lim = up_lim_analysis(item[0], item[5], bids)
-            means.append(Y)
-            errs.append(err)
-            for j in range(len(X)):
-                if Y[j] != -99:
-                    # axis.errorbar(X[j], Y[j], alpha = 1, xerr=0, yerr= err[j], color=item[4][0], fmt=item[4][1], ms = 12)
-                    # axis.scatter(X[j], Y[j], alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-                    # self.ax5.text(X[j], Y[j], length[j], c = 'red')
-                    X_plot.append(X[j])
-                    Y_plot.append(Y[j])
-                    err_plot.append(err[j])
-                    up_lim_end.append(up_lim[j])
-                    
-            X_plot = np.asarray(X_plot)
-            Y_plot = np.asarray(Y_plot)
-            for err in err_plot:
-                err_up.append(err[1][0])
-                err_down.append(err[0][0])
-            err_up = np.asarray(err_up)
-            err_down = np.asarray(err_down)
-            
-            self.ax5.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-            self.ax5.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
-            for i, elem in enumerate(up_lim_end):
-                if elem:
-                    self.ax5.arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
-            self.ax5.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
-            self.ax5.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
-            self.ax5.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
 
         for j, item in enumerate(class_list_WHAN):
             self.ax5.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])

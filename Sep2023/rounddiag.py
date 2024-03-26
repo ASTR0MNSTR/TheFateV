@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from __plt__ import *
 
 class Main:
 
@@ -58,6 +59,7 @@ class Main:
 
         fig, axs = plt.subplots(4, 3, figsize=(12, 16), tight_layout=True)
         plt.subplots_adjust(wspace=0, hspace=0)
+        # adjusting_plotting_pars()
 
         # [0, 0]
         # [1, 0] 1 - row

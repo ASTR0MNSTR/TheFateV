@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from __plt__ import *
 
 class Main:
 
@@ -17,7 +18,7 @@ class Main:
         self.WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
 
         self.BPT_labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
-        self.BPT_colors = ['midnightblue', 'dodgerblue', 'springgreen', 'darkgreen', 'limegreen', 'mediumvioletred', 'deeppink', 'fuchsia', 'white']
+        self.BPT_colors = ['midnightblue', 'dodgerblue', 'springgreen', 'darkgreen', 'limegreen', 'mediumvioletred', 'crimson', 'fuchsia', 'white']
 
         self.BPT_colors_merged = ['royalblue', 'lime', 'hotpink', 'w']
         self.WHAN_colors_merged = ['royalblue', 'lime', 'hotpink', 'brown']
@@ -29,7 +30,8 @@ class Main:
 
         fig, axs = plt.subplots(2, 4, figsize=(16, 8), tight_layout=True)
         plt.subplots_adjust(wspace=0, hspace=0)
-
+        # adjusting_plotting_pars()
+        
         ax1 = axs[0, 0]
         ax3 = axs[0, 1]
         ax5 = axs[0, 2]

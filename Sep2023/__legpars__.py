@@ -46,11 +46,11 @@ list_names_WHAN = ['sAGN', 'wAGN', 'SF','ELR', 'NER', 'LLR', 'ALL']
 
 WHAN_color_plt = {
     'sAGN' : ['gray', 150, 'P'],
-    'wAGN' : ['gray', 100, 'P'],
+    'wAGN' : ['gray', 150, 'o'],
     'SF' : ['gray', 150, '*'],
     'ELR' : ['gray', 150, 'D'],
-    'NER' : ['gray', 150, 'o'],
-    'LLR' : ['gray', 100, 'o']
+    'NER' : ['gray', 150, '^'],
+    'LLR' : ['gray', 150, 'v']
 }
 
 BPT_color_plt ={

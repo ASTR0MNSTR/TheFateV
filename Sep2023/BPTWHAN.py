@@ -293,8 +293,9 @@ class Main(hp):
 
         # dust_correction module:
         
-        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, pair_HA = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, Z)
+        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, HA_ew, HA_ew_err, pair_HA = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, Z)
 
+        
         X_er = 0
         Y_er = 0
         try:
@@ -315,7 +316,7 @@ class Main(hp):
         res_out = [X, X_er, pair_x_flags, Y, Y_er, pair_y_flags]
 
         kwargs = [SURV, SURV_CODE, IS_BEST, IS_SBEST, CATAID,
-                  [SFR_HA, SFR_HA_er], AGN, FLUXES, FLUXES_ER, bms, [RA, DEC, Z, SPEC_ID], [X, pair_x_flags, HA_EW, pair_HA], SC_WHAN,
+                  [SFR_HA, SFR_HA_er], AGN, FLUXES, FLUXES_ER, bms, [RA, DEC, Z, SPEC_ID], [X, pair_x_flags, HA_ew, pair_HA], SC_WHAN,
                   [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW, HA_EW_ERR], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er]
                 #   [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_1, HA_EW_ERR_1], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er, k_OIII, log_LAGN, k_HA, E_B_V, OIII_m, OIII_er_m, LAGN_m, out_m, LAGN_max, out_m_off]
         res_out_out = [res_out, kwargs]
@@ -504,6 +505,7 @@ class Main(hp):
         self.gs_top = plt.GridSpec(nrows=2, ncols=3, wspace=0)
         #self.fig = plt.figure(figsize=(12, 12), tight_layout=True)
         self.fig = plt.figure(figsize=(18, 12))
+        adjusting_plotting_pars()
 
         self.ax4 = self.fig.add_subplot(self.gs_top[0,0])
         self.ax5 = self.fig.add_subplot(self.gs_top[0,1], sharey=self.ax4)
@@ -606,7 +608,7 @@ class Main(hp):
                         self.ax5.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker =self.cd_WHAN[SC_WHAN][2], alpha=1)
                         #self.ax4.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker =self.cd_WHAN[SC_WHAN][2], alpha=0.5)
                         #self.ax5.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.s_m.to_rgba(age), marker =self.cd_WHAN[SC_WHAN][2], alpha=0.5)
-                        self.ax_med_BPT.scatter(x, y, s=1.5, color=self.s_m.to_rgba(age), alpha=0.5)
+                        self.ax_med_BPT.scatter(x, y, s=1.5, color=self.s_m.to_rgba(age), alpha=0.3)
                         k += 1
                     except KeyError:
                         pass
@@ -630,7 +632,7 @@ class Main(hp):
         for key in BPT_color_plt:
             self.ax_med_BPT.scatter(-99, -99, alpha=1, color = BPT_color_plt[key][0], s = BPT_color_plt[key][1], marker= BPT_color_plt[key][2], label=key)
         
-        self.ax_med_BPT.legend(loc =3, fontsize='13')
+        self.ax_med_BPT.legend(loc=3)
         print('Number of points on BPT: ', k)
 
         #self.ax4.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='o')
@@ -682,8 +684,8 @@ class Main(hp):
             X_wAGN = np.arange(-0.4, 2.5, 0.01)
             ax.plot(X_wAGN, 0.77815125+X_wAGN*0, 'black')
             ax.text(-1.5, 2, 'SF')
-            ax.text(0.8, 0.5, 'wAGN')
-            ax.text(0.8, 2, 'sAGN')
+            ax.text(0.6, 0.5, 'wAGN')
+            ax.text(0.6, 2, 'sAGN')
 
             Y_sAGN = np.arange(0.47712, 3, 0.01)
             ax.plot(-0.4+Y_sAGN*0, Y_sAGN, 'black')
@@ -732,7 +734,7 @@ class Main(hp):
                 AGN_flags.append(SC_WHAN)
                 if len(pair_x_flags) == 0 and len(pair_y_flags) == 0:
                     self.ax6.scatter(x, y, s=self.color_dict[AGN][1], color=self.color_dict[AGN][0], alpha=1, marker=self.color_dict[AGN][2])
-                    self.ax_med_WHAN.scatter(x, y, s=self.color_dict[AGN][1], color=self.s_m.to_rgba(age), alpha=0.5, marker=self.color_dict[AGN][2])
+                    self.ax_med_WHAN.scatter(x, y, s=self.color_dict[AGN][1], color=self.s_m.to_rgba(age), alpha=0.3, marker=self.color_dict[AGN][2])
                     self.ax7.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=1)
                     #self.ax6.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=0.5)
                     #self.ax7.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.s_m.to_rgba(age), marker = '.', alpha=0.5)
@@ -745,10 +747,9 @@ class Main(hp):
                     
         class_list = class_list_creator_wo_err(X, Y, AGE, AGN_flags, 'WHAN')
         
-        sizes = [150, 100, 150, 150, 150, 100]
         for j, item in enumerate(class_list):
             big_point_X, big_point_Y, big_point_age = median_position(item[0], item[1], item[2], [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]])
-            self.ax_med_WHAN.scatter(big_point_X, big_point_Y, s = sizes[j], color = self.s_m.to_rgba(big_point_age), marker=item[3][1])
+            self.ax_med_WHAN.scatter(big_point_X, big_point_Y, s = 150, color = self.s_m.to_rgba(big_point_age), marker=item[3][1])
         
         for key in WHAN_color_plt:
             self.ax_med_WHAN.scatter(-99, -99, alpha=1, color = WHAN_color_plt[key][0], s = WHAN_color_plt[key][1], marker= WHAN_color_plt[key][2], label=key)
@@ -759,9 +760,9 @@ class Main(hp):
         self.ax6.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='o')
         self.ax6.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s = 30, marker='o')
         self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s = 30, marker='o')
-        self.ax6.legend(loc=3, fontsize="13")
-        self.ax7.legend(loc=3, fontsize="13")
-        self.ax_med_WHAN.legend(loc=3, fontsize="13")
+        self.ax6.legend(loc=3)
+        self.ax7.legend(loc=3)
+        self.ax_med_WHAN.legend(loc=3)
         
         
         #self.ax6.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
@@ -771,7 +772,7 @@ class Main(hp):
 
         self.fig.subplots_adjust(right=0.9)
         cbar_ax = self.fig.add_axes([0.9, 0.1, 0.05, 0.78])
-        self.fig.colorbar(self.s_m, cax=cbar_ax)
+        self.fig.colorbar(self.s_m, cax=cbar_ax, label=r'$log(age)$')
         #self.ax7.legend(loc=3, fontsize="13")
         
         self.fig.savefig('./FIGURES_IN_PAPER/BPT_WHAN.pdf')
