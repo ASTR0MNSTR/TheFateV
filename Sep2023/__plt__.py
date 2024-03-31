@@ -73,6 +73,16 @@ def plotting(pars_dict):
 
     fig1.savefig(pars_dict['save_path'])
     
+def rainbow_plotter(axis, classlist):
+    for item in classlist:
+        popt, dev = width_estimation(item[0], item[1])
+        X_plot = np.linspace(10.0, 11.5, 1000)
+        axis.fill_between(X_plot, linear_function(X_plot, popt[0], popt[1] + dev), linear_function(X_plot, popt[0], popt[1] - dev), color = item[4][0], alpha = 0.17)
+        axis.plot(X_plot, linear_function(X_plot, popt[0], popt[1] + dev), alpha = 1, color=item[4][0])
+        axis.plot(X_plot, linear_function(X_plot, popt[0], popt[1] - dev), alpha = 1, color=item[4][0])
+        axis.plot(X_plot, linear_function(X_plot, popt[0], popt[1]), alpha = 1, color=item[4][0], linestyle = '--')
+        
+    
 def classlist_plotter(axis, classlist, bids):
     errs = []
     means = []
@@ -165,7 +175,8 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
                     
     class_list = class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT)
     
-    classlist_plotter(axis, class_list, bids)
+    # classlist_plotter(axis, class_list, bids)
+    rainbow_plotter(axis, class_list)
     
     if leg == True:
         for j, item in enumerate(class_list):
@@ -202,7 +213,7 @@ def class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT):
                 Y_up.append(up[i])
                 Y_down.append(down[i])
         
-        class_list.append([X, Y, Y_down, Y_up, colors_markers[j]])
+        class_list.append([X, Y, Y_up, Y_down, colors_markers[j]])
     return class_list
         # class_list = [[yes_temp_age, yes_temp, 'midnightblue', yes_temp_down, yes_temp_up, 'P'], [UNC_temp_age, UNC_temp, 'springgreen', UNC_temp_down, UNC_temp_up, 'H'], [no_temp_age, no_temp, 'mediumvioletred', no_temp_down, no_temp_up, '*'], [noel_temp_age, noel_temp, 'orchid', noel_temp_down, noel_temp_up, 'o']]
 
@@ -255,7 +266,7 @@ def class_list_creator_w_err_out(x, y, up, down, AGN_keys, WHAN_or_BPT, ks):
                 Y_down.append(down[i])
                 KS.append(ks[i])
         
-        class_list.append([X, Y, Y_down, Y_up, colors_markers[j], KS])
+        class_list.append([X, Y, Y_up, Y_down, colors_markers[j], KS])
     return class_list
 
 def bin_stats(pars_dict):

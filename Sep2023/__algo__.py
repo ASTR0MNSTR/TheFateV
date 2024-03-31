@@ -128,10 +128,12 @@ def AGN_lum(OIII, OIII_er, z):
         return -99999.0, -99999.0
     elif OIII < 0 and OIII_er > 0 and SN*OIII_er + OIII < 0: #absorption
         OIII += SN*OIII_er
-        LAGN_er = 'upAbs'
+        # LAGN_er = 'upAbs'
+        LAGN_er = -1
     elif OIII <= SN*OIII_er: #non-detection
         OIII += SN*OIII_er
-        LAGN_er = 'upNon'
+        # LAGN_er = 'upNon'
+        LAGN_er = -2
     elif OIII > SN*OIII_er:
         LAGN_er = None
     else:
@@ -292,9 +294,9 @@ def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, 
     
     HA_ew, HA_ew_err, pair_HA = ew_proc(HA_ew, HA_ew_err)
     
-    coefs, E_B_V = dust_correction(HA, HA_er, HB, HB_er)
+    # coefs, E_B_V = dust_correction(HA, HA_er, HB, HB_er)
 
-    #coefs = [1, 1, 1, 1, 1, 1, 1]
+    coefs = [1, 1, 1, 1, 1, 1, 1]
     
     #coefs = [OIII_c, NII_c, SII_c, OI_c, HB_c, OII_c, HA_c]
     

@@ -133,14 +133,14 @@ class Main(hp):
         self.ax4.set_xticks(ages_const)
         for j, item in enumerate(class_list_BPT):
             self.ax4.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
-        self.ax4.legend(loc=3, fontsize='13')
+        self.ax4.legend(loc=3)
         
         classlist_plotter(self.ax5, class_list_WHAN, bids)
 
         self.ax5.set_xticks(ages_const)
         for j, item in enumerate(class_list_WHAN):
             self.ax5.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
-        self.ax5.legend(loc=3, fontsize='13')
+        self.ax5.legend(loc=3)
 
 if __name__ == '__main__':
     obj = Main('E:\LICENSE\ProgsData\main\GAMAforOleg_1.txt', 'GAMA_ETG_OLA.csv')

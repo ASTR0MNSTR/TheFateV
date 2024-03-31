@@ -10,13 +10,9 @@ def MS_flagging(SFR_array, MS_array, Z_array):
             time = cosmo.age(float(Z_array[i])).value
             SFR_MS = (0.84 - 0.026*time)*float(MS_array[i]) - (6.51 - 0.11*time)
             delta_SFR = float(SFR_array[i]) - SFR_MS
-        
-            if delta_SFR < -0.2:
-                bms.append(0)
-            else:
-                bms.append(1)
+            bms.append(delta_SFR)
         else:
-            bms.append(-1)
+            bms.append(-99999.0)
     
     bms = np.array(bms)
     return bms
@@ -27,7 +23,7 @@ def spectra_processing(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, 
         lines_float = [float(item) for item in lines]
         if -99999.0 not in lines_float:
             OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_er, Z = lines_float
-            BPT, X, pair_x_flags, Y, pair_y_flags, WHAN, LAGN, LAGN_er, pair_HA = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_er, Z)
+            BPT, X, pair_x_flags, Y, pair_y_flags, WHAN, LAGN, LAGN_er, HA_ew, HA_ew_err, pair_HA = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_er, Z)
         else:
             BPT = 'NDA'
             WHAN = 'NDA'
@@ -108,7 +104,7 @@ class Main:
                                                           DataFrame['NIIR_FLUX'][i], DataFrame['NIIR_FLUX_ERR'][i], DataFrame['HA_FLUX'][i], DataFrame['HA_FLUX_ERR'][i],
                                                           DataFrame['HA_EW'][i], DataFrame['HA_EW_ERR'][i], DataFrame['Z_2'][i])
                 
-            if LAGN_er in ['upNon', 'upAbs']:
+            if LAGN_er in [-1, -2]:
                 OUTFLOW.append(outflow_wAGN(DataFrame['SFR_0_1Gyr_percentile50'][i], LAGN, DataFrame['mass_stellar_percentile50'][i]))
                 OUTFLOW_up.append(LAGN_er)
                 OUTFLOW_down.append(LAGN_er)

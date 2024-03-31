@@ -3,6 +3,9 @@ import random
 from scipy.stats import bootstrap
 import numpy as np
 
+def linear_function(x, a, b):
+    return a*x + b
+
 def median_position(xs, ys, par, x_bids):
     y_values = empty(x_bids)
     x_values = empty(x_bids)
@@ -23,6 +26,14 @@ def empty(bins):
     for item in bins:
         listed.append([])
     return listed
+
+def width_estimation(x, y_mid):
+    x_data = np.array(x)
+    y_data = np.array(y_mid)
+    popt, pcov = curve_fit(linear_function, x_data, y_data)
+    
+    delta_SFR = np.abs(y_data - linear_function(x_data, *popt))
+    return popt, np.std(delta_SFR)
 
 def monte_carlo(x, y_mid, y_up, y_down, x_bids):
 
