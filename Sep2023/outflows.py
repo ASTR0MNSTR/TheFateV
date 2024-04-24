@@ -117,7 +117,7 @@ class Main:
         
         for i in range(len(self.DataFrame['SFR_0_1Gyr_percentile50'])):
                 
-            if self.DataFrame['LAGN_er'][i] in ['upNon', 'upAbs']:
+            if self.DataFrame['LAGN_er'][i] in [-1, -2]:
                 OUTFLOW.append(outflow_wAGN(self.DataFrame['SFR_0_1Gyr_percentile50'][i], self.DataFrame['LAGN'][i], self.DataFrame['mass_stellar_percentile50'][i]))
                 OUTFLOW_up.append(self.DataFrame['LAGN_er'][i])
                 OUTFLOW_down.append(self.DataFrame['LAGN_er'][i])
@@ -223,7 +223,7 @@ class Main:
         # self.fig1.suptitle('W AGN', fontsize=16)
         Main.plotter(self, [axes[0], axes[1]], pars['X'], pars['Y'], pars['Y_up'], pars['Y_down'], 'BPT', 'WHAN', pars['bids_chain'])
         self.fig1.savefig(pars['filename'])
-        plt.show()
+        # plt.show()
 
     def plotter(self, axes, x, y, up, down, BPT_key, WHAN_key, bids_chain):
         XX = []
@@ -242,13 +242,13 @@ class Main:
             Y_up = self.DataFrame[up][i]
             Y_down = self.DataFrame[down][i]
             
-            if Y_up == 'upNon':
+            if Y_up == -2:
                 axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=0.1)
                 axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.1)
                 k = 0
                 Y_up = 0
                 Y_down = 0
-            elif Y_up == 'upAbs':
+            elif Y_up == -1:
                 axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=0.1)
                 axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.1)
                 k = -1

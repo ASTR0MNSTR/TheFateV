@@ -9,7 +9,7 @@ class Main:
         return (f'{pct:.2f}%') if pct > 0.1 else ''
     
     def my_autopct_WHAN(pct):
-        return (f'{pct:.2f}%') if pct > 1 else ''
+        return (f'{pct:.2f}%') if pct > 3 else ''
 
     def __init__(self, file):
         self.file = file
@@ -31,7 +31,7 @@ class Main:
 
         fig, axs = plt.subplots(2, 3, figsize=(12, 8), tight_layout=True)
         plt.subplots_adjust(wspace=0, hspace=0)
-        # adjusting_plotting_pars()
+        adjusting_plotting_pars()
 
         ax1 = axs[0, 0]
         ax3 = axs[0, 1]
@@ -41,12 +41,12 @@ class Main:
         ax4 = axs[1, 1]
         ax6 = axs[1, 2]
 
-        Main.histo(self, ax1, [0], 'BPT')
-        Main.histo(self, ax3, [1], 'BPT')
-        Main.histo(self, ax5, [0, 1], 'BPT')
-        Main.histo(self, ax2, [0], 'WHAN')
-        Main.histo(self, ax4, [1], 'WHAN')
-        Main.histo(self, ax6, [0, 1], 'WHAN')
+        Main.histo(self, ax2, [0], 'BPT')
+        Main.histo(self, ax4, [1], 'BPT')
+        Main.histo(self, ax6, [0, 1], 'BPT')
+        Main.histo(self, ax1, [0], 'WHAN')
+        Main.histo(self, ax3, [1], 'WHAN')
+        Main.histo(self, ax5, [0, 1], 'WHAN')
         ax1.set(title='below-MS (1298 galaxies)')
         ax3.set(title='MS (697 galaxies)')
         ax5.set(title='Total (1995 galaxies)')     

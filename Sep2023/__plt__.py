@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 from __legpars__ import *
 from __stats__ import *
 import pandas as pd
+from scipy import ndimage
 
 def adjusting_plotting_pars():
-    plt.rcParams['font.size'] = 15
+    plt.rcParams['font.size'] = 13
     
 def generating_annotation(axis, x, y, text):
     axis.text(x, y, text)
@@ -22,15 +23,18 @@ def theor_lines(axes, key):
         elif key == 'sfrsm':
             x = np.arange(6.9, 12, 0.1)
             ax.plot(x, (0.84 - 0.026*13.323023)*x - (6.51 - 0.11*13.323023), color='k', linestyle='dotted')
+            ax.text(11.3, (0.84 - 0.026*13.323023)*11.3 - (6.5 - 0.11*13.323023), 'z = 0', rotation=9)
             ax.plot(x, (0.84 - 0.026*11.4074)*x - (6.51 - 0.11*11.4074), linestyle='dashed', color='k')
+            ax.text(11.3, (0.84 - 0.026*11.4074)*11.3 - (6.5 - 0.11*11.4074), 'z = 0.19', rotation=9)
             ax.plot(x, (0.84 - 0.026*9.8615801)*x - (6.51 - 0.11*9.8615801), linestyle='solid', color='k')
+            ax.text(11.3, (0.84 - 0.026*9.8615801)*11.3 - (6.5 - 0.11*9.8615801), 'z = 0.33', rotation=9)
     
             
 def plotting(pars_dict):
     if 'err' in pars_dict.keys():
-        cols = [pars_dict['x'], pars_dict['y'], pars_dict['err'], 'BPT', 'WHAN', 'P100_flux', 'P100_fluxerr']
+        cols = [pars_dict['x'], pars_dict['y'], pars_dict['err'], 'BPT', 'WHAN']
     else:
-        cols = [pars_dict['x'], pars_dict['y'], pars_dict['up'], pars_dict['down'], 'BPT', 'WHAN', 'P100_flux', 'P100_fluxerr']
+        cols = [pars_dict['x'], pars_dict['y'], pars_dict['up'], pars_dict['down'], 'BPT', 'WHAN']
     DataFrame = pd.read_csv(pars_dict['input_path'], usecols=cols)
     gs_top = plt.GridSpec(1, 2, wspace=0)
     fig1 = plt.figure(figsize=(12, 6), tight_layout=True)
@@ -72,15 +76,36 @@ def plotting(pars_dict):
         ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['WHAN'], bids, 'WHAN', True)
 
     fig1.savefig(pars_dict['save_path'])
+
+def contours(x , y , lev, sigma, bin1, bin2):
+        #mode{‘reflect’, ‘constant’, ‘nearest’, ‘mirror’, ‘wrap’}, optional\n”,
+        x_g1d = ndimage.gaussian_filter1d(x, sigma, mode = 'mirror')
+        y_g1d = ndimage.gaussian_filter1d(y, sigma, mode = 'mirror')
+        H, xedges, yedges = np.histogram2d(y_g1d, x_g1d, bins=(bin1,bin2))
+        extent = [yedges[0], yedges[-1], xedges[0], xedges[-1]]
+        levels = []
+        for i in range(len(lev)):
+            levels.append(np.max(H) * lev[i])
+        return (H, extent, levels)
     
+def contour_plotter(axis, classlist):
+    for item in classlist:
+        X = np.array(item[0])
+        Y = np.array(item[1])
+        line_widths = (2.9,2,1.)
+        levels = [0.05, 0.5] # theses levels are ‘lev’ in the above def, so they define the percentage of the contours: eg.: 0.05 is the contour at 5% of the hight (enclosing 95% of the data), and 0.9 is the contours at 90% of the hight (enclosing 10% of the data)
+        H = contours(X, Y , levels, sigma = 2, bin1 = 20, bin2 = 20)
+        axis.contour(H[0], levels = H[2], origin='lower', colors=item[4][0], linewidths=line_widths, extent=H[1], alpha = 1)
+
 def rainbow_plotter(axis, classlist):
     for item in classlist:
-        popt, dev = width_estimation(item[0], item[1])
+        popt, dev, ssfr50, ssfr_down, ssfr_up = width_estimation(item[0], item[1])
         X_plot = np.linspace(10.0, 11.5, 1000)
         axis.fill_between(X_plot, linear_function(X_plot, popt[0], popt[1] + dev), linear_function(X_plot, popt[0], popt[1] - dev), color = item[4][0], alpha = 0.17)
         axis.plot(X_plot, linear_function(X_plot, popt[0], popt[1] + dev), alpha = 1, color=item[4][0])
         axis.plot(X_plot, linear_function(X_plot, popt[0], popt[1] - dev), alpha = 1, color=item[4][0])
         axis.plot(X_plot, linear_function(X_plot, popt[0], popt[1]), alpha = 1, color=item[4][0], linestyle = '--')
+        print(f'{item[-1]} & ${ssfr50}\pm^{ssfr_up}_{ssfr_down}$ & {popt[0]} & {popt[1]} & {dev} {chr(92)}{chr(92)}')
         
     
 def classlist_plotter(axis, classlist, bids):
@@ -167,16 +192,17 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
         color_dict = color_dict_BPT
     else:
         color_dict = cd_WHAN
-    for i, item in enumerate(y):
-        X = x[i]
-        Y = item
-        AGN = AGN_keys[i]
-        axis.scatter(X, Y, alpha=0.4, color = color_dict[AGN][0], marker='.', s = color_dict[AGN][1])
+    # for i, item in enumerate(y):
+    #     X = x[i]
+    #     Y = item
+    #     AGN = AGN_keys[i]
+    #     axis.scatter(X, Y, alpha=0.4, color = color_dict[AGN][0], marker='.', s = color_dict[AGN][1])
                     
     class_list = class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT)
     
     # classlist_plotter(axis, class_list, bids)
     rainbow_plotter(axis, class_list)
+    # contour_plotter(axis, class_list)
     
     if leg == True:
         for j, item in enumerate(class_list):
@@ -307,9 +333,9 @@ def bin_stats(pars_dict):
     #ax4.xaxis.set_label_position('top')
     ax4.set_title('WHAN classification')
 
-    ax6.set_xlabel(pars_dict['xlabel'])
+    ax6.set_xlabel(pars_dict['xlabel'], fontsize="15")
     # ax6.set_xticks([r for r in range(6)], ['<0.05', '0.05-0.10', '0.10-0.15', '0.15-0.20', '0.20-0.25', '0.25-0.33'])
-    ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'])
+    ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'], fontsize="15")
 
     plt.savefig(pars_dict['save_path'])
 
@@ -419,7 +445,9 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         axes.bar(br1, SFX_perc, color ='crimson', width = barWidth, edgecolor ='grey', label ='SFX')
         axes.bar(br1, SFY_perc, color ='fuchsia', width = barWidth, edgecolor ='grey', label ='SFY')
         
-        axes.set_ylabel(f'{y_name}')
+        yticks = np.arange(0, 101, 20)
+        axes.set_ylabel(f'{y_name}', fontsize="15")
+        axes.set_yticks(yticks, yticks, fontsize="15")
         axes.set_ylim(0, 110)
         
         # Adding Xticks
@@ -503,8 +531,11 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
  
         # Adding Xticks
 
-    axes.set_ylabel(f'{y_name}')
+    yticks = np.arange(0, 101, 20)
+    axes.set_ylabel(f'{y_name}', fontsize="15")
+    axes.set_yticks(yticks, yticks, fontsize="15")
     axes.set_ylim(0, 110)
+        
 
     k = 0
     for rect in bar1:

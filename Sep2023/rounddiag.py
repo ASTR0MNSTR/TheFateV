@@ -92,8 +92,8 @@ class Main:
 
         Main.histo(self, axs[3, 2], ['NOEL'])
 
-        axs[0, 0].set_title(r'Only $log([NII/H\alpha])$ (X)')
-        axs[0, 1].set_title(r'$log([NII/H\alpha])$ and $log([OIII/H\beta])$ (XY)')
+        axs[0, 0].set_title(r'Only $log([NII]/H\alpha)$ (X)')
+        axs[0, 1].set_title(r'$log([NII]/H\alpha)$ and $log([OIII]/H\beta)$ (XY)')
         axs[0, 2].set_title('All objects')
         axs[0, 0].set_ylabel('AGN (BPT)')
         axs[1, 0].set_ylabel('UNC (BPT)')

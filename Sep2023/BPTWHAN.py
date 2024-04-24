@@ -517,7 +517,7 @@ class Main(hp):
 
         self.topaxes = [self.ax5, self.ax4, self.ax_med_BPT]
         for ax in self.topaxes:    
-            ax.set_xlabel(r'$log(N[II]/H\alpha)$')
+            ax.set_xlabel(r'$log([NII]/H\alpha)$')
             ax.set_xlim(-2.1, 1.2)
             ax.set_ylim(-1.2, 1.5) 
             X_1 = np.arange(-4, 0.4, 0.01)
@@ -537,7 +537,7 @@ class Main(hp):
             ax.set_xticks(np.arange(-2, 1.2, 0.5))
             ax.set_box_aspect(1)
 
-        self.ax4.set_ylabel(r'$log(O[III]/H\beta)$')
+        self.ax4.set_ylabel(r'$log([OIII]/H\beta)$')
 
         norm = mpl.colors.Normalize(vmin=8.8,vmax=10.0)
         c_m = mpl.cm.jet
@@ -689,7 +689,7 @@ class Main(hp):
 
             Y_sAGN = np.arange(0.47712, 3, 0.01)
             ax.plot(-0.4+Y_sAGN*0, Y_sAGN, 'black')
-            ax.set_xlabel(r"$log(N[II]/H\alpha)$")
+            ax.set_xlabel(r"$log([NII]/H\alpha)$")
             ax.set_xticks(np.arange(-2.0, 1.2, 0.5))
             ax.set_yticks(np.arange(-2, 3.0, 0.5))
             ax.set_box_aspect(1)
@@ -757,9 +757,12 @@ class Main(hp):
         for key in self.cd_WHAN_leg.keys():
             self.ax7.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = self.cd_WHAN_leg[key][1], label=key)
 
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGN', s = 30, marker='o')
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNC', s = 30, marker='o')
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SF', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGNXY', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'dodgerblue', label='AGNX', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNCXY', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'darkgreen', label='UNCX', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SFXY', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'crimson', label='SFX', s = 30, marker='o')
         self.ax6.legend(loc=3)
         self.ax7.legend(loc=3)
         self.ax_med_WHAN.legend(loc=3)

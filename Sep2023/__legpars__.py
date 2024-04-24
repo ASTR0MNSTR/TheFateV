@@ -10,14 +10,14 @@ cd_WHAN = {
 
 color_dict_BPT ={
             'AGNXY' : ['midnightblue', 15, '.'],
-            'AGNX' : ['midnightblue', 15, '.'],
-            'AGNY' : ['midnightblue', 15, '.'],
+            'AGNX' : ['dodgerblue', 15, '.'],
+            'AGNY' : ['black', 15, '.'],
             'UNCXY' : ['springgreen', 9, '.'],
-            'UNCX' : ['springgreen', 9, '.'],
-            'UNCY' : ['springgreen', 9, '.'],
+            'UNCX' : ['darkgreen', 9, '.'],
+            'UNCY' : ['limegreen', 9, '.'],
             'SFXY' : ['mediumvioletred', 9, '.'],
-            'SFX' : ['mediumvioletred', 9, '.'],
-            'SFY' : ['mediumvioletred', 9, '.'],
+            'SFX' : ['crimson', 9, '.'],
+            'SFY' : ['fuchsia', 9, '.'],
             'NOEL' : ['orchid', 9, '.'],
         }
 
@@ -54,7 +54,7 @@ WHAN_color_plt = {
 }
 
 BPT_color_plt ={
-    'AGN' : ['gray', 150, 'P'],
-    'UNC' : ['gray', 150, 'H'],
-    'SF' : ['gray', 150, '*'],
+    'AGNXY' : ['gray', 150, 'P'],
+    'UNCXY' : ['gray', 150, 'H'],
+    'SFXY' : ['gray', 150, '*'],
 }

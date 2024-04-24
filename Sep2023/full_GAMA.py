@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from astropy.cosmology import Planck13 as cosmo
 from __algo__ import *
+from __plt__ import *
 
 def MS_flagging(SFR_array, MS_array, Z_array):
     bms = []
@@ -79,11 +80,79 @@ class Main:
             'mass_stellar_percentile16',
             'mass_stellar_percentile50',
             'mass_stellar_percentile84',
+            'GALINDEX_r',
+            'GALINDEXERR_r'
         ]
         
-        DataFrame = pd.read_csv(self.path, sep="\s+", engine='python', usecols=required_cols)
+        required_cols_2 = [
+            'CATAID_2b',
+            'RA_1b',
+            'DEC_1b',
+            'Z_2',
+            'NIIR_FLUX',
+            'NIIR_FLUX_ERR',
+            'OIIIR_FLUX',
+            'OIIIR_FLUX_ERR',
+            'HA_FLUX',
+            'HA_FLUX_ERR',
+            'HA_EW',
+            'HA_EW_ERR',
+            'HB_FLUX',
+            'HB_FLUX_ERR',
+            'mass_stellar_percentile50',
+            'SFR_0_1Gyr_percentile16',
+            'SFR_0_1Gyr_percentile50',
+            'SFR_0_1Gyr_percentile84',
+            'GALINDEX_r',
+            'GALINDEXERR_r'
+        ]
+        
+        DataFrame = pd.read_csv(self.path, sep="\s+", engine='python', usecols=required_cols_2)
+        DataFrame = DataFrame.drop(DataFrame[DataFrame['CATAID_2b'] == '""'].index)
         print(DataFrame.shape)
         DataFrame.to_csv(self.out_path, index=False)
+    
+    def reader(self):
+        DataFrame = pd.read_csv(self.out_path, sep=',')
+        BPTs = []
+        WHANs = []
+        for i in range(len(DataFrame['OIIIR_FLUX'])):
+            if float(DataFrame['GALINDEX_r'][i]) + 2*float(DataFrame['GALINDEXERR_r'][i]) < 2.5 and float(DataFrame['GALINDEXERR_r'][i]) > 0 and float(DataFrame['GALINDEX_r'][i]) > 0 and float(DataFrame['Z_2'][i]) < 0.33 and float(DataFrame['Z_2'][i]) > 0.26:
+                BPT, WHAN, LAGN, LAGN_er = spectra_processing(DataFrame['OIIIR_FLUX'][i], DataFrame['OIIIR_FLUX_ERR'][i], DataFrame['HB_FLUX'][i], DataFrame['HB_FLUX_ERR'][i],
+                                                          DataFrame['NIIR_FLUX'][i], DataFrame['NIIR_FLUX_ERR'][i], DataFrame['HA_FLUX'][i], DataFrame['HA_FLUX_ERR'][i],
+                                                          DataFrame['HA_EW'][i], DataFrame['HA_EW_ERR'][i], DataFrame['Z_2'][i])
+                BPTs.append(BPT)
+                WHANs.append(WHAN)
+            else:
+                DataFrame = DataFrame.drop(i)
+            
+        DataFrame['BPT'] = BPTs
+        DataFrame['WHAN'] = WHANs
+        
+        DataFrame = DataFrame.drop(DataFrame[DataFrame['BPT'] == 'NDA'].index)
+        DataFrame = DataFrame.drop(DataFrame[DataFrame['WHAN'] == 'NDA'].index)
+        print(DataFrame.shape)
+        DataFrame.to_csv(self.out_path, index=False)
+    
+    def plotter(self):
+        bids_mass_plt = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
+        
+        plotting({
+            'input_path' : self.out_path,
+            'x' : 'mass_stellar_percentile50',
+            'y' : 'SFR_0_1Gyr_percentile50',
+            'up' : 'SFR_0_1Gyr_percentile84',
+            'down' : 'SFR_0_1Gyr_percentile16',
+            'xlim' : [9.9, 11.6],
+            'ylim' : [-3.1, 2.3],
+            'xticks' : np.arange(10.0, 11.6, 0.25),
+            'yticks' : np.arange(-3, 2.2, 1),
+            'xlabel' : r'$log(M_s / M_{\odot})$',
+            'ylabel' : r'$log(SFR) / M_{\odot} yr^{-1})$',
+            'bids': bids_mass_plt,
+            'save_path' : r'SFRSM_LTG_033.pdf',
+            'theor_lines' : 'sfrsm'
+        })
 
     def read(self):
         DataFrame = pd.read_csv(self.out_path, sep=',')
@@ -131,6 +200,8 @@ class Main:
             'bMS/MS' : MS_flag,
             'BPT' : BPTs,
             'WHAN' : WHANs, 
+            'GALINDEX_r' : DataFrame['GALINDEX_r'],
+            'GALINDEXERR_r' : DataFrame['GALINDEXERR_r'],
             'outflow_agn_on_percentile16' : OUTFLOW_down,
             'outflow_agn_on_percentile50' : OUTFLOW, 
             'outflow_agn_on_percentile84' : OUTFLOW_up, 
@@ -144,5 +215,7 @@ class Main:
         
 if __name__ == '__main__':
     obj = Main(r'E:/LICENSE/ProgsData/main/GAMAv3.txt')
-    # obj.extract()
-    obj.read()
+    obj.extract()
+    obj.reader()
+    obj.plotter()
+    # obj.read()
