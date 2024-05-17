@@ -22,12 +22,16 @@ def theor_lines(axes, key):
             ax.plot(x, y, color='k', linestyle='solid')
         elif key == 'sfrsm':
             x = np.arange(6.9, 12, 0.1)
-            ax.plot(x, (0.84 - 0.026*13.323023)*x - (6.51 - 0.11*13.323023), color='k', linestyle='dotted')
-            ax.text(11.3, (0.84 - 0.026*13.323023)*11.3 - (6.5 - 0.11*13.323023), 'z = 0', rotation=9)
-            ax.plot(x, (0.84 - 0.026*11.4074)*x - (6.51 - 0.11*11.4074), linestyle='dashed', color='k')
-            ax.text(11.3, (0.84 - 0.026*11.4074)*11.3 - (6.5 - 0.11*11.4074), 'z = 0.19', rotation=9)
-            ax.plot(x, (0.84 - 0.026*9.8615801)*x - (6.51 - 0.11*9.8615801), linestyle='solid', color='k')
-            ax.text(11.3, (0.84 - 0.026*9.8615801)*11.3 - (6.5 - 0.11*9.8615801), 'z = 0.33', rotation=9)
+            # ax.plot(x, (0.84 - 0.026*11.636)*x - (6.51 - 0.11*11.636), color='k', linestyle='solid')
+            # ax.text(11.3, (0.84 - 0.026*11.636)*11.3 - (6.5 - 0.11*11.636), 'z = 0.17', rotation=9)
+            
+            ax.plot(x, (0.84 - 0.026*10.594)*x - (6.51 - 0.11*10.594), color='k', linestyle='solid')
+            ax.text(11.3, (0.84 - 0.026*10.594)*11.3 - (6.5 - 0.11*10.594), 'z = 0.27', rotation=9)
+            
+            # ax.plot(x, (0.84 - 0.026*11.4074)*x - (6.51 - 0.11*11.4074), linestyle='dashed', color='k')
+            # ax.text(11.3, (0.84 - 0.026*11.4074)*11.3 - (6.5 - 0.11*11.4074), 'z = 0.19', rotation=9)
+            # ax.plot(x, (0.84 - 0.026*9.8615801)*x - (6.51 - 0.11*9.8615801), linestyle='solid', color='k')
+            # ax.text(11.3, (0.84 - 0.026*9.8615801)*11.3 - (6.5 - 0.11*9.8615801), 'z = 0.33', rotation=9)
     
             
 def plotting(pars_dict):
@@ -40,15 +44,15 @@ def plotting(pars_dict):
     fig1 = plt.figure(figsize=(12, 6), tight_layout=True)
     adjusting_plotting_pars()
 
-    ax4 = fig1.add_subplot(gs_top[:,0])
-    ax5 = fig1.add_subplot(gs_top[:,1], sharey=ax4)
+    ax5 = fig1.add_subplot(gs_top[:,0])
+    ax4 = fig1.add_subplot(gs_top[:,1], sharey=ax5)
     
     topaxes = [ax5, ax4]
 
-    ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
-    ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in')
+    ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
+    ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in')
     
-    ax4.set_ylabel(pars_dict['ylabel'])
+    ax5.set_ylabel(pars_dict['ylabel'])
     for ax in topaxes:    
         ax.set_xlim(pars_dict['xlim'])
         ax.set_ylim(pars_dict['ylim'])
@@ -59,6 +63,7 @@ def plotting(pars_dict):
     k = 0.85
     generating_annotation(ax4, pars_dict['xlim'][0] + k*(pars_dict['xlim'][1] - pars_dict['xlim'][0]), pars_dict['ylim'][0] + k*(pars_dict['ylim'][1] - pars_dict['ylim'][0]), 'BPT')    
     generating_annotation(ax5, pars_dict['xlim'][0] + k*(pars_dict['xlim'][1] - pars_dict['xlim'][0]), pars_dict['ylim'][0] + k*(pars_dict['ylim'][1] - pars_dict['ylim'][0]), 'WHAN')    
+    # generating_annotation(ax5, 11.0, 1.8, '0.22 < z < 0.33')    
     bids = pars_dict['bids']
     
     try:
@@ -192,16 +197,16 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
         color_dict = color_dict_BPT
     else:
         color_dict = cd_WHAN
-    # for i, item in enumerate(y):
-    #     X = x[i]
-    #     Y = item
-    #     AGN = AGN_keys[i]
-    #     axis.scatter(X, Y, alpha=0.4, color = color_dict[AGN][0], marker='.', s = color_dict[AGN][1])
+    for i, item in enumerate(y):
+        X = x[i]
+        Y = item
+        AGN = AGN_keys[i]
+        axis.scatter(X, Y, alpha=0.4, color = color_dict[AGN][0], marker='.', s = color_dict[AGN][1])
                     
     class_list = class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT)
     
-    # classlist_plotter(axis, class_list, bids)
-    rainbow_plotter(axis, class_list)
+    classlist_plotter(axis, class_list, bids)
+    # rainbow_plotter(axis, class_list)
     # contour_plotter(axis, class_list)
     
     if leg == True:

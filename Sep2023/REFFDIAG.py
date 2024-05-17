@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from __plt__ import *
+from __reader__ import *
 
 class Main:
 
@@ -24,8 +25,12 @@ class Main:
         self.WHAN_colors_merged = ['royalblue', 'lime', 'hotpink', 'brown']
     
     def reading(self):
-        usecols= ['WHAN', 'BPT', 'Aperture_1_Reff']
-        self.dataframe = pd.read_csv(self.file, usecols=usecols)
+        usecols= ['WHAN', 'BPT', 'Aperture_1_Reff', 'Z', 'mass_stellar_percentile50']
+        source_path = r'E:/LICENSE/ProgsData/main/GAMAforOleg.txt'
+        input_path = r'E:/databases/GAMA_ETG_OLA_R_r_1.csv'
+        output_path = r'E:/databases/Merged.csv'
+        merge_phys_databases(source_path, input_path, output_path)
+        self.dataframe = pd.read_csv(output_path, usecols=usecols)
     
     def plotting(self):
 
@@ -67,9 +72,11 @@ class Main:
         RG = 0
         NDA = 0
         self.total1 = 0
+        redshift = []
         for i in range(len(self.dataframe['Aperture_1_Reff'])):
             if self.dataframe['Aperture_1_Reff'][i] in keys:
                 self.total1 += 1
+                redshift.append(float(self.dataframe['Z'][i]))
                 if self.dataframe['WHAN'][i] == 'SF':
                     SF += 1
                 elif self.dataframe['WHAN'][i] == 'ELR':
@@ -89,8 +96,10 @@ class Main:
                     self.total1 -= 1
                 else:
                     print(self.dataframe['WHAN'][i])
+                    
+        redshift = np.array(redshift)
         
-        print(keys, self.total1)
+        print(keys, self.total1, np.median(redshift) - np.percentile(redshift, 16), np.median(redshift), np.percentile(redshift, 84) - np.median(redshift))
         
         return [sAGN, wAGN, UNC, SF, ELR, LLR, RG]
 
