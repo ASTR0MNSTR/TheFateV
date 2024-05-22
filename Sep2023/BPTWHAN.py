@@ -502,7 +502,7 @@ class Main(hp):
             pass
 
     def plotting_BPT(self):
-        self.gs_top = plt.GridSpec(nrows=2, ncols=3, wspace=0)
+        self.gs_top = plt.GridSpec(2, 3, wspace=0, hspace=0)
         #self.fig = plt.figure(figsize=(12, 12), tight_layout=True)
         self.fig = plt.figure(figsize=(18, 12))
         adjusting_plotting_pars()
@@ -511,13 +511,13 @@ class Main(hp):
         self.ax5 = self.fig.add_subplot(self.gs_top[0,1], sharey=self.ax4)
         self.ax_med_BPT = self.fig.add_subplot(self.gs_top[0,2], sharey=self.ax4)
 
-        self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in')
-        self.ax_med_BPT.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in')
-        self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=True, left=True, direction='in')
+        self.ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=False, right=True, labelleft=False, left=True, direction='in', labelsize=20)
+        self.ax_med_BPT.tick_params(top=True, labeltop=False, bottom=True, labelbottom=False, right=True, labelleft=False, left=True, direction='in', labelsize=20)
+        self.ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=False, right=True, labelleft=True, left=True, direction='in', labelsize=20)
 
         self.topaxes = [self.ax5, self.ax4, self.ax_med_BPT]
         for ax in self.topaxes:    
-            ax.set_xlabel(r'$log([NII]/H\alpha)$')
+            # ax.set_xlabel(r'$\log{\mathrm{([NII]/H\alpha)}$')
             ax.set_xlim(-2.1, 1.2)
             ax.set_ylim(-1.2, 1.5) 
             X_1 = np.arange(-4, 0.4, 0.01)
@@ -530,14 +530,14 @@ class Main(hp):
             # https://adsabs.harvard.edu/full/2003MNRAS.346.1055K
             ax.plot(X_11, 1.01*X_11 + 0.48, c='r', linestyle='dotted')
             ax.text(-1.5, 1.2, 'AGN')
-            ax.text(0, -1, 'C')
+            ax.text(0, -1, 'UNC', ha='center', va='center')
             ax.text(-1.5, -0.5, 'SF')
             ax.text(0.5, -0.5, 'LINER')
             ax.set_yticks(np.arange(-1, 2.1, 0.5))
             ax.set_xticks(np.arange(-2, 1.2, 0.5))
             ax.set_box_aspect(1)
 
-        self.ax4.set_ylabel(r'$log([OIII]/H\beta)$')
+        self.ax4.set_ylabel(r'$\log{\mathrm{([OIII]/H\beta)}}$')
 
         norm = mpl.colors.Normalize(vmin=8.8,vmax=10.0)
         c_m = mpl.cm.jet
@@ -667,9 +667,9 @@ class Main(hp):
 
         self.topaxes = [self.ax7, self.ax6, self.ax_med_WHAN]
 
-        self.ax7.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in')
-        self.ax_med_WHAN.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in')
-        self.ax6.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=True, left=True, direction='in')
+        self.ax7.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in', labelsize=20)
+        self.ax_med_WHAN.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=False, left=True, direction='in', labelsize=20)
+        self.ax6.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, labelleft=True, left=True, direction='in', labelsize=20)
         #for ax in self.topaxes[1:]:
         #plt.setp(ax.get_xticklabels(), visible=False)
 
@@ -689,13 +689,13 @@ class Main(hp):
 
             Y_sAGN = np.arange(0.47712, 3, 0.01)
             ax.plot(-0.4+Y_sAGN*0, Y_sAGN, 'black')
-            ax.set_xlabel(r"$log([NII]/H\alpha)$")
+            ax.set_xlabel(r"$\log \mathrm{([NII]/H\alpha)}$")
             ax.set_xticks(np.arange(-2.0, 1.2, 0.5))
             ax.set_yticks(np.arange(-2, 3.0, 0.5))
             ax.set_box_aspect(1)
         
 
-        self.ax6.set_ylabel(r"$log(EW_{H\alpha})$")
+        self.ax6.set_ylabel(r"$\log \mathrm{(EW_{\mathrm{H\alpha}})}$")
         
         k = 0
         X = []
@@ -773,9 +773,9 @@ class Main(hp):
         #self.ax7.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
         #self.ax7.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
 
-        self.fig.subplots_adjust(right=0.9)
-        cbar_ax = self.fig.add_axes([0.9, 0.1, 0.05, 0.78])
-        self.fig.colorbar(self.s_m, cax=cbar_ax, label=r'$log(age)$')
+        self.fig.subplots_adjust(right=0.89)
+        cbar_ax = self.fig.add_axes([0.9, 0.1, 0.03, 0.78])
+        self.fig.colorbar(self.s_m, cax=cbar_ax, label=r'$\log \mathrm{(age \: / \: yr)}$')
         #self.ax7.legend(loc=3, fontsize="13")
         
         self.fig.savefig('./FIGURES_IN_PAPER/BPT_WHAN.pdf')

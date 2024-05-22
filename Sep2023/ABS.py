@@ -6,10 +6,10 @@ from __plt__ import *
 class Main:
 
     def my_autopct_BPT(pct):
-        return (f'{pct:.2f}%') if pct > 0.1 else ''
+        return (f'{pct:.2f}%') if pct > 3 else ''
     
     def my_autopct_WHAN(pct):
-        return (f'{pct:.2f}%') if pct > 1 else ''
+        return (f'{pct:.2f}%') if pct > 3 else ''
 
     def __init__(self, file):
         self.file = file
@@ -18,7 +18,7 @@ class Main:
         self.WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
 
         self.BPT_labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
-        self.BPT_colors = ['midnightblue', 'dodgerblue', 'springgreen', 'darkgreen', 'limegreen', 'mediumvioletred', 'crimson', 'fuchsia', 'white']
+        self.BPT_colors = ['midnightblue', 'dodgerblue', 'springgreen', 'darkgreen', 'limegreen', 'mediumvioletred', 'crimson', 'fuchsia', 'silver']
 
         self.BPT_colors_merged = ['royalblue', 'lime', 'hotpink', 'w']
         self.WHAN_colors_merged = ['royalblue', 'lime', 'hotpink', 'brown']
@@ -28,7 +28,7 @@ class Main:
     
     def plotting(self):
 
-        fig, axs = plt.subplots(2, 4, figsize=(16, 8), tight_layout=True)
+        fig, axs = plt.subplots(2, 4, figsize=(12, 6), tight_layout=True)
         plt.subplots_adjust(wspace=0, hspace=0)
         # adjusting_plotting_pars()
         
@@ -51,10 +51,10 @@ class Main:
         Main.histo(self, ax7, 'HA', 'HA_er', 'BPT')
         Main.histo(self, ax8, 'HA', 'HA_er', 'WHAN')
 
-        ax1.set(title='OIII, 321 gal.')
-        ax3.set(title='HB, 777 gal.')
-        ax5.set(title='NII, 15 gal.')         
-        ax7.set(title='HA, 326 gal.')         
+        ax1.set(title=r'$\mathrm{[OIII]}$' + ', 321 gal.')
+        ax3.set(title=r'$\mathrm{H\beta}$' + ', 777 gal.')
+        ax5.set(title=r'$\mathrm{[NII]}$' + ', 15 gal.')         
+        ax7.set(title=r'$\mathrm{H\alpha}$' + ', 326 gal.')         
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
@@ -171,7 +171,7 @@ class Main:
             labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
 
         for i in range(len(data)):
-            if (data[i]*100/np.sum(data)) > 0.1: #2%
+            if (data[i]*100/np.sum(data)) > 3: #2%
                 list.append(labels[i])
             else:
                 list.append('')
@@ -181,7 +181,7 @@ class Main:
         def my_format(pct):
             total = sum(data)
             val = int(round(pct*total/100.0))
-            if data[1] == int(val) or data[2] == int(val) or pct == 100 or pct < 1:
+            if data[1] == int(val) or data[2] == int(val) or pct == 100 or pct < 3:
                 return ''
             else:
                 return (f'{pct:.2f}%')
@@ -191,7 +191,7 @@ class Main:
         def my_format(pct):
             total = sum(data)
             val = int(round(pct*total/100.0))
-            if data[3] == int(val) or pct == 100 or pct < 1:
+            if data[3] == int(val) or pct == 100 or pct < 3:
                 return ''
             else:
                 return (f'{pct:.2f}%')

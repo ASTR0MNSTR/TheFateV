@@ -271,10 +271,10 @@ class Main:
         }
         
         NewDataFrame = pd.DataFrame(NewFrameDict)
-        NewDataFrame = NewDataFrame.round(decimals=4)
+        NewDataFrame = NewDataFrame.round(decimals=8)
         NewDataFrame.to_csv(self.final_out_path, index=False)
         
 if __name__ == '__main__':
     obj = Main(r'E:/LICENSE/ProgsData/main/GAMAv3.txt')
-    obj.completely_different_extraction()
+    # obj.completely_different_extraction()
     obj.read()

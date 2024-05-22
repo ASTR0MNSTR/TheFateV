@@ -42,18 +42,22 @@ def plotting(pars_dict):
         cols = [pars_dict['x'], pars_dict['y'], pars_dict['err'], 'BPT', 'WHAN']
     else:
         cols = [pars_dict['x'], pars_dict['y'], pars_dict['up'], pars_dict['down'], 'BPT', 'WHAN']
-    DataFrame = pd.read_csv(pars_dict['input_path'], usecols=cols)
-    gs_top = plt.GridSpec(1, 2, wspace=0)
-    fig1 = plt.figure(figsize=(12, 6), tight_layout=True)
+    # DataFrame = pd.read_csv(pars_dict['input_path'], usecols=cols)
+    DataFrame = pars_dict['db']
+
     adjusting_plotting_pars()
 
-    ax4 = fig1.add_subplot(gs_top[:,0])
-    ax5 = fig1.add_subplot(gs_top[:,1], sharey=ax4)
+    ax4 = pars_dict['ax1']
+    ax5 = pars_dict['ax2']
     
     topaxes = [ax5, ax4]
 
-    ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in', labelsize=17)
-    ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in', labelsize=17)
+    if pars_dict['xlabel'] != False:
+        ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in', labelsize=17)
+        ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in', labelsize=17)
+    else:
+        ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in', labelsize=17)
+        ax5.tick_params(top=True, labeltop=False, bottom=True, labelbottom=False, left=True, labelleft=False, right=True, labelright=False, direction='in', labelsize=17)
     
     ax4.set_ylabel(pars_dict['ylabel'], fontsize=17)
     for ax in topaxes:    
@@ -61,29 +65,31 @@ def plotting(pars_dict):
         ax.set_ylim(pars_dict['ylim'])
         ax.set_yticks(pars_dict['yticks'])
         ax.set_xticks(pars_dict['xticks'])
-        ax.set_xlabel(pars_dict['xlabel'], fontsize=17)
+        if pars_dict['xlabel'] != False:
+            ax.set_xlabel(pars_dict['xlabel'], fontsize=17)
     
     k = 0.8
-    generating_annotation(ax4, pars_dict['xlim'][0] + k*(pars_dict['xlim'][1] - pars_dict['xlim'][0]), pars_dict['ylim'][0] + k*(pars_dict['ylim'][1] - pars_dict['ylim'][0]), 'BPT')    
-    generating_annotation(ax5, pars_dict['xlim'][0] + k*(pars_dict['xlim'][1] - pars_dict['xlim'][0]), pars_dict['ylim'][0] + k*(pars_dict['ylim'][1] - pars_dict['ylim'][0]), 'WHAN')    
+    if pars_dict['annotation'] == True:
+        generating_annotation(ax4, pars_dict['xlim'][0] + k*(pars_dict['xlim'][1] - pars_dict['xlim'][0]), pars_dict['ylim'][0] + k*(pars_dict['ylim'][1] - pars_dict['ylim'][0]), 'BPT')    
+        generating_annotation(ax5, pars_dict['xlim'][0] + k*(pars_dict['xlim'][1] - pars_dict['xlim'][0]), pars_dict['ylim'][0] + k*(pars_dict['ylim'][1] - pars_dict['ylim'][0]), 'WHAN')    
     # generating_annotation(ax5, 11.0, 1.8, '0.22 < z < 0.33')    
     bids = pars_dict['bids']
     
-    try:
-        theor_lines([ax4, ax5], pars_dict['theor_lines'])
-    except:
-        pass
+    # try:
+    #     theor_lines([ax4, ax5], pars_dict['theor_lines'])
+    # except:
+    #     pass
     
     if 'err' in pars_dict.keys():
         # ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']] + DataFrame[pars_dict['err']], DataFrame[pars_dict['y']] - DataFrame[pars_dict['err']], DataFrame['BPT'], bids, 'BPT', True)
-        ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame['BPT'], bids, 'BPT', True)
+        ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame['BPT'], bids, 'BPT', pars_dict['legend'])
         # ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']] + DataFrame[pars_dict['err']], DataFrame[pars_dict['y']] - DataFrame[pars_dict['err']], DataFrame['WHAN'], bids, 'WHAN', True)
-        ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame['WHAN'], bids, 'WHAN', True)
+        ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame['WHAN'], bids, 'WHAN', pars_dict['legend'])
     else:
-        ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['BPT'], bids, 'BPT', True)
-        ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['WHAN'], bids, 'WHAN', True)
+        ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['BPT'], bids, 'BPT', pars_dict['legend'])
+        ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['WHAN'], bids, 'WHAN', pars_dict['legend'])
 
-    fig1.savefig(pars_dict['save_path'])
+    return ax4, ax5
 
 def contours(x , y , lev, sigma, bin1, bin2):
         #mode{‘reflect’, ‘constant’, ‘nearest’, ‘mirror’, ‘wrap’}, optional\n”,
@@ -202,9 +208,10 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
         color_dict = cd_WHAN
     for i, item in enumerate(y):
         X = x[i]
-        Y = item
+        Y = y[i]
         AGN = AGN_keys[i]
         axis.scatter(X, Y, alpha=0.4, color = color_dict[AGN][0], marker='.', s = color_dict[AGN][1])
+        
                     
     class_list = class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT)
     
@@ -219,7 +226,7 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
             elif WHAN_or_BPT == 'WHAN':
                 list_names = list_names_WHAN
             axis.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names[j])
-        axis.legend(loc=3)
+        axis.legend(loc=3, fontsize=14)
     
     return axis   
 
@@ -279,10 +286,10 @@ def class_list_creator_w_err_out(x, y, up, down, AGN_keys, WHAN_or_BPT, ks):
         keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
         colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['orchid', 'o']]
     elif WHAN_or_BPT == 'WHAN':
-        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
-        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']]
-        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
-        # colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v'], ['black', 'h']]
+        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
+        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']]
+        # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
+        colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v'], ['black', 'h']]
     class_list = []
     
     for j, chain in enumerate(keys):
@@ -307,18 +314,16 @@ def bin_stats(pars_dict):
     
     DataFrame = pd.read_csv(pars_dict['input_path'])
     
-    adjusting_plotting_pars()
+    # adjusting_plotting_pars()
     
-    gs_top = plt.GridSpec(6, 1, hspace=0, wspace=0)
-    fig = plt.figure(figsize=(12, 18), tight_layout=True)
-
-    ax1 = fig.add_subplot(gs_top[0,0])
-    ax2 = fig.add_subplot(gs_top[1,0])
-    ax3 = fig.add_subplot(gs_top[2,0])
-    ax4 = fig.add_subplot(gs_top[3,0])
-    ax5 = fig.add_subplot(gs_top[4,0])
-    ax6 = fig.add_subplot(gs_top[5,0])
-    
+    fig, axs = plt.subplots(6, 1, figsize=(12, 18), tight_layout=True)
+    plt.subplots_adjust(wspace=0, hspace=0)
+    ax1 = axs[0]
+    ax2 = axs[1]
+    ax3 = axs[2]
+    ax4 = axs[3]
+    ax5 = axs[4]
+    ax6 = axs[5]
     plotter_histo_BPT(ax3, [0], DataFrame[pars_dict['x']], DataFrame['BPT'], 'BMS, %', DataFrame['BMS'], pars_dict['bins'])
 
     plotter_histo_BPT(ax2, [1], DataFrame[pars_dict['x']], DataFrame['BPT'], 'MS, %', DataFrame['BMS'], pars_dict['bins'])
@@ -331,25 +336,25 @@ def bin_stats(pars_dict):
 
     plotter_histo_WHAN(ax4, [0,1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
 
-    ax2.legend(fontsize="10", loc='center right')
-    ax5.legend(fontsize="13", loc='center right')
+    ax2.legend(fontsize="10", loc='lower right')
+    ax5.legend(fontsize="13", loc='lower right')
 
     top_axes = [ax2, ax3, ax5]
     for item in top_axes:
-        item.tick_params(top=False, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
+        item.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
 
-    ax1.tick_params(top=False, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
+    ax1.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
     ax1.text(5.5, 80, 'BPT', fontsize='15', ha='center', va='center')
     ax4.text(5.5, 80, 'WHAN', fontsize='15', ha='center', va='center')
     #ax1.xaxis.set_label_position('top')
     # ax1.set_title('BPT classification')
-    ax4.tick_params(top=False, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
+    ax4.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
     #ax4.xaxis.set_label_position('top')
     # ax4.set_title('WHAN classification')
 
-    ax6.set_xlabel(pars_dict['xlabel'], fontsize=17)
+    ax6.set_xlabel(pars_dict['xlabel'], fontsize="15")
     # ax6.set_xticks([r for r in range(6)], ['<0.05', '0.05-0.10', '0.10-0.15', '0.15-0.20', '0.20-0.25', '0.25-0.33'])
-    ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'], fontsize=17)
+    ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'], fontsize="15")
 
     plt.savefig(pars_dict['save_path'])
 
@@ -459,9 +464,9 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         axes.bar(br1, SFX_perc, color ='crimson', width = barWidth, edgecolor ='grey', label ='SFX')
         axes.bar(br1, SFY_perc, color ='fuchsia', width = barWidth, edgecolor ='grey', label ='SFY')
         
-        yticks = np.arange(0, 101, 25)
-        axes.set_ylabel(f'{y_name}', fontsize=17)
-        axes.set_yticks(yticks, yticks, fontsize=17)
+        yticks = np.arange(0, 101, 20)
+        axes.set_ylabel(f'{y_name}', fontsize="15")
+        axes.set_yticks(yticks, yticks, fontsize="15")
         axes.set_ylim(0, 110)
         
         # Adding Xticks
@@ -545,9 +550,9 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
  
         # Adding Xticks
 
-    yticks = np.arange(0, 101, 25)
-    axes.set_ylabel(f'{y_name}', fontsize=17)
-    axes.set_yticks(yticks, yticks, fontsize=17)
+    yticks = np.arange(0, 101, 20)
+    axes.set_ylabel(f'{y_name}', fontsize="15")
+    axes.set_yticks(yticks, yticks, fontsize="15")
     axes.set_ylim(0, 110)
         
 

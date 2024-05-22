@@ -147,38 +147,60 @@ class Main:
         self.DataFrame['OUTFLOW_up'] = OUTFLOW_up_off
         self.DataFrame['OUTFLOW_down'] = OUTFLOW_down_off
         
-        Main.plotting_init(self,
+        gs_top = plt.GridSpec(2, 2, wspace=0, hspace=0)
+        self.fig1 = plt.figure(figsize=(12, 12), tight_layout=True)
+        
+        ax1 = self.fig1.add_subplot(gs_top[0,0])
+        ax2 = self.fig1.add_subplot(gs_top[0,1], sharey=ax1)
+        ax3 = self.fig1.add_subplot(gs_top[1,0])
+        ax4 = self.fig1.add_subplot(gs_top[1,1], sharey=ax3)
+
+        ax1.tick_params(top=True, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in', labelsize=20)
+        ax2.tick_params(top=True, labeltop=False, bottom=True, labelbottom=False, left=True, labelleft=False, right=True, labelright=False, direction='in', labelsize=20)
+        ax3.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in', labelsize=20)
+        ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in', labelsize=20)
+
+        k = 0.8
+        
+        ax1.text(8.7 + k*(10.0-8.7), -3 + k*(4.0 - (-3.0)), 'BPT', fontsize=20)
+        ax2.text(8.7 + k*(10.0-8.7), -3 + k*(4.0 - (-3.0)), 'WHAN', fontsize=20)
+        
+        ax1.set_ylabel(r'$\log \mathrm{(\dot{M}_{H_2} \: / \: (M_\odot/yr))}$', fontsize=20)
+        ax3.set_ylabel(r'$\log \mathrm{(\dot{M}_{H_2} \: / \: (M_\odot/yr))}$', fontsize=20)
+        ax3.set_xlabel(r'$\log \mathrm{(age \: / \: yr)}$', fontsize=20)
+        ax4.set_xlabel(r'$\log \mathrm{(age \: / \: yr)}$', fontsize=20)
+        
+        topaxes = [ax1,ax2, ax3, ax4]
+        for ax in topaxes:    
+            ax.set_xlim([8.7, 10.1])
+            ax.set_xticks(np.arange(8.8, 10.1, 0.2))
+            ax.set_ylim([-3.0, 4.5])
+            ax.set_yticks(np.arange(-3.0, 4.1, 1.0))
+
+        ax1, ax2 = Main.plotting_init(self,
             {'X' : 'ager_percentile50',
              'Y' : 'OUTFLOW',
              'Y_up' : 'OUTFLOW_up',
              'Y_down' : 'OUTFLOW_down',
-             'axes' : [self.ax4, self.ax5],
-             'xlabel' : r'$log(age/yr)$',
-             'ylabel' : r'$log(M_{H_2}/(M_\odot/yr))$',
-             'xlim' : [8.7, 10.0],
-             'ylim' : [-3, 4],
-             'filename' : './FIGURES_IN_PAPER/OUTFLOW_wo.pdf',
-             'bids_chain' : [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
-             }
+             'bids_chain' : [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]],
+             'legend' : False
+             },
+            ax1, ax2
         )
         
         self.DataFrame['OUTFLOW'] = OUTFLOW
         self.DataFrame['OUTFLOW_up'] = OUTFLOW_up
         self.DataFrame['OUTFLOW_down'] = OUTFLOW_down   
         
-        Main.plotting_init(self,
+        ax3, ax4 = Main.plotting_init(self,
             {'X' : 'ager_percentile50',
              'Y' : 'OUTFLOW',
              'Y_up' : 'OUTFLOW_up',
              'Y_down' : 'OUTFLOW_down',
-             'axes' : [self.ax4, self.ax5],
-             'xlabel' : r'$log(age/yr)$',
-             'ylabel' : r'$log(M_{H_2}/(M_\odot/yr))$',
-             'xlim' : [8.7, 10.0],
-             'ylim' : [-3, 4],
-             'filename' : './FIGURES_IN_PAPER/OUTFLOW_w.pdf',
-             'bids_chain' : [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
-             }
+             'bids_chain' : [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]],
+             'legend' : True
+             },
+            ax3, ax4
         )
         
         # Main.plotting_init(self,
@@ -196,36 +218,14 @@ class Main:
         #      }
         # )
         
-     
+        self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW.pdf')
     
-    def plotting_init(self, pars):
-        gs_top = plt.GridSpec(1, 2, wspace=0)
-        self.fig1 = plt.figure(figsize=(12, 6), tight_layout=True)
+    def plotting_init(self, pars, ax1, ax2):
+        Main.plotter(self, [ax1, ax2], pars['X'], pars['Y'], pars['Y_up'], pars['Y_down'], 'BPT', 'WHAN', pars['bids_chain'], pars['legend'])
+        return ax1, ax2
 
-        axes = pars['axes']
-        
-        axes[0] = self.fig1.add_subplot(gs_top[:,0])
-        axes[1] = self.fig1.add_subplot(gs_top[:,1], sharey=axes[0])
 
-        self.topaxes = [axes[1], axes[0]]
-
-        axes[0].tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
-        axes[1].tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in')
-
-        axes[0].set_ylabel(pars['ylabel'])
-        for ax in self.topaxes:    
-            ax.set_xlim(pars['xlim'])
-            ax.set_ylim(pars['ylim'])
-            ax.set_xlabel(pars['xlabel'])
-            # ax.set_yscale('log')
-            #ax.set_yticks(np.arange(15, 25.9, 2))
-
-        # self.fig1.suptitle('W AGN', fontsize=16)
-        Main.plotter(self, [axes[0], axes[1]], pars['X'], pars['Y'], pars['Y_up'], pars['Y_down'], 'BPT', 'WHAN', pars['bids_chain'])
-        self.fig1.savefig(pars['filename'])
-        # plt.show()
-
-    def plotter(self, axes, x, y, up, down, BPT_key, WHAN_key, bids_chain):
+    def plotter(self, axes, x, y, up, down, BPT_key, WHAN_key, bids_chain, legend):
         XX = []
         YY = []
         Y_ups = []
@@ -242,23 +242,24 @@ class Main:
             Y_up = self.DataFrame[up][i]
             Y_down = self.DataFrame[down][i]
             
+            alpha = 0.2
             if Y_up == -2:
-                axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=0.1)
-                axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.1)
+                axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=alpha)
+                axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=alpha)
                 k = 0
                 Y_up = 0
                 Y_down = 0
             elif Y_up == -1:
-                axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=0.1)
-                axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.1)
+                axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=alpha)
+                axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=alpha)
                 k = -1
                 Y_up = 0
                 Y_down = 0
             else:
                 # axes[0].errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_BPT[AGN][0], marker = '.')
                 # axes[1].errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_WHAN[WHAN][0], marker = '.')
-                axes[0].scatter(X, Y, alpha = 0.1, color = self.color_dict_BPT[AGN][0], marker = '.')
-                axes[1].scatter(X, Y, alpha = 0.1, color = self.color_dict_WHAN[WHAN][0], marker = '.')
+                axes[0].scatter(X, Y, alpha = alpha, color = self.color_dict_BPT[AGN][0], marker = '.')
+                axes[1].scatter(X, Y, alpha = alpha, color = self.color_dict_WHAN[WHAN][0], marker = '.')
                 k = 1
             
             if Y > -10:
@@ -292,13 +293,14 @@ class Main:
         classlist_plotter_uplim(axes[0], class_list_BPT, bids)
         classlist_plotter_uplim(axes[1], class_list_WHAN, bids)
 
-        for j, item in enumerate(class_list_BPT):
-            axes[0].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
-        axes[0].legend(loc=3, fontsize='13')
+        if legend == True:
+            for j, item in enumerate(class_list_BPT):
+                axes[0].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
+            axes[0].legend(loc=3, fontsize=17)
 
-        for j, item in enumerate(class_list_WHAN):
-            axes[1].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
-        axes[1].legend(loc=3, fontsize='13')
+            for j, item in enumerate(class_list_WHAN):
+                axes[1].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
+            axes[1].legend(loc=3, fontsize=17)
         
         
         # for ax in axes:
