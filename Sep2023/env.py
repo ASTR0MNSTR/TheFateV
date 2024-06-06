@@ -36,8 +36,8 @@ class Main(hp):
         self.color_dict_WHAN = cd_WHAN
         self.color_dict_leg = color_dict_leg
 
-        self.list_names_BPT = ['AGN', 'UNC', 'SF', 'NOEL']
-        self.list_names_WHAN = ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']
+        self.list_names_BPT = ['AGN', 'UNC', 'SFG', 'NOEL']
+        self.list_names_WHAN = ['sAGN', 'wAGN', 'SGF', 'ELR', 'NER', 'LLR']
 
         self.BMS_dict= {
             0 : ['.', 25], #bms
@@ -90,6 +90,7 @@ class Main(hp):
         gs_top = plt.GridSpec(2, 2, wspace=0, hspace=0.15)
         self.fig1 = plt.figure(figsize=(12, 12))
         adjusting_plotting_pars()
+        adjusting_figure_size(12, 12, 0.8, 0.2, 0.6, 0.2)
         ax1 = self.fig1.add_subplot(gs_top[0,0])
         ax2 = self.fig1.add_subplot(gs_top[0,1], sharey=ax1)
         ax3 = self.fig1.add_subplot(gs_top[1,0])

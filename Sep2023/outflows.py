@@ -148,7 +148,8 @@ class Main:
         self.DataFrame['OUTFLOW_down'] = OUTFLOW_down_off
         
         gs_top = plt.GridSpec(2, 2, wspace=0, hspace=0)
-        self.fig1 = plt.figure(figsize=(12, 12), tight_layout=True)
+        self.fig1 = plt.figure(figsize=(12, 12))
+        adjusting_figure_size(12, 12, 1, 0.2, 0.7, 0.2)
         
         ax1 = self.fig1.add_subplot(gs_top[0,0])
         ax2 = self.fig1.add_subplot(gs_top[0,1], sharey=ax1)
@@ -174,8 +175,8 @@ class Main:
         for ax in topaxes:    
             ax.set_xlim([8.7, 10.1])
             ax.set_xticks(np.arange(8.8, 10.1, 0.2))
-            ax.set_ylim([-3.0, 4.5])
-            ax.set_yticks(np.arange(-3.0, 4.1, 1.0))
+            ax.set_ylim([-3.0, 4.0])
+            ax.set_yticks(np.arange(-3.0, 3.9, 1.0))
 
         ax1, ax2 = Main.plotting_init(self,
             {'X' : 'ager_percentile50',
@@ -203,21 +204,6 @@ class Main:
             ax3, ax4
         )
         
-        # Main.plotting_init(self,
-        #     {'X' : 'SFR_0_1Gyr_percentile50',
-        #      'Y' : 'OUTFLOW',
-        #      'Y_up' : 'OUTFLOW_up',
-        #      'Y_down' : 'OUTFLOW_down',
-        #      'axes' : [self.ax4, self.ax5],
-        #      'xlabel' : r'$log(SFR/(M_\odot/yr))$',
-        #      'ylabel' : r'$log(M_{H_2}/(M_\odot/yr))$',
-        #      'xlim' : [-3.5, 3.5],
-        #      'ylim' : [-3.5, 3.5],
-        #      'filename' : './FIGURES_IN_PAPER/OUT_AGN_SFR.pdf',
-        #      'bids_chain' : [[-3, -2], [-2, -1], [-1, 0], [0, 1], [1, 2], [2, 3]]
-        #      }
-        # )
-        
         self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW.pdf')
     
     def plotting_init(self, pars, ax1, ax2):
@@ -233,6 +219,11 @@ class Main:
         BPT_keys = []
         WHAN_keys = []
         ks = []
+        
+        X_fit = []
+        Y_fit = []
+        Y_fit_up = []
+        Y_fit_down = []
                 
         for i in range(len(self.DataFrame[x])):
             AGN = self.DataFrame[BPT_key][i]
@@ -260,6 +251,10 @@ class Main:
                 # axes[1].errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_WHAN[WHAN][0], marker = '.')
                 axes[0].scatter(X, Y, alpha = alpha, color = self.color_dict_BPT[AGN][0], marker = '.')
                 axes[1].scatter(X, Y, alpha = alpha, color = self.color_dict_WHAN[WHAN][0], marker = '.')
+                X_fit.append(X)
+                Y_fit.append(Y)
+                Y_fit_up.append(Y_up)
+                Y_fit_down.append(Y_down)
                 k = 1
             
             if Y > -10:
@@ -310,7 +305,7 @@ class Main:
         
         ages = np.arange(8.8, 10, 0.05)
         
-        a, SE_A, b, SE_B = fit(XX, YY, Y_ups, Y_downs)
+        a, SE_A, b, SE_B = fit(X_fit, Y_fit, Y_fit_up, Y_fit_down)
         
         print('a : {:3e}, +: {:3e} -: {:3e}'.format(a, SE_A[0][0], SE_A[1][0]))
         print('b : {:3e}, +: {:3e} -: {:3e}'.format(b, SE_B[0][0], SE_B[1][0]))

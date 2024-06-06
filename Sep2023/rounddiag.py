@@ -41,13 +41,13 @@ class Main:
         self.file = file
         self.dataframe = None
 
-        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NER']
+        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SFG', 'ELR', 'LLR', 'NER']
         self.WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
 
         self.WHAN_colors_merged = ['royalblue', 'lime', 'hotpink', 'brown']
 
 
-        self.BPT_labels = ['AGN', 'UNC', 'SF', 'NOEL']
+        self.BPT_labels = ['AGN', 'UNC', 'SFG', 'NOEL']
         self.BPT_colors = ['midnightblue', 'springgreen', 'mediumvioletred', 'silver']
     
 
@@ -84,9 +84,9 @@ class Main:
 
 ######################################
 
-        Main.histo(self, axs[2, 0], ['SFX'])
-        Main.histo(self, axs[2, 1], ['SFXY'])
-        Main.histo(self, axs[2, 2], ['SFXY', 'SFX', 'SFY'])
+        Main.histo(self, axs[2, 0], ['SFGX'])
+        Main.histo(self, axs[2, 1], ['SFGXY'])
+        Main.histo(self, axs[2, 2], ['SFGXY', 'SFGX', 'SFGY'])
 
 ######################################
 
@@ -97,7 +97,7 @@ class Main:
         axs[0, 2].set_title('All objects (X, Y, XY)')
         axs[0, 0].set_ylabel('AGN (BPT)')
         axs[1, 0].set_ylabel('UNC (BPT)')
-        axs[2, 0].set_ylabel('SF (BPT)')
+        axs[2, 0].set_ylabel('SFG (BPT)')
         axs[3, 2].set_ylabel('NOEL (BPT)')
         
         axs[3, 0].remove()
@@ -119,7 +119,7 @@ class Main:
         for i in range(len(self.dataframe['BPT'])):
             if self.dataframe['BPT'][i] in keys:
                 self.total1 += 1
-                if self.dataframe['WHAN'][i] == 'SF':
+                if self.dataframe['WHAN'][i] == 'SFG':
                     SF += 1
                 elif self.dataframe['WHAN'][i] == 'ELR':
                     ELR += 1
@@ -144,7 +144,7 @@ class Main:
     
     def my_level_list(data):
         list = []
-        WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NER']
+        WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SFG', 'ELR', 'LLR', 'NER']
         for i in range(len(data)):
             if (data[i]*100/np.sum(data)) > 2 : #2%
                 list.append(WHAN_labels[i])
@@ -154,7 +154,11 @@ class Main:
 
     def histo(self, figure, keys):
         size = 0.45
-        figure.pie(Main.sorting_forWHAN(self, keys), radius=1, labels=Main.my_level_list(Main.sorting_forWHAN(self, keys)), colors=self.WHAN_colors, autopct=Main.my_autopct, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+        patches, texts, autotexts = figure.pie(Main.sorting_forWHAN(self, keys), radius=1, labels=Main.my_level_list(Main.sorting_forWHAN(self, keys)), colors=self.WHAN_colors, autopct=Main.my_autopct, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+        [autotext.set_color('black') for autotext in autotexts]
+        autotexts[0].set_color('white')
+        autotexts[1].set_color('white')
+        autotexts[-2].set_color('white')
         figure.pie(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))[0], radius=1-size, colors=self.WHAN_colors_merged, autopct=Main.short_WHAN_in(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
         figure.set(aspect='equal')
 

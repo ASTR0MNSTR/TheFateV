@@ -11,6 +11,10 @@ def adjusting_plotting_pars():
     mpl.rcParams['xtick.labelsize'] = 17
     mpl.rcParams['ytick.labelsize'] = 17 
     
+def adjusting_figure_size(figw, figh, l, r, b, t):
+    # plt.subplots_adjust(left=1/figw, right=1-0.2/figw, bottom=0.7/figh, top=1-0.2/figh)
+    plt.subplots_adjust(left=l/figw, right=1-r/figw, bottom=b/figh, top=1-t/figh)
+    
 def generating_annotation(axis, x, y, text):
     axis.text(x, y, text)
 
@@ -232,11 +236,11 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
 
 def class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT):
     if WHAN_or_BPT == 'BPT':
-        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
-        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['orchid', 'o']]
+        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFGXY'], ['SFGX'], ['NOEL']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['silver', 'o']]
     elif WHAN_or_BPT == 'WHAN':
         # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
-        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
+        keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR']]
         # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
         colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v']]
     class_list = []
@@ -260,10 +264,10 @@ def class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT):
 
 def class_list_creator_wo_err(x, y, age, AGN_keys, WHAN_or_BPT):
     if WHAN_or_BPT == 'BPT':
-        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
-        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['orchid', 'o']]
+        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFGXY'], ['SFGX'], ['NOEL']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['silver', 'o']]
     elif WHAN_or_BPT == 'WHAN':
-        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
+        keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR']]
         colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v']]
     class_list = []
     
@@ -283,11 +287,11 @@ def class_list_creator_wo_err(x, y, age, AGN_keys, WHAN_or_BPT):
 
 def class_list_creator_w_err_out(x, y, up, down, AGN_keys, WHAN_or_BPT, ks):
     if WHAN_or_BPT == 'BPT':
-        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
-        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['orchid', 'o']]
+        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFGXY'], ['SFGX'], ['NOEL']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['silver', 'o']]
     elif WHAN_or_BPT == 'WHAN':
         # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
-        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']]
+        keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SFG', 'ELR', 'NER', 'LLR']]
         # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
         colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v'], ['black', 'h']]
     class_list = []
@@ -314,16 +318,18 @@ def bin_stats(pars_dict):
     
     DataFrame = pd.read_csv(pars_dict['input_path'])
     
-    # adjusting_plotting_pars()
+    adjusting_plotting_pars()
     
-    fig, axs = plt.subplots(6, 1, figsize=(12, 18), tight_layout=True)
-    plt.subplots_adjust(wspace=0, hspace=0)
-    ax1 = axs[0]
-    ax2 = axs[1]
-    ax3 = axs[2]
-    ax4 = axs[3]
-    ax5 = axs[4]
-    ax6 = axs[5]
+    gs_top = plt.GridSpec(6, 1, hspace=0, wspace=0)
+    fig = plt.figure(figsize=(12, 18), tight_layout=True)
+
+    ax1 = fig.add_subplot(gs_top[0,0])
+    ax2 = fig.add_subplot(gs_top[1,0])
+    ax3 = fig.add_subplot(gs_top[2,0])
+    ax4 = fig.add_subplot(gs_top[3,0])
+    ax5 = fig.add_subplot(gs_top[4,0])
+    ax6 = fig.add_subplot(gs_top[5,0])
+    
     plotter_histo_BPT(ax3, [0], DataFrame[pars_dict['x']], DataFrame['BPT'], 'BMS, %', DataFrame['BMS'], pars_dict['bins'])
 
     plotter_histo_BPT(ax2, [1], DataFrame[pars_dict['x']], DataFrame['BPT'], 'MS, %', DataFrame['BMS'], pars_dict['bins'])
@@ -336,25 +342,25 @@ def bin_stats(pars_dict):
 
     plotter_histo_WHAN(ax4, [0,1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
 
-    ax2.legend(fontsize="10", loc='lower right')
-    ax5.legend(fontsize="13", loc='lower right')
+    ax2.legend(fontsize="10", loc='center right')
+    ax5.legend(fontsize="13", loc='center right')
 
     top_axes = [ax2, ax3, ax5]
     for item in top_axes:
-        item.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
+        item.tick_params(top=False, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
 
-    ax1.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
+    ax1.tick_params(top=False, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
     ax1.text(5.5, 80, 'BPT', fontsize='15', ha='center', va='center')
     ax4.text(5.5, 80, 'WHAN', fontsize='15', ha='center', va='center')
     #ax1.xaxis.set_label_position('top')
     # ax1.set_title('BPT classification')
-    ax4.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
+    ax4.tick_params(top=False, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
     #ax4.xaxis.set_label_position('top')
     # ax4.set_title('WHAN classification')
 
-    ax6.set_xlabel(pars_dict['xlabel'], fontsize="15")
+    ax6.set_xlabel(pars_dict['xlabel'], fontsize=17)
     # ax6.set_xticks([r for r in range(6)], ['<0.05', '0.05-0.10', '0.10-0.15', '0.15-0.20', '0.20-0.25', '0.25-0.33'])
-    ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'], fontsize="15")
+    ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'], fontsize=17)
 
     plt.savefig(pars_dict['save_path'])
 
@@ -391,11 +397,11 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
             for j in range(len(age)):
                 if age[j] > bins[i][0] and age[j] <= bins[i][1] and BMS[j] in BMS_condition: #below-MS=0 / MS galaxies=1 and item['BMS'] == 1:
                     SAMPLE[i] += 1
-                    if SC_BPT[j] == 'SFXY':
+                    if SC_BPT[j] == 'SFGXY':
                         SF[i] += 1
-                    elif SC_BPT[j] == 'SFX':
+                    elif SC_BPT[j] == 'SFGX':
                         SFX[i] += 1
-                    elif SC_BPT[j] == 'SFY':
+                    elif SC_BPT[j] == 'SFGY':
                         SFY[i] += 1
                     elif SC_BPT[j] == 'NOEL':
                         NOEL[i] += 1
@@ -439,9 +445,9 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         print('UNC', UNC, sum(UNC))
         print('UNCX', UNCX, sum(UNCX))
         print('UNCY', UNCY, sum(UNCY))
-        print('SF', SF, sum(SF))
-        print('SFX', SFX, sum(SFX))
-        print('SFY', SFY, sum(SFY))
+        print('SFGXY', SF, sum(SF))
+        print('SFGX', SFX, sum(SFX))
+        print('SFGY', SFY, sum(SFY))
         print('NOEL', NOEL, sum(NOEL))
         print('NDA', NDA, sum(NDA))
         print('TOT', SAMPLE, sum(SAMPLE))
@@ -459,14 +465,14 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         axes.bar(br1, UNC_perc, color ='springgreen', width = barWidth, edgecolor ='grey', label ='UNCXY')
         axes.bar(br1, UNCX_perc, color ='darkgreen', width = barWidth, edgecolor ='grey', label ='UNCX')
         axes.bar(br1, UNCY_perc, color ='limegreen', width = barWidth, edgecolor ='grey', label ='UNCY')
-        axes.bar(br1, NOEL_perc, color ='white', width = barWidth, edgecolor ='grey', label ='NOEL')
-        axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SFXY')
-        axes.bar(br1, SFX_perc, color ='crimson', width = barWidth, edgecolor ='grey', label ='SFX')
-        axes.bar(br1, SFY_perc, color ='fuchsia', width = barWidth, edgecolor ='grey', label ='SFY')
+        axes.bar(br1, NOEL_perc, color ='silver', width = barWidth, edgecolor ='grey', label ='NOEL')
+        axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SFGXY')
+        axes.bar(br1, SFX_perc, color ='crimson', width = barWidth, edgecolor ='grey', label ='SFGX')
+        axes.bar(br1, SFY_perc, color ='fuchsia', width = barWidth, edgecolor ='grey', label ='SFGY')
         
-        yticks = np.arange(0, 101, 20)
-        axes.set_ylabel(f'{y_name}', fontsize="15")
-        axes.set_yticks(yticks, yticks, fontsize="15")
+        yticks = np.arange(0, 101, 25)
+        axes.set_ylabel(f'{y_name}', fontsize=17)
+        axes.set_yticks(yticks, yticks, fontsize=17)
         axes.set_ylim(0, 110)
         
         # Adding Xticks
@@ -502,7 +508,7 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
         for j in range(len(age)):
             if age[j] > bins[i][0] and age[j] <= bins[i][1] and int(BMS[j]) in BMS_condition: #below-MS=0 / MS galaxies=1 and item['BMS'] == 1:
                 SAMPLE[i] += 1
-                if SC_WHAN[j] == 'SF':
+                if SC_WHAN[j] == 'SFG':
                     SF[i] += 1
                 elif SC_WHAN[j] == 'wAGN':
                     wAGN[i] += 1
@@ -543,16 +549,16 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
     edgecolor ='grey', label ='sAGN')
     axes.bar(br1, wAGN_perc, color ='dodgerblue', width = barWidth, edgecolor ='grey', label ='wAGN')
     axes.bar(br1, NOEL_perc, color ='springgreen', width = barWidth, edgecolor ='grey', label ='UNC')
-    axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SF')
+    axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SFG')
     axes.bar(br1, ELR_perc, color ='sandybrown', width = barWidth, edgecolor ='grey', label ='ELR')
     axes.bar(br1, RG_perc, color ='chocolate', width = barWidth, edgecolor ='grey', label ='NER')
     axes.bar(br1, LLR_perc, color ='maroon', width = barWidth, edgecolor ='grey', label ='LLR')
  
         # Adding Xticks
 
-    yticks = np.arange(0, 101, 20)
-    axes.set_ylabel(f'{y_name}', fontsize="15")
-    axes.set_yticks(yticks, yticks, fontsize="15")
+    yticks = np.arange(0, 101, 25)
+    axes.set_ylabel(f'{y_name}', fontsize=17)
+    axes.set_yticks(yticks, yticks, fontsize=17)
     axes.set_ylim(0, 110)
         
 

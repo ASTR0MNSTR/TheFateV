@@ -122,7 +122,7 @@ def luminosity_calcularor(OIII, OIII_er, z, LAGN_er):
         LAGN_er = 3500 * 4 * np.pi * (distance* distance) * OIII_er / ((1+z) * (10**(60)))
     return LAGN, LAGN_er
     
-def AGN_lum(OIII, OIII_er, z):
+def AGN_lum(OIII, OIII_er, z, coef):
     SN = 2
     if OIII == -99999.0 or OIII_er < 0:
         return -99999.0, -99999.0
@@ -135,6 +135,8 @@ def AGN_lum(OIII, OIII_er, z):
         # LAGN_er = 'upNon'
         LAGN_er = -2
     elif OIII > SN*OIII_er:
+        OIII_er *= coef
+        OIII *= coef
         LAGN_er = None
     else:
         print('SMTH WRONG!')
@@ -191,12 +193,12 @@ def double_line(res, res_er, pair_flags, limit_SF, limit_AGN, flag):
         if res - res_er > limit_AGN:
             AGN = 'AGN'
         elif res + res_er < limit_SF:
-            AGN = 'SF'
+            AGN = 'SFG'
         else:
             AGN = 'UNC'
     else:
         if pair_flags[0] == 'down' and res < limit_SF:
-            AGN = 'SF'
+            AGN = 'SFG'
         elif pair_flags[0] == 'up' and res > limit_AGN:
             AGN = 'AGN'
         else:
@@ -206,7 +208,7 @@ def double_line(res, res_er, pair_flags, limit_SF, limit_AGN, flag):
 
 def def_four_lines(X, X_er, Y, Y_er):
     if Y + Y_er < 0.61 / ((X - 0.05)) + 1.3 and X + X_er < 0.05:
-        AGN = 'SFXY'
+        AGN = 'SFGXY'
     elif Y - Y_er > 0.61 / ((X - 0.47)) + 1.19 and X + X_er < 0.47:
         AGN = 'AGNXY'
     elif X - X_er > 0.47:
@@ -259,7 +261,7 @@ def four_lines(X, X_er, pair_x_flags, Y, Y_er, pair_y_flags):
             if pair_y_flag == 'up' or pair_x_flag == 'right':
                 AGN = 'UNCXY'
             else:
-                AGN = 'SFXY'
+                AGN = 'SFGXY'
                 
         else:
             AGN = 'UNCXY'
@@ -280,7 +282,7 @@ def WHAN(X, X_er, pair_x_flags, HA_ew, HA_ew_err, pair_HA):
             if X == -99:
                 return 'LLR'
             elif HA_ew - HA_ew_err > 0.47712 and X + X_er < -0.4 and 'up' not in pair_x_flags and len(pair_HA) == 0:
-                return 'SF'
+                return 'SFG'
             elif HA_ew - HA_ew_err > 0.47712 and X - X_er > -0.4 and HA_ew + HA_ew_err < 0.77815125 and len(pair_x_flags) == 0 and len(pair_HA) == 0:
                 return 'wAGN'
             elif HA_ew - HA_ew_err > 0.47712 and X - X_er > -0.4 and HA_ew - HA_ew_err >= 0.77815125 and len(pair_x_flags) == 0 and len(pair_HA) == 0:
@@ -294,7 +296,7 @@ def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, 
     
     HA_ew, HA_ew_err, pair_HA = ew_proc(HA_ew, HA_ew_err)
     
-    # coefs, E_B_V = dust_correction(HA, HA_er, HB, HB_er)
+    # coefs_1, E_B_V = dust_correction(HA, HA_er, HB, HB_er)
 
     coefs = [1, 1, 1, 1, 1, 1, 1]
     
@@ -327,7 +329,8 @@ def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, 
     #    SC_WHAN += '!'
     
     #AGN Luminosity estimation
-    LAGN, LAGN_er = AGN_lum(OIII, OIII_er, z)
+    coef = coefs[0]
+    LAGN, LAGN_er = AGN_lum(OIII, OIII_er, z, coef)
 
     return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, HA_ew, HA_ew_err, pair_HA
 

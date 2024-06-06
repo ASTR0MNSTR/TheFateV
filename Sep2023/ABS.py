@@ -5,19 +5,13 @@ from __plt__ import *
 
 class Main:
 
-    def my_autopct_BPT(pct):
-        return (f'{pct:.2f}%') if pct > 3 else ''
-    
-    def my_autopct_WHAN(pct):
-        return (f'{pct:.2f}%') if pct > 3 else ''
-
     def __init__(self, file):
         self.file = file
         self.dataframe = None
-        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NER']
+        self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SFG', 'ELR', 'LLR', 'NER']
         self.WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
 
-        self.BPT_labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
+        self.BPT_labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFGXY', 'SFGX', 'SFGY', 'NOEL']
         self.BPT_colors = ['midnightblue', 'dodgerblue', 'springgreen', 'darkgreen', 'limegreen', 'mediumvioletred', 'crimson', 'fuchsia', 'silver']
 
         self.BPT_colors_merged = ['royalblue', 'lime', 'hotpink', 'w']
@@ -75,7 +69,7 @@ class Main:
         for i in range(len(self.dataframe['BMS'])):
             if self.dataframe[flux_key][i] < (-2)*self.dataframe[flux_er_key][i]:
                 self.total1 += 1
-                if self.dataframe['WHAN'][i] == 'SF':
+                if self.dataframe['WHAN'][i] == 'SFG':
                     SF += 1
                 elif self.dataframe['WHAN'][i] == 'ELR':
                     ELR += 1
@@ -117,11 +111,11 @@ class Main:
         for i in range(len(self.dataframe['BMS'])):
             if self.dataframe[flux_key][i] < (-2)*self.dataframe[flux_er_key][i]:
                 self.total2 += 1
-                if self.dataframe['BPT'][i] in ['SFXY']:
+                if self.dataframe['BPT'][i] in ['SFGXY']:
                     SF += 1
-                elif self.dataframe['BPT'][i] in ['SFX']:
+                elif self.dataframe['BPT'][i] in ['SFGX']:
                     SFX += 1
-                elif self.dataframe['BPT'][i] in ['SFY']:
+                elif self.dataframe['BPT'][i] in ['SFGY']:
                     SFY += 1
                 elif self.dataframe['BPT'][i] in ['AGNXY']:
                     AGN += 1
@@ -144,68 +138,24 @@ class Main:
         print('BPT', flux_key, self.total2)
         return [AGN, AGNX, UNC, UNCX, UNCY, SF, SFX, SFY, NOEL]
     
-    def merging_BPT(self, list_obj):
-        AGN = list_obj[0] + list_obj[1]
-        UNC = list_obj[2] + list_obj[3] + list_obj[4]
-        SF =  list_obj[5] + list_obj[6] + list_obj[7]
-        NOEL = list_obj[8]
-
-        return [AGN, UNC, SF, NOEL]
-    
-    def merging_WHAN(self, list_obj):
-
-        sAGN, wAGN, UNC, SF, ELR, LLR, RG = list_obj
-
-        AGN = sAGN + wAGN
-        UNC = UNC
-        SF = SF
-        ret = ELR + LLR + RG
-
-        return [AGN, UNC, SF, ret]
-    
-    def my_level_list(data, kwarg):
-        list = []
-        if kwarg == 'WHAN':
-            labels = ['sAGN', 'wAGN', 'UNC', 'SF', 'ELR', 'LLR', 'NER']
-        elif kwarg == 'BPT':
-            labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFXY', 'SFX', 'SFY', 'NOEL']
-
-        for i in range(len(data)):
-            if (data[i]*100/np.sum(data)) > 3: #2%
-                list.append(labels[i])
-            else:
-                list.append('')
-        return list
-    
-    def short_WHAN_in(data):
-        def my_format(pct):
-            total = sum(data)
-            val = int(round(pct*total/100.0))
-            if data[1] == int(val) or data[2] == int(val) or pct == 100 or pct < 3:
-                return ''
-            else:
-                return (f'{pct:.2f}%')
-        return my_format
-    
-    def short_BPT_in(data):
-        def my_format(pct):
-            total = sum(data)
-            val = int(round(pct*total/100.0))
-            if data[3] == int(val) or pct == 100 or pct < 3:
-                return ''
-            else:
-                return (f'{pct:.2f}%')
-        return my_format
-    
     def histo(self, figure, flux_key, flux_er_key, kwarg):
         size = 0.45
         if kwarg == 'WHAN':
-            figure.pie(Main.sorting_forWHAN(self, flux_key, flux_er_key), radius=1, labels=Main.my_level_list(Main.sorting_forWHAN(self, flux_key, flux_er_key), 'WHAN'), colors=self.WHAN_colors, autopct=Main.my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
-            figure.pie(Main.merging_WHAN(self, Main.sorting_forWHAN(self, flux_key, flux_er_key)), radius=1-size, colors=self.WHAN_colors_merged, autopct=Main.short_WHAN_in(Main.merging_WHAN(self, Main.sorting_forWHAN(self, flux_key, flux_er_key))), wedgeprops=dict(width=size, edgecolor='w'))
+            patches, texts, autotexts = figure.pie(Main.sorting_forWHAN(self, flux_key, flux_er_key), radius=1, labels=my_level_list(Main.sorting_forWHAN(self, flux_key, flux_er_key), 'WHAN'), colors=self.WHAN_colors, autopct=my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+            [autotext.set_color('black') for autotext in autotexts]
+            autotexts[0].set_color('white')
+            autotexts[1].set_color('white')
+            # autotexts[-2].set_color('white')
+            # figure.pie(Main.merging_WHAN(self, Main.sorting_forWHAN(self, flux_key, flux_er_key)), radius=1-size, colors=self.WHAN_colors_merged, autopct=short_WHAN_in(Main.merging_WHAN(self, Main.sorting_forWHAN(self, flux_key, flux_er_key))), wedgeprops=dict(width=size, edgecolor='w'))
+            figure.pie(merging_WHAN(self, Main.sorting_forWHAN(self, flux_key, flux_er_key)), radius=1-size, colors=self.WHAN_colors_merged, wedgeprops=dict(width=size, edgecolor='w'))
             figure.set(aspect='equal')
         elif kwarg == 'BPT':
-            figure.pie(Main.sorting_forBPT(self, flux_key, flux_er_key), radius=1, labels=Main.my_level_list(Main.sorting_forBPT(self, flux_key, flux_er_key), 'BPT'), colors=self.BPT_colors, autopct=Main.my_autopct_BPT, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
-            figure.pie(Main.merging_BPT(self, Main.sorting_forBPT(self, flux_key, flux_er_key)), radius=1-size, colors=self.BPT_colors_merged, autopct=Main.short_BPT_in(Main.merging_BPT(self, Main.sorting_forBPT(self, flux_key, flux_er_key))), wedgeprops=dict(width=size, edgecolor='w'))
+            patches, texts, autotexts = figure.pie(Main.sorting_forBPT(self, flux_key, flux_er_key), radius=1, labels=my_level_list(Main.sorting_forBPT(self, flux_key, flux_er_key), 'BPT'), colors=self.BPT_colors, autopct=my_autopct_BPT, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+            [autotext.set_color('black') for autotext in autotexts]
+            autotexts[0].set_color('white')
+            # autotexts[3].set_color('white')
+            # figure.pie(Main.merging_BPT(self, Main.sorting_forBPT(self, flux_key, flux_er_key)), radius=1-size, colors=self.BPT_colors_merged, autopct=short_BPT_in(Main.merging_BPT(self, Main.sorting_forBPT(self, flux_key, flux_er_key))), wedgeprops=dict(width=size, edgecolor='w'))
+            figure.pie(merging_BPT(self, Main.sorting_forBPT(self, flux_key, flux_er_key)), radius=1-size, colors=self.BPT_colors_merged, wedgeprops=dict(width=size, edgecolor='w'))
             figure.set(aspect='equal')
 
 if __name__ == '__main__':

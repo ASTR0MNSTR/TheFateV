@@ -6,10 +6,95 @@ import pandas as pd
 from scipy import ndimage
 import matplotlib as mpl
 
+#ROUND HISTOS
+
+def my_level_list(data, kwarg):
+    list = []
+    if kwarg == 'WHAN':
+        labels = ['sAGN', 'wAGN', 'UNC', 'SFG', 'ELR', 'LLR', 'NER']
+    elif kwarg == 'BPT':
+        labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFGXY', 'SFGX', 'SFGY', 'NOEL']
+
+    for i in range(len(data)):
+        if (data[i]*100/np.sum(data)) > 5: #2%
+            list.append(labels[i])
+        else:
+            list.append('')
+    return list
+
+def my_autopct_BPT(pct):
+    return (f'{pct:.2f}%') if pct > 5 else ''
+    
+def my_autopct_WHAN(pct):
+    return (f'{pct:.2f}%') if pct > 5 else ''
+
+def merging_BPT(self, list_obj):
+    AGNXY, AGNX, UNCXY, UNCX, UNCY, SFXY, SFX, SFY, NOEL = list_obj
+        
+    AGNs = [AGNXY, AGNX]
+    UNCs = [UNCXY, UNCX, UNCY]
+    SFs = [SFXY, SFX, SFY]
+    NOELs = [NOEL]
+        
+    arrays = [AGNs, UNCs, SFs, NOELs]
+    indexes = []
+    results = []
+    for i, array in enumerate(arrays):
+        if len(array) == 1 or array.count(0) == len(array) - 1:
+            indexes.append(i)
+        results.append(sum(array))
+
+    return results
+    
+def merging_WHAN(self, list_obj):
+
+    sAGN, wAGN, UNC, SF, ELR, LLR, RG = list_obj
+
+    AGNs = [sAGN, wAGN]
+    UNCs = [UNC]
+    SFs = [SF]
+    RGs = [ELR, LLR, RG]
+        
+    arrays = [AGNs, UNCs, SFs, RGs]
+    indexes = []
+    results = []
+    for i, array in enumerate(arrays):
+        if len(array) == 1 or array.count(0) == len(array) - 1:
+            indexes.append(i)
+        results.append(sum(array))
+
+    return results
+
+def short_WHAN_in(data):
+    def my_format(pct):
+        total = sum(data)
+        val = int(round(pct*total/100.0))
+        if data[1] == int(val) or data[2] == int(val) or pct == 100 or pct < 5:
+            return ''
+        else:
+            return (f'{pct:.2f}%')
+    return my_format
+    
+def short_BPT_in(data):
+    def my_format(pct):
+        total = sum(data)
+        val = int(round(pct*total/100.0))
+        if data[3] == int(val) or pct == 100 or pct < 5:
+            return ''
+        else:
+            return (f'{pct:.2f}%')
+    return my_format
+
+#PHYSICS
+
 def adjusting_plotting_pars():
     plt.rcParams['font.size'] = 17
     mpl.rcParams['xtick.labelsize'] = 17
     mpl.rcParams['ytick.labelsize'] = 17 
+    
+def adjusting_figure_size(figw, figh, l, r, b, t):
+    # plt.subplots_adjust(left=1/figw, right=1-0.2/figw, bottom=0.7/figh, top=1-0.2/figh)
+    plt.subplots_adjust(left=l/figw, right=1-r/figw, bottom=b/figh, top=1-t/figh)
     
 def generating_annotation(axis, x, y, text):
     axis.text(x, y, text)
@@ -225,11 +310,11 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
 
 def class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT):
     if WHAN_or_BPT == 'BPT':
-        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
-        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['orchid', 'o']]
+        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFGXY'], ['SFGX'], ['NOEL']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['silver', 'o']]
     elif WHAN_or_BPT == 'WHAN':
-        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
-        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
+        # keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR']]
+        keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR']]
         # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
         colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v']]
     class_list = []
@@ -254,9 +339,9 @@ def class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT):
 def class_list_creator_wo_err(x, y, age, AGN_keys, WHAN_or_BPT):
     if WHAN_or_BPT == 'BPT':
         keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
-        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['orchid', 'o']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['silver', 'o']]
     elif WHAN_or_BPT == 'WHAN':
-        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
+        keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR']]
         colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v']]
     class_list = []
     
@@ -276,11 +361,11 @@ def class_list_creator_wo_err(x, y, age, AGN_keys, WHAN_or_BPT):
 
 def class_list_creator_w_err_out(x, y, up, down, AGN_keys, WHAN_or_BPT, ks):
     if WHAN_or_BPT == 'BPT':
-        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
-        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['orchid', 'o']]
+        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFGXY'], ['SFGX'], ['NOEL']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['silver', 'o']]
     elif WHAN_or_BPT == 'WHAN':
-        keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
-        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SF', 'ELR', 'NER', 'LLR']]
+        keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR']]
+        # keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SFG', 'ELR', 'NER', 'LLR']]
         colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
         # colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v'], ['black', 'h']]
     class_list = []
@@ -361,7 +446,7 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         UNC = empty()
         UNCX = empty()
         UNCY = empty()
-        SF = empty()
+        SFG = empty()
         SFX = empty()
         SFY = empty()
         AGN = empty()
@@ -386,11 +471,11 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
             for j in range(len(age)):
                 if age[j] > bins[i][0] and age[j] <= bins[i][1] and BMS[j] in BMS_condition: #below-MS=0 / MS galaxies=1 and item['BMS'] == 1:
                     SAMPLE[i] += 1
-                    if SC_BPT[j] == 'SFXY':
-                        SF[i] += 1
-                    elif SC_BPT[j] == 'SFX':
+                    if SC_BPT[j] == 'SFGXY':
+                        SFG[i] += 1
+                    elif SC_BPT[j] == 'SFGX':
                         SFX[i] += 1
-                    elif SC_BPT[j] == 'SFY':
+                    elif SC_BPT[j] == 'SFGY':
                         SFY[i] += 1
                     elif SC_BPT[j] == 'NOEL':
                         NOEL[i] += 1
@@ -414,10 +499,10 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
             try:
                 SFY_perc[j] = (SFY[j]/SAMPLE[j])*100
                 SFX_perc[j] = (SFY[j] + SFX[j])*100/SAMPLE[j]
-                SF_perc[j] = (SFY[j] + SFX[j]+SF[j])*100/SAMPLE[j]
-                NDA_perc[j] = (NDA[j] + SFY[j] + SFX[j]+SF[j])*100/SAMPLE[j]
-                NOEL_perc[j] = (NDA[j] + SFY[j] + SFX[j]+SF[j]+NOEL[j])*100/SAMPLE[j]
-                UNCY_perc[j] = (NDA[j] + SFY[j] + SFX[j]+SF[j]+NOEL[j] + UNCY[j])*100/SAMPLE[j]
+                SF_perc[j] = (SFY[j] + SFX[j]+SFG[j])*100/SAMPLE[j]
+                NDA_perc[j] = (NDA[j] + SFY[j] + SFX[j]+SFG[j])*100/SAMPLE[j]
+                NOEL_perc[j] = (NDA[j] + SFY[j] + SFX[j]+SFG[j]+NOEL[j])*100/SAMPLE[j]
+                UNCY_perc[j] = (NDA[j] + SFY[j] + SFX[j]+SFG[j]+NOEL[j] + UNCY[j])*100/SAMPLE[j]
                 UNCX_perc[j] = UNCY_perc[j] + (UNCX[j]/SAMPLE[j])*100
                 UNC_perc[j] = UNCX_perc[j] + (UNC[j]/SAMPLE[j])*100
                 
@@ -434,9 +519,9 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         print('UNC', UNC, sum(UNC))
         print('UNCX', UNCX, sum(UNCX))
         print('UNCY', UNCY, sum(UNCY))
-        print('SF', SF, sum(SF))
-        print('SFX', SFX, sum(SFX))
-        print('SFY', SFY, sum(SFY))
+        print('SFGXY', SFG, sum(SFG))
+        print('SFGX', SFX, sum(SFX))
+        print('SFGY', SFY, sum(SFY))
         print('NOEL', NOEL, sum(NOEL))
         print('NDA', NDA, sum(NDA))
         print('TOT', SAMPLE, sum(SAMPLE))
@@ -454,10 +539,10 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         axes.bar(br1, UNC_perc, color ='springgreen', width = barWidth, edgecolor ='grey', label ='UNCXY')
         axes.bar(br1, UNCX_perc, color ='darkgreen', width = barWidth, edgecolor ='grey', label ='UNCX')
         axes.bar(br1, UNCY_perc, color ='limegreen', width = barWidth, edgecolor ='grey', label ='UNCY')
-        axes.bar(br1, NOEL_perc, color ='white', width = barWidth, edgecolor ='grey', label ='NOEL')
-        axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SFXY')
-        axes.bar(br1, SFX_perc, color ='crimson', width = barWidth, edgecolor ='grey', label ='SFX')
-        axes.bar(br1, SFY_perc, color ='fuchsia', width = barWidth, edgecolor ='grey', label ='SFY')
+        axes.bar(br1, NOEL_perc, color ='silver', width = barWidth, edgecolor ='grey', label ='NOEL')
+        axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SFGXY')
+        axes.bar(br1, SFX_perc, color ='crimson', width = barWidth, edgecolor ='grey', label ='SFGX')
+        axes.bar(br1, SFY_perc, color ='fuchsia', width = barWidth, edgecolor ='grey', label ='SFGY')
         
         yticks = np.arange(0, 101, 25)
         axes.set_ylabel(f'{y_name}', fontsize=17)
@@ -474,7 +559,7 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
 
 def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
  
-    SF = empty()
+    SFG = empty()
     wAGN = empty()
     sAGN = empty()
     NOEL = empty()
@@ -497,8 +582,8 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
         for j in range(len(age)):
             if age[j] > bins[i][0] and age[j] <= bins[i][1] and int(BMS[j]) in BMS_condition: #below-MS=0 / MS galaxies=1 and item['BMS'] == 1:
                 SAMPLE[i] += 1
-                if SC_WHAN[j] == 'SF':
-                    SF[i] += 1
+                if SC_WHAN[j] == 'SFG':
+                    SFG[i] += 1
                 elif SC_WHAN[j] == 'wAGN':
                     wAGN[i] += 1
                 elif SC_WHAN[j] == 'sAGN':
@@ -522,11 +607,11 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
             LLR_perc[j] = (LLR[j]/SAMPLE[j])*100
             RG_perc[j] = ((LLR[j] + NER[j])/SAMPLE[j])*100
             ELR_perc[j] = (LLR[j] + NER[j] + ELR[j])*100/SAMPLE[j]
-            SF_perc[j] = (LLR[j] + NER[j] + ELR[j]+SF[j])*100/SAMPLE[j]
-            NDA_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SF[j])*100/SAMPLE[j]
-            NOEL_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SF[j]+NOEL[j])*100/SAMPLE[j]
-            wAGN_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SF[j]+NOEL[j] + wAGN[j])*100/SAMPLE[j]
-            sAGN_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SF[j]+NOEL[j] + wAGN[j] + sAGN[j])*100/SAMPLE[j]
+            SF_perc[j] = (LLR[j] + NER[j] + ELR[j]+SFG[j])*100/SAMPLE[j]
+            NDA_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SFG[j])*100/SAMPLE[j]
+            NOEL_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SFG[j]+NOEL[j])*100/SAMPLE[j]
+            wAGN_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SFG[j]+NOEL[j] + wAGN[j])*100/SAMPLE[j]
+            sAGN_perc[j] = (NDA[j] + NER[j] + LLR[j] + ELR[j]+SFG[j]+NOEL[j] + wAGN[j] + sAGN[j])*100/SAMPLE[j]
         except:
             pass
     
@@ -538,7 +623,7 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
     edgecolor ='grey', label ='sAGN')
     axes.bar(br1, wAGN_perc, color ='dodgerblue', width = barWidth, edgecolor ='grey', label ='wAGN')
     axes.bar(br1, NOEL_perc, color ='springgreen', width = barWidth, edgecolor ='grey', label ='UNC')
-    axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SF')
+    axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SFG')
     axes.bar(br1, ELR_perc, color ='sandybrown', width = barWidth, edgecolor ='grey', label ='ELR')
     axes.bar(br1, RG_perc, color ='chocolate', width = barWidth, edgecolor ='grey', label ='NER')
     axes.bar(br1, LLR_perc, color ='maroon', width = barWidth, edgecolor ='grey', label ='LLR')
@@ -556,7 +641,7 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
         height = rect.get_height()
         axes.text(rect.get_x() + rect.get_width() / 2.0, height, str(SAMPLE[k]), ha='center', va='bottom', fontsize='13')
         k+=1
-    all = [sAGN, wAGN, NOEL, SF, ELR, NER, LLR, SAMPLE]
+    all = [sAGN, wAGN, NOEL, SFG, ELR, NER, LLR, SAMPLE]
 
     for group in all:
         for i, item in enumerate(group):

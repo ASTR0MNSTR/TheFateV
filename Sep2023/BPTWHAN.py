@@ -504,7 +504,8 @@ class Main(hp):
     def plotting_BPT(self):
         self.gs_top = plt.GridSpec(2, 3, wspace=0, hspace=0)
         #self.fig = plt.figure(figsize=(12, 12), tight_layout=True)
-        self.fig = plt.figure(figsize=(18, 12))
+        self.fig = plt.figure(figsize=(20, 12))
+        adjusting_figure_size(20, 12, l=1.2, r=1.8, b=0.6, t=0.3)
         adjusting_plotting_pars()
 
         self.ax4 = self.fig.add_subplot(self.gs_top[0,0])
@@ -518,7 +519,9 @@ class Main(hp):
         self.topaxes = [self.ax5, self.ax4, self.ax_med_BPT]
         for ax in self.topaxes:    
             # ax.set_xlabel(r'$\log{\mathrm{([NII]/H\alpha)}$')
-            ax.set_xlim(-2.1, 1.2)
+            ax.set_yticks(np.arange(-1, 2.1, 0.5))
+            ax.set_xticks(np.arange(-2, 1.2, 0.5))
+            ax.set_xlim(-1.9, 1.2)
             ax.set_ylim(-1.2, 1.5) 
             X_1 = np.arange(-4, 0.4, 0.01)
             X_111 = np.arange(-4, 0, 0.01)
@@ -533,8 +536,6 @@ class Main(hp):
             ax.text(0, -1, 'UNC', ha='center', va='center')
             ax.text(-1.5, -0.5, 'SF')
             ax.text(0.5, -0.5, 'LINER')
-            ax.set_yticks(np.arange(-1, 2.1, 0.5))
-            ax.set_xticks(np.arange(-2, 1.2, 0.5))
             ax.set_box_aspect(1)
 
         self.ax4.set_ylabel(r'$\log{\mathrm{([OIII]/H\beta)}}$')
@@ -673,8 +674,10 @@ class Main(hp):
         #for ax in self.topaxes[1:]:
         #plt.setp(ax.get_xticklabels(), visible=False)
 
-        for ax in self.topaxes:    
-            ax.set_xlim([-2.1, 1.2])
+        for ax in self.topaxes:
+            ax.set_xticks(np.arange(-2.0, 1.2, 0.5))
+            ax.set_yticks(np.arange(-2, 3.0, 0.5))    
+            ax.set_xlim([-1.9, 1.2])
             ax.set_ylim([-2, 2.7])
             ax.axhline(y = 0.47712, color = 'black', linestyle='dashed')
             ax.axhline(y = -0.301, color = 'black', linestyle='dotted')
@@ -690,8 +693,6 @@ class Main(hp):
             Y_sAGN = np.arange(0.47712, 3, 0.01)
             ax.plot(-0.4+Y_sAGN*0, Y_sAGN, 'black')
             ax.set_xlabel(r"$\log \mathrm{([NII]/H\alpha)}$")
-            ax.set_xticks(np.arange(-2.0, 1.2, 0.5))
-            ax.set_yticks(np.arange(-2, 3.0, 0.5))
             ax.set_box_aspect(1)
         
 
@@ -761,8 +762,8 @@ class Main(hp):
         self.ax6.scatter(-99, -99, alpha= 1, color = 'dodgerblue', label='AGNX', s = 30, marker='o')
         self.ax6.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNCXY', s = 30, marker='o')
         self.ax6.scatter(-99, -99, alpha= 1, color = 'darkgreen', label='UNCX', s = 30, marker='o')
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SFXY', s = 30, marker='o')
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'crimson', label='SFX', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SFGXY', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'crimson', label='SFGX', s = 30, marker='o')
         self.ax6.legend(loc=3)
         self.ax7.legend(loc=3)
         self.ax_med_WHAN.legend(loc=3)
@@ -773,8 +774,8 @@ class Main(hp):
         #self.ax7.scatter(-99, -99, color='none', edgecolors='crimson', s=20, label='Abs. lines BPT')
         #self.ax7.scatter(-99, -99, color='none', edgecolors='black', s=20, label='Abs. lines WHAN')
 
-        self.fig.subplots_adjust(right=0.89)
-        cbar_ax = self.fig.add_axes([0.9, 0.1, 0.03, 0.78])
+        # self.fig.subplots_adjust(right=0.89)
+        cbar_ax = self.fig.add_axes([0.91, 0.05, 0.03, 0.925])
         self.fig.colorbar(self.s_m, cax=cbar_ax, label=r'$\log \mathrm{(age \: / \: yr)}$')
         #self.ax7.legend(loc=3, fontsize="13")
         

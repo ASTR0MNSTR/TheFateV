@@ -97,7 +97,6 @@ class Main:
         }
         
         MagPhys = pd.read_csv(MagPhys_path, sep="\s+", engine='python', usecols=MP_cols.values(), names=MP_cols.keys())
-        print(MagPhys)
         
         Sersic_path = r'E:\databases\SersicCatSDSS'
         S_cols = {
@@ -111,7 +110,12 @@ class Main:
         Result1 = pd.merge(DirectSummation, MagPhys, how="left", on='CATAID')
         FinalDataFrame = pd.merge(Result1, Sersic, how="left", on='CATAID')
         FinalDataFrame.fillna(-99999.0, inplace=True)
+        FinalDataFrame.RA = FinalDataFrame.RA.round(5)
+        FinalDataFrame.DEC = FinalDataFrame.DEC.round(5)
+        FinalDataFrame.Z = FinalDataFrame.Z.round(8)
         FinalDataFrame.to_csv(self.out_path, index=False)
+        
+        FinalDataFrame.info()
         print('Finished merge!')
         
     # def extract(self):
@@ -210,9 +214,10 @@ class Main:
     #         'theor_lines' : 'sfrsm'
     #     })
 
-    def read(self):
+    def read_process(self):
         DataFrame = pd.read_csv(self.out_path, sep=',')
         MS_flag = MS_flagging(DataFrame['SFR_0_1Gyr_percentile50'], DataFrame['mass_stellar_percentile50'], DataFrame['Z'])
+        print('deltaMS calculated!')
         BPTs = []
         WHANs = []
         LAGNs = []
@@ -251,13 +256,14 @@ class Main:
             LAGNs.append(LAGN)
             LAGN_ers.append(LAGN_er)
         
+        print('Spectra processing finished!')
         
         NewFrameDict = {
             'CATAID' : DataFrame['CATAID'],
             'RA' : DataFrame['RA'],
             'DEC' : DataFrame['DEC'],
             'Z' : DataFrame['Z'],
-            'bMS/MS' : MS_flag,
+            'deltaMS' : MS_flag,
             'BPT' : BPTs,
             'WHAN' : WHANs, 
             'GALINDEX_r' : DataFrame['GALINDEX_r'],
@@ -271,10 +277,25 @@ class Main:
         }
         
         NewDataFrame = pd.DataFrame(NewFrameDict)
-        NewDataFrame = NewDataFrame.round(decimals=8)
+        
+        #rounding part
+        # NewDataFrame = NewDataFrame.round(decimals=8)
+        # NewDataFrame.RA = NewDataFrame.RA.round(5)
+        # NewDataFrame.DEC = NewDataFrame.DEC.round(5)
+        # NewDataFrame.Z = NewDataFrame.Z.round(8)
+        NewDataFrame.deltaMS = NewDataFrame.deltaMS.round(3)
+        NewDataFrame.GALINDEX_r = NewDataFrame.GALINDEX_r.round(4)
+        NewDataFrame.GALINDEXERR_r = NewDataFrame.GALINDEXERR_r.round(4)
+        NewDataFrame.outflow_agn_on_percentile16 = NewDataFrame.outflow_agn_on_percentile16.round(3)
+        NewDataFrame.outflow_agn_on_percentile50 = NewDataFrame.outflow_agn_on_percentile50.round(3)
+        NewDataFrame.outflow_agn_on_percentile84 = NewDataFrame.outflow_agn_on_percentile84.round(3)
+        NewDataFrame.outflow_agn_off_percentile16 = NewDataFrame.outflow_agn_off_percentile16.round(3)
+        NewDataFrame.outflow_agn_off_percentile50 = NewDataFrame.outflow_agn_off_percentile50.round(3)
+        NewDataFrame.outflow_agn_off_percentile84 = NewDataFrame.outflow_agn_off_percentile84.round(3)
+        
         NewDataFrame.to_csv(self.final_out_path, index=False)
         
 if __name__ == '__main__':
     obj = Main(r'E:/LICENSE/ProgsData/main/GAMAv3.txt')
-    # obj.completely_different_extraction()
-    obj.read()
+    obj.completely_different_extraction()
+    obj.read_process()
