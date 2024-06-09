@@ -31,6 +31,19 @@ color_dict_BPT ={
             'NOEL' : ['silver', 9, '.'],
         }
 
+colors_BPT = {
+    'AGNXY' : 'midnightblue', 
+    'AGNX' : 'dodgerblue',
+    'AGNY' : 'black',
+    'UNCXY' : 'springgreen',
+    'UNCX' : 'darkgreen',
+    'UNCY' : 'limegreen', 
+    'SFGXY' : 'mediumvioletred', 
+    'SFGX' : 'crimson',
+    'SFGY' : 'fuchsia',
+    'NOEL' : 'silver',
+    }
+
 color_dict_leg ={
             'AGN' : ['midnightblue', 20, 'o'],
             'UNC' : ['springgreen', 20, 'o'],

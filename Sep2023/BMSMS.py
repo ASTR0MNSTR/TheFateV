@@ -85,6 +85,7 @@ class Main:
                     print('AKHRANA, ATMENA')
         
         print(keys, self.total1)
+        print([sAGN, wAGN, UNC, SF, ELR, LLR, NER])
         
         return [sAGN, wAGN, UNC, SF, ELR, LLR, NER]
 
@@ -131,6 +132,7 @@ class Main:
                     print('AKHRANA, ATMENA')
         
         print(keys, self.total2)
+        print([AGN, AGNX, UNC, UNCX, UNCY, SF, SFX, SFY, NOEL])
         return [AGN, AGNX, UNC, UNCX, UNCY, SF, SFX, SFY, NOEL]
 
     
