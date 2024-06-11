@@ -5,3 +5,6 @@ def flux_to_color(s_w1, s_w2):
 
 def flux_to_mag(s_w, zero_mag):
     return 2.5*np.log10(zero_mag/s_w)
+
+def my_autopct(pct):
+    return (f'{pct:.2f}%') if pct > 5 else ''
