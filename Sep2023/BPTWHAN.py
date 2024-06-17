@@ -779,7 +779,7 @@ class Main(hp):
         self.fig.colorbar(self.s_m, cax=cbar_ax, label=r'$\log \mathrm{(age \: / \: yr)}$')
         #self.ax7.legend(loc=3, fontsize="13")
         
-        self.fig.savefig('./FIGURES_IN_PAPER/BPT_WHAN.pdf')
+        self.fig.savefig('./FIGURES_IN_PAPER/BPT_WHAN.pdf', dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         #self.fig.savefig('WHAN.pdf')
 
         # plt.show()

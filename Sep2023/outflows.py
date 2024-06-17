@@ -204,7 +204,7 @@ class Main:
             ax3, ax4
         )
         
-        self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW.pdf')
+        self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW.pdf', dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
     
     def plotting_init(self, pars, ax1, ax2):
         Main.plotter(self, [ax1, ax2], pars['X'], pars['Y'], pars['Y_up'], pars['Y_down'], 'BPT', 'WHAN', pars['bids_chain'], pars['legend'])

@@ -54,7 +54,7 @@ class Main:
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
-        fig.savefig('./FIGURES_IN_PAPER/APERTURE_DIAG.pdf')
+        fig.savefig('./FIGURES_IN_PAPER/APERTURE_DIAG.pdf', dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         plt.show()
 
     def sorting_forWHAN(self, keys):

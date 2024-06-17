@@ -9,12 +9,12 @@ cd_WHAN = {
         }
 
 colors_WHAN = {
+    'sAGN' : 'midnightblue',
+    'wAGN' : 'blue',
     'UNC' : 'springgreen',
+    'SFG' : 'mediumvioletred',
     'LLR' : 'maroon',
     'ELR' : 'sandybrown',
-    'SFG' : 'mediumvioletred',
-    'wAGN' : 'blue',
-    'sAGN' : 'midnightblue',
     'NER' : 'chocolate'
 }
 
@@ -34,7 +34,7 @@ color_dict_BPT ={
 colors_BPT = {
     'AGNXY' : 'midnightblue', 
     'AGNX' : 'dodgerblue',
-    'AGNY' : 'black',
+    # 'AGNY' : 'black',
     'UNCXY' : 'springgreen',
     'UNCX' : 'darkgreen',
     'UNCY' : 'limegreen', 

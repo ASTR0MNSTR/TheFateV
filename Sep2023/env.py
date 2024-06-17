@@ -130,7 +130,7 @@ class Main(hp):
         ax1, ax2 = Main.plotter(self, bids_mass, [ax1, ax2], 0, 0)
         bids_age = [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
         ax3, ax4 = Main.plotter(self, bids_age, [ax3, ax4], 1, 1)
-        self.fig1.savefig('./FIGURES_IN_PAPER/SurfaceDensity.pdf')
+        self.fig1.savefig('./FIGURES_IN_PAPER/SurfaceDensity.pdf', dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         #plt.show()
 
     def plotter(self, bids, axes, xkey, legend_key):
