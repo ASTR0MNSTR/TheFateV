@@ -138,8 +138,8 @@ class Main:
     
     def histo(self, figure, keys, kwarg):
         size = 0.45
-        merged_WHAN = merging_WHAN(self, Main.sorting_forWHAN(self, keys))
-        merged_BPT = merging_BPT(self, Main.sorting_forBPT(self, keys))
+        merged_WHAN = merging_WHAN(Main.sorting_forWHAN(self, keys))
+        merged_BPT = merging_BPT(Main.sorting_forBPT(self, keys))
         if kwarg == 'WHAN':
             patches, texts, autotexts = figure.pie(Main.sorting_forWHAN(self, keys), radius=1, labels=my_level_list(Main.sorting_forWHAN(self, keys), 'WHAN'), colors=self.WHAN_colors, autopct=my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
             [autotext.set_color('black') for autotext in autotexts]
