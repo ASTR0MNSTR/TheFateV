@@ -146,14 +146,14 @@ class Main:
             autotexts[0].set_color('white')
             autotexts[1].set_color('white')
             autotexts[-2].set_color('white')
-            figure.pie(merged_WHAN, radius=1-size, colors=self.WHAN_colors_merged, autopct=short_WHAN_in(merging_WHAN(self, Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
+            figure.pie(merged_WHAN, radius=1-size, colors=self.WHAN_colors_merged, autopct=short_WHAN_in(merging_WHAN(Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
             figure.set(aspect='equal')
         elif kwarg == 'BPT':
             patches, texts, autotexts = figure.pie(Main.sorting_forBPT(self, keys), radius=1, labels=my_level_list(Main.sorting_forBPT(self, keys), 'BPT'), colors=self.BPT_colors, autopct=my_autopct_BPT, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
             [autotext.set_color('black') for autotext in autotexts]
             autotexts[0].set_color('white')
             autotexts[3].set_color('white')
-            figure.pie(merged_BPT, radius=1-size, colors=self.BPT_colors_merged, autopct=short_BPT_in(merging_BPT(self, Main.sorting_forBPT(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
+            figure.pie(merged_BPT, radius=1-size, colors=self.BPT_colors_merged, autopct=short_BPT_in(merging_BPT(Main.sorting_forBPT(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
             figure.set(aspect='equal')
             
             

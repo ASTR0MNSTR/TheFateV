@@ -28,7 +28,7 @@ def my_autopct_BPT(pct):
 def my_autopct_WHAN(pct):
     return (f'{pct:.2f}%') if pct > 5 else ''
 
-def merging_BPT(self, list_obj):
+def merging_BPT(list_obj):
     AGNXY, AGNX, UNCXY, UNCX, UNCY, SFXY, SFX, SFY, NOEL = list_obj
         
     AGNs = [AGNXY, AGNX]
@@ -46,7 +46,7 @@ def merging_BPT(self, list_obj):
 
     return results
     
-def merging_WHAN(self, list_obj):
+def merging_WHAN(list_obj):
 
     sAGN, wAGN, UNC, SF, ELR, LLR, RG = list_obj
 
@@ -88,9 +88,13 @@ def short_BPT_in(data):
 #PHYSICS
 
 def adjusting_plotting_pars():
-    plt.rcParams['font.size'] = 17
-    mpl.rcParams['xtick.labelsize'] = 17
-    mpl.rcParams['ytick.labelsize'] = 17 
+    plt.rcParams['font.size'] = 30
+    mpl.rcParams['xtick.labelsize'] = 30
+    mpl.rcParams['ytick.labelsize'] = 30 
+    mpl.rcParams['axes.labelsize'] = 30
+    mpl.rcParams['ytick.major.size'] = 20
+    mpl.rcParams['xtick.major.size'] = 20
+    print(mpl.rcParams.keys())
     
 def adjusting_figure_size(figw, figh, l, r, b, t):
     # plt.subplots_adjust(left=1/figw, right=1-0.2/figw, bottom=0.7/figh, top=1-0.2/figh)
