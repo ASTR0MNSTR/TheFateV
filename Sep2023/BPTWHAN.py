@@ -525,16 +525,16 @@ class Main(hp):
             ax.set_ylim(-1.2, 1.5) 
             X_1 = np.arange(-4, 0.4, 0.01)
             X_111 = np.arange(-4, 0, 0.01)
-            X_11 = np.arange(-0.45, 1.5, 0.01)
+            X_11 = np.arange(-0.2, 1.5, 0.01)
             ax.plot(X_1, (0.61/(X_1 - 0.47)) + 1.19,
-                      c='k')  # Kewley, 2001
+                      c='k', linewidth=3)  # Kewley, 2001
             ax.plot(X_111, (0.61/(X_111 - 0.05)) + 1.3,
-                      c='k', linestyle='dashed')  # Kauffman, 2003
+                      c='k', linestyle='dashed', linewidth=3)  # Kauffman, 2003
             # https://adsabs.harvard.edu/full/2003MNRAS.346.1055K
-            ax.plot(X_11, 1.01*X_11 + 0.48, c='r', linestyle='dotted')
+            ax.plot(X_11, 1.01*X_11 + 0.48, c='black', linestyle='dotted', linewidth=3)
             ax.text(-1.5, 1.2, 'AGN')
             ax.text(0, -1, 'UNC', ha='center', va='center')
-            ax.text(-1.5, -0.5, 'SF')
+            ax.text(-1.5, 0.1, 'SF')
             ax.text(0.5, -0.5, 'LINER')
             ax.set_box_aspect(1)
 
@@ -604,12 +604,12 @@ class Main(hp):
                 if len(pair_x_flags) == 0 and len(pair_y_flags) == 0:
                     try:
                         self.ax4.scatter(
-                            x, y, s=1.5, color=self.color_dict[AGN][0], alpha=1)
+                            x, y, s=5, color=self.color_dict[AGN][0], alpha=1)
                     #self.ax4.scatter(x, y, s=1.5, color=self.s_m.to_rgba(age), alpha=1)
-                        self.ax5.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker =self.cd_WHAN[SC_WHAN][2], alpha=1)
+                        self.ax5.scatter(x, y, s=5, color=self.cd_WHAN[SC_WHAN][0], alpha=1)
                         #self.ax4.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker =self.cd_WHAN[SC_WHAN][2], alpha=0.5)
                         #self.ax5.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.s_m.to_rgba(age), marker =self.cd_WHAN[SC_WHAN][2], alpha=0.5)
-                        self.ax_med_BPT.scatter(x, y, s=1.5, color=self.s_m.to_rgba(age), alpha=0.3)
+                        self.ax_med_BPT.scatter(x, y, s=5, color=self.s_m.to_rgba(age), alpha=0.3)
                         k += 1
                     except KeyError:
                         pass
@@ -679,19 +679,19 @@ class Main(hp):
             ax.set_yticks(np.arange(-2, 3.0, 0.5))    
             ax.set_xlim([-1.9, 1.2])
             ax.set_ylim([-2, 2.7])
-            ax.axhline(y = 0.47712, color = 'black', linestyle='dashed')
-            ax.axhline(y = -0.301, color = 'black', linestyle='dotted')
+            ax.axhline(y = 0.47712, color = 'black', linestyle='dashed', linewidth=3)
+            ax.axhline(y = -0.301, color = 'black', linestyle='dotted', linewidth=3)
             ax.text(0.8, 0, 'ELR')
             ax.text(0.8, -1.5, 'LLR')
 
             X_wAGN = np.arange(-0.4, 2.5, 0.01)
-            ax.plot(X_wAGN, 0.77815125+X_wAGN*0, 'black')
+            ax.plot(X_wAGN, 0.77815125+X_wAGN*0, 'black', linewidth=3)
             ax.text(-1.5, 2, 'SF')
             ax.text(0.6, 0.5, 'wAGN')
             ax.text(0.6, 2, 'sAGN')
 
             Y_sAGN = np.arange(0.47712, 3, 0.01)
-            ax.plot(-0.4+Y_sAGN*0, Y_sAGN, 'black')
+            ax.plot(-0.4+Y_sAGN*0, Y_sAGN, 'black', linewidth=3)
             ax.set_xlabel(r"$\log \mathrm{([NII]/H\alpha)}$")
             ax.set_box_aspect(1)
         
@@ -734,9 +734,9 @@ class Main(hp):
                 AGE.append(age)
                 AGN_flags.append(SC_WHAN)
                 if len(pair_x_flags) == 0 and len(pair_y_flags) == 0:
-                    self.ax6.scatter(x, y, s=self.color_dict[AGN][1], color=self.color_dict[AGN][0], alpha=1, marker=self.color_dict[AGN][2])
-                    self.ax_med_WHAN.scatter(x, y, s=self.color_dict[AGN][1], color=self.s_m.to_rgba(age), alpha=0.3, marker=self.color_dict[AGN][2])
-                    self.ax7.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=1)
+                    self.ax6.scatter(x, y, s=30, color=self.color_dict[AGN][0], alpha=1, marker=self.color_dict[AGN][2])
+                    self.ax_med_WHAN.scatter(x, y, s=30, color=self.s_m.to_rgba(age), alpha=0.3, marker=self.color_dict[AGN][2])
+                    self.ax7.scatter(x, y, s=30, color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=1)
                     #self.ax6.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=0.5)
                     #self.ax7.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.s_m.to_rgba(age), marker = '.', alpha=0.5)
             
@@ -756,14 +756,14 @@ class Main(hp):
             self.ax_med_WHAN.scatter(-99, -99, alpha=1, color = WHAN_color_plt[key][0], s = WHAN_color_plt[key][1], marker= WHAN_color_plt[key][2], label=key)
 
         for key in self.cd_WHAN_leg.keys():
-            self.ax7.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = self.cd_WHAN_leg[key][1], label=key)
+            self.ax7.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = 30, label=key)
 
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGNXY', s = 30, marker='o')
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'dodgerblue', label='AGNX', s = 30, marker='o')
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNCXY', s = 30, marker='o')
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'darkgreen', label='UNCX', s = 30, marker='o')
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SFGXY', s = 30, marker='o')
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'crimson', label='SFGX', s = 30, marker='o')
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGNXY', s = 25)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'dodgerblue', label='AGNX', s = 25)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNCXY', s = 25)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'darkgreen', label='UNCX', s = 25)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SFGXY', s = 25)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'crimson', label='SFGX', s = 25)
         self.ax6.legend(loc=3)
         self.ax7.legend(loc=3)
         self.ax_med_WHAN.legend(loc=3)

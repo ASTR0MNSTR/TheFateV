@@ -7,9 +7,12 @@ from scipy import ndimage
 import matplotlib as mpl
 
 def adjusting_plotting_pars():
-    plt.rcParams['font.size'] = 17
-    mpl.rcParams['xtick.labelsize'] = 17
-    mpl.rcParams['ytick.labelsize'] = 17 
+    plt.rcParams['font.size'] = 20
+    mpl.rcParams['xtick.labelsize'] = 20
+    mpl.rcParams['ytick.labelsize'] = 20 
+    mpl.rcParams['axes.labelsize'] = 20
+    mpl.rcParams['ytick.major.size'] = 15
+    mpl.rcParams['xtick.major.size'] = 15
     
 def adjusting_figure_size(figw, figh, l, r, b, t):
     # plt.subplots_adjust(left=1/figw, right=1-0.2/figw, bottom=0.7/figh, top=1-0.2/figh)
@@ -230,7 +233,7 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
             elif WHAN_or_BPT == 'WHAN':
                 list_names = list_names_WHAN
             axis.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names[j])
-        axis.legend(loc=3, fontsize=14)
+        axis.legend(loc=3, fontsize=17)
     
     return axis   
 
@@ -318,9 +321,7 @@ def bin_stats(pars_dict):
     
     DataFrame = pd.read_csv(pars_dict['input_path'])
     
-    adjusting_plotting_pars()
-    
-    gs_top = plt.GridSpec(6, 1, hspace=0.1, wspace=0.1)
+    gs_top = plt.GridSpec(6, 1, hspace=0, wspace=0)
     fig = plt.figure(figsize=(12, 18), tight_layout=True)
 
     ax1 = fig.add_subplot(gs_top[0,0])
@@ -342,8 +343,8 @@ def bin_stats(pars_dict):
 
     plotter_histo_WHAN(ax6, [0,1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
 
-    ax2.legend(fontsize="10", loc='center right')
-    ax5.legend(fontsize="13", loc='center right')
+    ax2.legend(fontsize="13", loc='center right')
+    ax5.legend(fontsize="15", loc='center right')
 
     top_axes = [ax2, ax3, ax5]
     for item in top_axes:
@@ -362,7 +363,7 @@ def bin_stats(pars_dict):
     # ax6.set_xticks([r for r in range(6)], ['<0.05', '0.05-0.10', '0.10-0.15', '0.15-0.20', '0.20-0.25', '0.25-0.33'])
     ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'], fontsize=17)
 
-    plt.savefig(pars_dict['save_path'], dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+    fig.savefig(pars_dict['save_path'], dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
 
 def empty():
     return [0, 0, 0, 0, 0, 0, 0]
@@ -461,7 +462,7 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         bar1 = axes.bar(br1, AGN_perc, color ='midnightblue', width = barWidth,
         edgecolor ='grey', label ='AGNXY')
         axes.bar(br1, AGNX_perc, color ='dodgerblue', width = barWidth, edgecolor ='grey', label ='AGNX')
-        axes.bar(br1, AGNY_perc, color ='aqua', width = barWidth, edgecolor ='grey', label ='AGNY')
+        # axes.bar(br1, AGNY_perc, color ='aqua', width = barWidth, edgecolor ='grey', label ='AGNY')
         axes.bar(br1, UNC_perc, color ='springgreen', width = barWidth, edgecolor ='grey', label ='UNCXY')
         axes.bar(br1, UNCX_perc, color ='darkgreen', width = barWidth, edgecolor ='grey', label ='UNCX')
         axes.bar(br1, UNCY_perc, color ='limegreen', width = barWidth, edgecolor ='grey', label ='UNCY')

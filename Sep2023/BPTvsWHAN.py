@@ -3,40 +3,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from __plt__ import *
 
+def plotting_pars():
+    plt.rcParams['font.size'] = 13
+
 class Main:
-
-    def merging_WHAN(self, list_obj):
-
-        sAGN, wAGN, UNC, SF, ELR, LLR, RG = list_obj
-
-        AGN = sAGN + wAGN
-        UNC = UNC
-        SF = SF
-        ret = ELR + LLR + RG
-
-        probs = [0, 0]
-        if sAGN == 0 or wAGN == 0:
-            probs[0] = 1
-        if ELR == ret or RG == ret or LLR == ret:
-            probs[1] = 1
-
-        return [AGN, UNC, SF, ret], probs
-
-    def my_autopct(pct):
-        return (f'{pct:.2f}%') if pct > 5 else ''
     
-    def short_WHAN_in(data):
-        def my_format(pct):
-            total = sum(data[0])
-            val = int(round(pct*total/100.0))
-            if data[0][1] == int(val) or data[0][2] == int(val) or pct == 100 or pct < 5:
-                return ''
-            elif (data[0][0] == int(val) and data[1][0] == 1) or (data[0][3] == int(val) and data[1][1] == 1):
-                return ''
-            else:
-                return (f'{pct:.2f}%')
-        return my_format
-
     def __init__(self, file):
         self.file = file
         self.dataframe = None
@@ -59,6 +30,7 @@ class Main:
 
         fig, axs = plt.subplots(4, 3, figsize=(12, 16), tight_layout=True)
         plt.subplots_adjust(wspace=0, hspace=0)
+        plotting_pars()
         # adjusting_plotting_pars()
 
         # [0, 0]
@@ -67,14 +39,9 @@ class Main:
 
         Main.histo(self, axs[0, 0], ['AGNX'])
         Main.histo(self, axs[0, 1], ['AGNXY'])
-        size = 0.45
-        keys = ['AGNXY', 'AGNX', 'AGNY']
-        axs[0, 2].pie(Main.sorting_forWHAN(self, keys), radius=1, labels=self.WHAN_labels, colors=self.WHAN_colors, autopct=Main.my_autopct, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
-        axs[0, 2].pie(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))[0], radius=1-size, colors=self.WHAN_colors_merged, autopct=Main.short_WHAN_in(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
-        axs[0, 2].set(aspect='equal')
+        Main.histo(self, axs[0, 2], ['AGNXY', 'AGNX'])
         
         #axs[0, 2].legend(title='WHAN classes:', loc="best", fontsize="13")
-        axs[0, 2].set(aspect='equal')
 
 ######################################
 
@@ -95,10 +62,10 @@ class Main:
         axs[0, 0].set_title(r"$\log \mathrm{([NII]/H\alpha)} \: \mathrm{(X)}$")
         axs[0, 1].set_title(r'$\log \mathrm{([NII]/H\alpha)} \: & \: \log \mathrm{([OIII]/H\beta)} \: \mathrm{(XY)}$')
         axs[0, 2].set_title('All objects (X, Y, XY)')
-        axs[0, 0].set_ylabel('AGN (BPT)')
-        axs[1, 0].set_ylabel('UNC (BPT)')
-        axs[2, 0].set_ylabel('SFG (BPT)')
-        axs[3, 2].set_ylabel('NOEL (BPT)')
+        axs[0, 0].set_ylabel('AGN (BPT)', fontsize=14)
+        axs[1, 0].set_ylabel('UNC (BPT)', fontsize=14)
+        axs[2, 0].set_ylabel('SFG (BPT)', fontsize=14)
+        axs[3, 2].set_ylabel('NOEL (BPT)', fontsize=14)
         
         axs[3, 0].remove()
         axs[3, 1].remove()
@@ -146,22 +113,25 @@ class Main:
         list = []
         WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SFG', 'ELR', 'LLR', 'NER']
         for i in range(len(data)):
-            if (data[i]*100/np.sum(data)) > 2 : #2%
+            if (data[i]*100/np.sum(data)) > 3 : #2%
                 list.append(WHAN_labels[i])
             else:
                 list.append('')
         return list
 
     def histo(self, figure, keys):
+        merged_WHAN = merging_WHAN(Main.sorting_forWHAN(self, keys))
         size = 0.45
-        patches, texts, autotexts = figure.pie(Main.sorting_forWHAN(self, keys), radius=1, labels=Main.my_level_list(Main.sorting_forWHAN(self, keys)), colors=self.WHAN_colors, autopct=Main.my_autopct, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+        patches, texts, autotexts = figure.pie(Main.sorting_forWHAN(self, keys), radius=1, labels=my_level_list(Main.sorting_forWHAN(self, keys), 'WHAN'), colors=self.WHAN_colors, autopct=my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.75, labeldistance=1.08)
         [autotext.set_color('black') for autotext in autotexts]
         autotexts[0].set_color('white')
         autotexts[1].set_color('white')
         autotexts[-2].set_color('white')
-        figure.pie(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))[0], radius=1-size, colors=self.WHAN_colors_merged, autopct=Main.short_WHAN_in(Main.merging_WHAN(self, Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
+        # figure.pie(merged_WHAN, radius=1-size, colors=self.WHAN_colors_merged, autopct=short_WHAN_in(merging_WHAN(Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
+        figure.pie(merged_WHAN, radius=1-size, colors=self.WHAN_colors_merged, wedgeprops=dict(width=size, edgecolor='w'))
         figure.set(aspect='equal')
-
+        
+        
 if __name__ == '__main__':
     obj = Main('GAMA_ETG_OLA.csv')
     obj.reading()

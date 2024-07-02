@@ -8,6 +8,80 @@ import matplotlib as mpl
 
 #ROUND HISTOS
 
+def plotting_pars():
+    plt.rcParams['font.size'] = 13
+
+def plotting_round_histo_BPT(axes, KeySeries):
+    size = 0.5
+    BPT_labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFGXY', 'SFGX', 'SFGY', 'NOEL']
+    BPT_colors = ['midnightblue', 'dodgerblue', 'springgreen', 'darkgreen', 'limegreen', 'mediumvioletred', 'crimson', 'fuchsia', 'silver']
+    BPT_colors_merged = ['royalblue', 'lime', 'hotpink', 'w']
+
+
+    dict_count = {
+    'AGNXY' : 0,
+    'AGNX' : 0,
+    'UNCXY' : 0,
+    'UNCX' : 0,
+    'UNCY' : 0,
+    'SFGXY' : 0,
+    'SFGX' : 0,
+    'SFGY' : 0,
+    'NOEL' : 0
+    }
+
+    for i in range(len(KeySeries)):
+        dict_count[KeySeries[i]] += 1
+    
+    vals = []
+    for key in dict_count.keys():
+        vals.append(dict_count[key])
+
+    merged_BPT = merging_BPT(vals)
+
+    patches, texts, autotexts = axes.pie(vals, radius=1, labels=my_level_list(vals, 'BPT'), colors=BPT_colors, autopct=my_autopct_BPT, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+    [autotext.set_color('black') for autotext in autotexts]
+    autotexts[0].set_color('white')
+    autotexts[3].set_color('white')
+    # axes.pie(merged_BPT, radius=1-size, colors=BPT_colors_merged, autopct=short_BPT_in(merged_BPT), wedgeprops=dict(width=size, edgecolor='w'))
+    axes.pie(merged_BPT, radius=1-size, colors=BPT_colors_merged, wedgeprops=dict(width=size, edgecolor='w'))
+    axes.set(aspect='equal')
+    return axes
+
+def plotting_round_histo_WHAN(axes, KeySeries):
+    WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SFG', 'ELR', 'LLR', 'NER']
+    WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
+    WHAN_colors_merged = ['royalblue', 'lime', 'hotpink', 'brown']
+    
+    size = 0.5
+    dict_count = {
+    'sAGN' : 0,
+    'wAGN' : 0,
+    'UNC' : 0,
+    'SFG' : 0,
+    'ELR' : 0,
+    'LLR' : 0,
+    'NER' : 0,
+    }
+
+    for i in range(len(KeySeries)):
+        dict_count[KeySeries[i]] += 1
+    
+    vals = []
+    for key in dict_count.keys():
+        vals.append(dict_count[key])
+        
+    merged_WHAN = merging_WHAN(vals)
+    patches, texts, autotexts = axes.pie(vals, radius=1, labels=my_level_list(vals, 'WHAN'), colors=WHAN_colors, autopct=my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+    [autotext.set_color('black') for autotext in autotexts]
+    autotexts[0].set_color('white')
+    autotexts[1].set_color('white')
+    autotexts[-2].set_color('white')
+    # axes.pie(merged_WHAN, radius=1-size, colors=WHAN_colors_merged, autopct=short_WHAN_in(merged_WHAN), wedgeprops=dict(width=size, edgecolor='w'))
+    axes.pie(merged_WHAN, radius=1-size, colors=WHAN_colors_merged, wedgeprops=dict(width=size, edgecolor='w'))
+    axes.set(aspect='equal')
+    return axes
+
 def my_level_list(data, kwarg):
     list = []
     if kwarg == 'WHAN':
@@ -16,7 +90,9 @@ def my_level_list(data, kwarg):
         labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFGXY', 'SFGX', 'SFGY', 'NOEL']
 
     for i in range(len(data)):
-        if (data[i]*100/np.sum(data)) > 5: #2%
+        if ((data[i]*100/np.sum(data)) > 30.55 and data[i]*100/np.sum(data) < 30.57): #2%
+            list.append('')
+        elif (data[i]*100/np.sum(data)) > 2: #2%
             list.append(labels[i])
         else:
             list.append('')
@@ -69,7 +145,7 @@ def short_WHAN_in(data):
     def my_format(pct):
         total = sum(data)
         val = int(round(pct*total/100.0))
-        if data[1] == int(val) or data[2] == int(val) or pct == 100 or pct < 5:
+        if data[0] == int(val) or data[1] == int(val) or data[2] == int(val) or pct == 100 or pct < 5:
             return ''
         else:
             return (f'{pct:.2f}%')
@@ -79,7 +155,7 @@ def short_BPT_in(data):
     def my_format(pct):
         total = sum(data)
         val = int(round(pct*total/100.0))
-        if data[3] == int(val) or pct == 100 or pct < 5:
+        if data[0] == int(val) or data[3] == int(val) or pct == 100 or pct < 5:
             return ''
         else:
             return (f'{pct:.2f}%')
@@ -166,10 +242,10 @@ def plotting(pars_dict):
     #     pass
     
     if 'err' in pars_dict.keys():
-        # ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']] + DataFrame[pars_dict['err']], DataFrame[pars_dict['y']] - DataFrame[pars_dict['err']], DataFrame['BPT'], bids, 'BPT', True)
-        ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame['BPT'], bids, 'BPT', pars_dict['legend'])
-        # ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']] + DataFrame[pars_dict['err']], DataFrame[pars_dict['y']] - DataFrame[pars_dict['err']], DataFrame['WHAN'], bids, 'WHAN', True)
-        ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame['WHAN'], bids, 'WHAN', pars_dict['legend'])
+        ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']] + DataFrame[pars_dict['err']], DataFrame[pars_dict['y']] - DataFrame[pars_dict['err']], DataFrame['BPT'], bids, 'BPT', True)
+        # ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame['BPT'], bids, 'BPT', pars_dict['legend'])
+        ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']] + DataFrame[pars_dict['err']], DataFrame[pars_dict['y']] - DataFrame[pars_dict['err']], DataFrame['WHAN'], bids, 'WHAN', True)
+        # ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame[pars_dict['y']], DataFrame['WHAN'], bids, 'WHAN', pars_dict['legend'])
     else:
         ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['BPT'], bids, 'BPT', pars_dict['legend'])
         ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['WHAN'], bids, 'WHAN', pars_dict['legend'])

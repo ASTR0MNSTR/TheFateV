@@ -149,7 +149,8 @@ class Main:
         
         gs_top = plt.GridSpec(2, 2, wspace=0, hspace=0)
         self.fig1 = plt.figure(figsize=(12, 12))
-        adjusting_figure_size(12, 12, 1, 0.2, 0.7, 0.2)
+        # adjusting_figure_size(12, 12, 1, 0.2, 0.7, 0.2)
+        adjusting_plotting_pars()
         
         ax1 = self.fig1.add_subplot(gs_top[0,0])
         ax2 = self.fig1.add_subplot(gs_top[0,1], sharey=ax1)
@@ -291,11 +292,11 @@ class Main:
         if legend == True:
             for j, item in enumerate(class_list_BPT):
                 axes[0].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
-            axes[0].legend(loc=3, fontsize=17)
+            axes[0].legend(loc=3, fontsize=15)
 
             for j, item in enumerate(class_list_WHAN):
                 axes[1].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
-            axes[1].legend(loc=3, fontsize=17)
+            axes[1].legend(loc=3, fontsize=15)
         
         
         # for ax in axes:

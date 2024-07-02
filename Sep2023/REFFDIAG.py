@@ -4,6 +4,9 @@ import numpy as np
 from __plt__ import *
 from __reader__ import *
 
+def plotting_pars():
+    plt.rcParams['font.size'] = 13
+
 class Main:
 
     def __init__(self, file):
@@ -33,6 +36,7 @@ class Main:
         fig, axs = plt.subplots(2, 3, figsize=(12, 8), tight_layout=True)
         plt.subplots_adjust(wspace=0, hspace=0)
         # adjusting_plotting_pars()
+        plotting_pars()
 
         ax1 = axs[0, 0]
         ax3 = axs[0, 1]
@@ -145,23 +149,25 @@ class Main:
         return [AGN, AGNX, UNC, UNCX, UNCY, SF, SFX, SFY, NOEL]
     
     def histo(self, figure, keys, kwarg):
-        size = 0.45
-        merged_WHAN = merging_WHAN(self, Main.sorting_forWHAN(self, keys))
-        merged_BPT = merging_BPT(self, Main.sorting_forBPT(self, keys))
+        size = 0.5
+        merged_WHAN = merging_WHAN(Main.sorting_forWHAN(self, keys))
+        merged_BPT = merging_BPT(Main.sorting_forBPT(self, keys))
         if kwarg == 'WHAN':
-            patches, texts, autotexts = figure.pie(Main.sorting_forWHAN(self, keys), radius=1, labels=my_level_list(Main.sorting_forWHAN(self, keys), 'WHAN'), colors=self.WHAN_colors, autopct=my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+            patches, texts, autotexts = figure.pie(Main.sorting_forWHAN(self, keys), radius=1, labels=my_level_list(Main.sorting_forWHAN(self, keys), 'WHAN'), colors=self.WHAN_colors, autopct=my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.75, labeldistance=1.1)
             [autotext.set_color('black') for autotext in autotexts]
             autotexts[0].set_color('white')
             autotexts[1].set_color('white')
             autotexts[-2].set_color('white')
-            figure.pie(merged_WHAN, radius=1-size, colors=self.WHAN_colors_merged, autopct=short_WHAN_in(merging_WHAN(self, Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
+            # figure.pie(merged_WHAN, radius=1-size, colors=self.WHAN_colors_merged, autopct=short_WHAN_in(merging_WHAN(Main.sorting_forWHAN(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
+            figure.pie(merged_WHAN, radius=1-size, colors=self.WHAN_colors_merged, wedgeprops=dict(width=size, edgecolor='w'))
             figure.set(aspect='equal')
         elif kwarg == 'BPT':
-            patches, texts, autotexts = figure.pie(Main.sorting_forBPT(self, keys), radius=1, labels=my_level_list(Main.sorting_forBPT(self, keys), 'BPT'), colors=self.BPT_colors, autopct=my_autopct_BPT, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.8, labeldistance=1.1)
+            patches, texts, autotexts = figure.pie(Main.sorting_forBPT(self, keys), radius=1, labels=my_level_list(Main.sorting_forBPT(self, keys), 'BPT'), colors=self.BPT_colors, autopct=my_autopct_BPT, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.75, labeldistance=1.1)
             [autotext.set_color('black') for autotext in autotexts]
             autotexts[0].set_color('white')
             autotexts[3].set_color('white')
-            figure.pie(merged_BPT, radius=1-size, colors=self.BPT_colors_merged, autopct=short_BPT_in(merging_BPT(self, Main.sorting_forBPT(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
+            # figure.pie(merged_BPT, radius=1-size, colors=self.BPT_colors_merged, autopct=short_BPT_in(merging_BPT(Main.sorting_forBPT(self, keys))), wedgeprops=dict(width=size, edgecolor='w'))
+            figure.pie(merged_BPT, radius=1-size, colors=self.BPT_colors_merged, wedgeprops=dict(width=size, edgecolor='w'))
             figure.set(aspect='equal')
 
 if __name__ == '__main__':

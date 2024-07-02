@@ -16,17 +16,17 @@ def my_level_list(data, kwarg):
         labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFGXY', 'SFGX', 'SFGY', 'NOEL']
 
     for i in range(len(data)):
-        if (data[i]*100/np.sum(data)) > 5: #2%
+        if (data[i]*100/np.sum(data)) > 3: #2%
             list.append(labels[i])
         else:
             list.append('')
     return list
 
 def my_autopct_BPT(pct):
-    return (f'{pct:.2f}%') if pct > 5 else ''
+    return (f'{pct:.2f}%') if pct > 3 else ''
     
 def my_autopct_WHAN(pct):
-    return (f'{pct:.2f}%') if pct > 5 else ''
+    return (f'{pct:.2f}%') if pct > 3 else ''
 
 def merging_BPT(list_obj):
     AGNXY, AGNX, UNCXY, UNCX, UNCY, SFXY, SFX, SFY, NOEL = list_obj
@@ -69,7 +69,7 @@ def short_WHAN_in(data):
     def my_format(pct):
         total = sum(data)
         val = int(round(pct*total/100.0))
-        if data[1] == int(val) or data[2] == int(val) or pct == 100 or pct < 5:
+        if data[1] == int(val) or data[2] == int(val) or pct == 100 or pct < 3:
             return ''
         else:
             return (f'{pct:.2f}%')
@@ -79,7 +79,7 @@ def short_BPT_in(data):
     def my_format(pct):
         total = sum(data)
         val = int(round(pct*total/100.0))
-        if data[3] == int(val) or pct == 100 or pct < 5:
+        if data[3] == int(val) or pct == 100 or pct < 3:
             return ''
         else:
             return (f'{pct:.2f}%')
@@ -88,13 +88,13 @@ def short_BPT_in(data):
 #PHYSICS
 
 def adjusting_plotting_pars():
-    plt.rcParams['font.size'] = 30
-    mpl.rcParams['xtick.labelsize'] = 30
-    mpl.rcParams['ytick.labelsize'] = 30 
-    mpl.rcParams['axes.labelsize'] = 30
-    mpl.rcParams['ytick.major.size'] = 20
-    mpl.rcParams['xtick.major.size'] = 20
-    print(mpl.rcParams.keys())
+    plt.rcParams['font.size'] = 20
+    mpl.rcParams['xtick.labelsize'] = 20
+    mpl.rcParams['ytick.labelsize'] = 20 
+    mpl.rcParams['axes.labelsize'] = 20
+    mpl.rcParams['ytick.major.size'] = 15
+    mpl.rcParams['xtick.major.size'] = 15
+    # print(mpl.rcParams.keys())
     
 def adjusting_figure_size(figw, figh, l, r, b, t):
     # plt.subplots_adjust(left=1/figw, right=1-0.2/figw, bottom=0.7/figh, top=1-0.2/figh)
@@ -172,7 +172,7 @@ def plotting(pars_dict):
         ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['BPT'], bids, 'BPT', True)
         ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['WHAN'], bids, 'WHAN', True)
 
-    fig1.savefig(pars_dict['save_path'])
+    fig1.savefig(pars_dict['save_path'], dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
 
 def contours(x , y , lev, sigma, bin1, bin2):
         #mode{‘reflect’, ‘constant’, ‘nearest’, ‘mirror’, ‘wrap’}, optional\n”,
@@ -308,7 +308,7 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
             elif WHAN_or_BPT == 'WHAN':
                 list_names = list_names_WHAN
             axis.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names[j])
-        axis.legend(loc=3)
+        axis.legend(loc=3, fontsize=15)
     
     return axis   
 

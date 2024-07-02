@@ -809,7 +809,7 @@ class Main(hp):
             ax.plot(X_111, (0.61/(X_111 - 0.05)) + 1.3,
                       c='k', linestyle='dashed', linewidth=5)  # Kauffman, 2003
             # https://adsabs.harvard.edu/full/2003MNRAS.346.1055K
-            ax.plot(X_11, 1.01*X_11 + 0.48, c='r', linestyle='dotted', linewidth=5)
+            ax.plot(X_11, 1.01*X_11 + 0.48, c='black', linestyle='dotted', linewidth=5)
             ax.text(-1.5, 1.2, 'AGN', weight='bold')
             ax.text(0, -1, 'UNC', ha='center', va='center', weight='bold')
             ax.text(-1.5, 0.1, 'SF', weight='bold')

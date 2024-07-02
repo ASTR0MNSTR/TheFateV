@@ -90,7 +90,7 @@ class Main(hp):
         gs_top = plt.GridSpec(2, 2, wspace=0, hspace=0.15)
         self.fig1 = plt.figure(figsize=(12, 12))
         adjusting_plotting_pars()
-        adjusting_figure_size(12, 12, 0.8, 0.2, 0.6, 0.2)
+        # adjusting_figure_size(12, 12, 0.8, 0.2, 0.6, 0.2)
         ax1 = self.fig1.add_subplot(gs_top[0,0])
         ax2 = self.fig1.add_subplot(gs_top[0,1], sharey=ax1)
         ax3 = self.fig1.add_subplot(gs_top[1,0])
@@ -104,17 +104,17 @@ class Main(hp):
         ax2.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in', labelsize=17)
         ax4.tick_params(top=True, labeltop=False, bottom=True, labelbottom=True, left=True, labelleft=False, right=True, labelright=False, direction='in', labelsize=17)
 
-        ax1.set_ylabel(r'$log(\sigma), \: Mpc^{-2}$')
+        ax1.set_ylabel(r'$\log \mathrm{(\sigma), \: Mpc^{-2}}$')
         ax1.set_xlabel(r'$\log \mathrm{(M_{stellar} \: / \: M_\odot)}$')
         ax2.set_xlabel(r'$\log \mathrm{(M_{stellar} \: / \: M_\odot)}$')
-        ax3.set_ylabel(r'$log(\sigma), \: Mpc^{-2}$')
+        ax3.set_ylabel(r'$\log \mathrm{(\sigma), \: Mpc^{-2}}$')
         ax3.set_xlabel(r'$\log \mathrm{(age \: / \: yr)}$')
         ax4.set_xlabel(r'$\log \mathrm{(age \: / \: yr)}$')
         for ax in self.topaxes:  
-            ax.set_xlim([9.9, 11.6])
+            ax.set_xlim([9.9, 11.7])
             ax.set_ylim([-2, 3])
             ax.axhline(1, color = 'k', linestyle='-')
-            ax.set_xticks(np.arange(10.0, 11.6, 0.3))
+            ax.set_xticks(np.arange(10.0, 11.7, 0.3))
         
         for ax in self.bottomaxes:  
             ax.set_xlim([8.7, 10.1])
@@ -196,11 +196,11 @@ class Main(hp):
         if legend_key == 1:
             for j, item in enumerate(class_list_BPT):
                 axes[0].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
-            axes[0].legend(loc=3, fontsize=17)
+            axes[0].legend(loc=3, fontsize=15)
 
             for j, item in enumerate(class_list_WHAN):
                 axes[1].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
-            axes[1].legend(loc=3, fontsize=17)
+            axes[1].legend(loc=3, fontsize=15)
         
         return axes
 
