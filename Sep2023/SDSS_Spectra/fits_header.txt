@@ -1,0 +1,75 @@
+(5, 4952)
+SIMPLE  =                    T / file does conform to FITS standard      
+BITPIX  =                  -32 / number of bits per data pixel
+NAXIS   =                    2 / number of data axes
+NAXIS1  =                 4952 / length of data axis 1
+NAXIS2  =                    5 / length of data axis 2
+EXTEND  =                    T / FITS dataset may contain extensions
+COMMENT   FITS (Flexible Image Transport System) format is defined in 'AstronomyCOMMENT   
+and Astrophysics', volume 376, page 359; bibcode: 2001A&A...376..359H 
+BSCALE  =                   1. / True_value = BSCALE * FITS_value + BZERO       
+BZERO   =                   0. / True_value = BSCALE * FITS_value + BZERO       
+DATE    = '2015-03-24T13:45:51' / file creation date (YYYY-MM-DDThh:mm:ss UT)   
+ORIGIN  = 'GAMA    '           / Source of the data
+OBSERVAT= 'SSO     '           / Name of observatory
+LATITUDE=            -31.27704 / Telescope latitude in deg
+LONGITUD=             149.0661 / Telescope longitude in deg
+ALTITUDE=                1164. / Telescope height above sea level in m          
+TELESCOP= 'AAT     '           / 3.9m Anglo-Australian Telescope
+INSTRUME= 'AAOMEGA-2dF'        / AAOmega/2dF multi-fibre spectrograph           
+SPECTID = 'RD      '           / Spectrograph ID                                
+GRATID  = '385R 580V'          / Disperser ID
+DICHROIC= 'X5700   '           / Dichroic name
+PLATE   =                    0 / 2dF plate number                               
+RDNOISE =                 3.49 / Readout noise in e-
+GAIN    =                1.799 / Readout gain in e-/ADU
+FIBRE   =                  176 / Fibre number                                   
+PIVOT   =                  176 / Pivot number                                   
+X       =               -61447 / Fibre button x position on plate
+Y       =              -124889 / Fibre button y position on plate               
+THETA   =               162.28 / Fibre angle in deg                             
+N_EXP   =                    3 / Number of exposures                            
+T_EXP   =                3600. / Total exposure time in s                       
+N_NIGHTS=                    1 / Number of nights over which exposures were 
+spreDATE-OBS= '2008-03-01'         / UT date of observation                         
+UTMJD   =     54526.4230962556 / Mean MJD of start of exposures                 
+UTSTART = '09:47:09'           / UT of start of first exposure                  
+UTEND   = '10:53:26'           / UT of end of last exposure                     
+ZDSTART =                46.04 / Zenith distance at start of first exposure in 
+dZDEND   =                35.27 / Zenith distance at end of last exposure in deg 
+HASTART =               -34.39 / Hour angle at start of first exposure in deg   
+HAEND   =               -17.77 / Hour angle at end of last exposure in deg      
+HEL_VC  =               -13.72 / Heliocentric velocity correction in km/s       
+CTYPE1  = 'Wavelength'         / Type of coordinate on axis 1                   
+CUNIT1  = 'Angstrom'           / Units for axis 1                               
+CRPIX1  =                2476. / WCS reference point                            
+CRVAL1  =       6291.743164062 / WCS reference value                            
+CD1_1   =          1.035940794 / WCS transformation matrix element              
+CD1_2   =                   0. / WCS transformation matrix element              
+CD2_1   =                   0. / WCS transformation matrix element              
+CD2_2   =                   1. / WCS transformation matrix element              
+ROW1    = 'Spectrum'           / Flux-calibrated spectrum in 10^-17 erg/s/cm^2/A
+ROW2    = 'Error   '           / 1 sigma error spectrum                         
+ROW3    = 'Spectrum_nocalib'   / Spectrum without flux calibration              
+ROW4    = 'Error_nocalib'      / 1 sigma error spectrum (no flux calibration)   
+ROW5    = 'Sky     '           / Sky spectrum (no flux calibration)             
+FIELDID = 'G09_Y1_AN1'         / ID of GAMA AAT field                           
+SPECID  = 'G09_Y1_AN1_176'     / ID of GAMA AAT spectrum                        
+RA      =            129.16587 / RA of spectrum in deg (J2000)                  
+DEC     =              0.99478 / DEC of spectrum in deg (J2000)                 
+WMIN    =              3727.79 / Minimum wavelength in A                        
+WMAX    =              8856.73 / Maximum wavelength in A                        
+Z       =              0.13973 / Heliocentric redshift                          
+NQ      =                    4 / Normalised redshift quality (use nQ>2 for 
+scienPROB    =                   1. / Probability that redshift is correct           
+SN      =                13.33 / S/N as measured by runz                        
+SN_ALT  =                 11.6 / Median S/N per pixel in 4500-6500 A band       
+RFLUXFAC=          6.95927E-19 / Ratio of r-band petrosian to fibre flux        
+CATAID  =               300335 / ID of matched GAMA object                      
+OBJECT  =               300335 / ID of matched GAMA object                      
+GAMANAME= 'GAMAJ083639.81+005941.2' / Name of matched GAMA object               
+IC_FLAG =                 4104 / Catalogue source(s) of matched GAMA object     
+DIST    =                 0.07 / Distance between spec and object in arcsec     
+IS_SBEST=                    T / GAMA AAT spectrum with best redshift for this 
+oEND                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+

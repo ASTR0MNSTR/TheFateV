@@ -6,7 +6,7 @@ from matplotlib import gridspec
 import pandas as pd
 from astropy.constants import c
 
-def plotter_extractor(path_to_file, output_path):
+def plotter_extractor_sdss(path_to_file, output_path, wave):
     hdul = fits.open(path_to_file)
     data1 = hdul[1].data
  
@@ -68,7 +68,7 @@ def plotter_extractor(path_to_file, output_path):
     ax0.set_ylabel('Flux (raw)')
     ax1.set_ylabel('Flux (fit)')
     
-    Halpha_observed = 6562.819 * (1 + df['z'][0]) 
+    Halpha_observed = wave * (1 + df['z'][0]) 
     wavelength = 10 ** data1.field('loglam')
     res_min = np.abs(wavelength - Halpha_observed - 200)
     res_max = np.abs(wavelength - Halpha_observed + 200)
@@ -86,4 +86,36 @@ def plotter_extractor(path_to_file, output_path):
     ax3.plot(vel, Y_DATA_MODEL, color='r')
     ax3.set_xlabel('Velocity, km/s')
     
+    fig.savefig(output_path, dpi=70, bbox_inches = 'tight', pad_inches = 0.0001)
+    
+def plotter_extractor_gama(path_to_file, output_path, wave):
+    hdul = fits.open(path_to_file)
+    hdu = hdul[0]
+    flux = hdu.data[0,:]
+    wavelength = np.linspace(float(hdu.header['WMIN']), float(hdu.header['WMAX']), int(hdu.header['NAXIS1']))
+    
+    fig = plt.figure(figsize=(12,6), tight_layout=True)
+    spec = gridspec.GridSpec(ncols=2, nrows=1,
+                         width_ratios=[2, 1], wspace=0.1,
+                         hspace=0)
+    
+    ax0 = fig.add_subplot(spec[0])
+    ax0.plot(wavelength, flux, linewidth=1, c='black')
+    
+    ax0.set_xlabel('Wavelength')
+    ax0.set_ylabel('Flux (raw)')
+    
+    Halpha_observed = wave * (1 + float(hdu.header['Z'])) 
+    res_min = np.abs(wavelength - Halpha_observed - 200)
+    res_max = np.abs(wavelength - Halpha_observed + 200)
+    i_max = np.where(res_min == np.min(res_min))[0][0]
+    i_min = np.where(res_max == np.min(res_max))[0][0]
+    
+    x = wavelength
+    vel = (x[i_min:i_max] - Halpha_observed)*c.to('km/s').value/x[i_min:i_max]
+    Y_DATA_FLUX = flux[i_min:i_max]
+    
+    ax2 = fig.add_subplot(spec[1])
+    ax2.plot(vel, Y_DATA_FLUX, color='black')
+    ax2.set_xlabel('Velocity, km/s')
     fig.savefig(output_path, dpi=70, bbox_inches = 'tight', pad_inches = 0.0001)
