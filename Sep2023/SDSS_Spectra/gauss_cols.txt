@@ -1,0 +1,140 @@
+SPECID               1  -                     -  Unique spectrum ID
+CATAID               2  -                     -  Unique GAMA object ID
+HB_CONT              3  10^(-17)erg/s/cm^2/A  -  HB/OIIIB/OIIIR group continuum intercept (NB: units only valid for SDSS and AAOmega spectra)
+HB_CONT_ERR          4  10^(-17)erg/s/cm^2/A  -  HB/OIIIB/OIIIR group continuum intercept uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HB_GRAD              5  10^(-17)erg/s/cm^2/A  -  HB/OIIIB/OIIIR group continuum gradient (NB: units only valid for SDSS and AAOmega spectra)
+HB_GRAD_ERR          6  10^(-17)erg/s/cm^2/A  -  HB continuum gradient uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HB_REDCHI_EMB        7  -                     -  Reduced chisquared for the continuum+narrow+broad emission line fit
+HB_REDCHI_EMABS      8  -                     -  Reduced chisquared for the continuum+narrow+absorption emission line fit
+HB_FITFAIL           9  -                     -  If for code failed prior to fitting this line, then FITFAIL=1, if fitted then FITFAIL=0
+HB_NPEG             10  -                     -  Number of parameters pegged at their boundaries for gaussian fit to HB
+HB_MODSEL_EM_LINE   11  -                     -  Model selection score for the continuum-plus-emission-line fit compared to the straight-line continuum fit
+HB_MODSEL_EMB_EM    12  -                     -  Model selection score for the continuum and Narrow+Broad emission-line fit compared to the continuum-plus-narrow line fit
+HB_MODSEL_NABS_N    13  -                     -  Model selection score for the continuum and Narrow emission plus absorption line fit compared to the continuum-plus-narrow line fit
+HB_BF               14  -                     -  Analytic approximation to the Baye's factor for the best model
+HB_DELBIC           15  -                     -  Change in the Bayesian Information Criterion which compares the two models
+HB_DELAIC           16  -                     -  Similar to BIC, not used in the model selection
+HB_CEN              17  A                     -  For the fits, the wavelength positions were measured with respect to this value
+AMP_HB              18  10^(-17)erg/s/cm^2/A  -  HB line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+AMP_HB_ERR          19  10^(-17)erg/s/cm^2/A  -  HB uncertainty on line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+POS_HB              20  A                     -  HB line position from Gaussian fit measured relative to HB_CEN
+POS_HB_ERR          21  A                     -  HB uncertainty on line position from Gaussian fit
+SIG_HB              22  A                     -  HB line sigma from Gaussian fit
+SIG_HB_ERR          23  A                     -  Uncertainty on the HB line sigma from the Gaussian fit
+HB_FLUX             24  10^(-17)erg/s/cm^2    -  HB line flux (NB: units only valid for SDSS and AAOmega spectra)
+HB_FLUX_ERR         25  10^(-17)erg/s/cm^2    -  HB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HB_EW               26  A                     -  HB line equivalent width
+HB_EW_ERR           27  A                     -  HB equivalent width uncertainty
+AMP_HB_ABS          28  10^(-17)erg/s/cm^2/A  -  HB_ABS line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+AMP_HB_ABS_ERR      29  10^(-17)erg/s/cm^2/A  -  HB_ABS uncertainty on line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+POS_HB_ABS          30  A                     -  HB_ABS line position from Gaussian fit measured relative to HB_CEN
+POS_HB_ABS_ERR      31  A                     -  HB_ABS uncertainty on line position from Gaussian fit
+SIG_HB_ABS          32  A                     -  HB_ABS line sigma from Gaussian fit
+SIG_HB_ABS_ERR      33  A                     -  Uncertainty on the HB_ABS line sigma from the Gaussian fit
+HB_ABS_FLUX         34  10^(-17)erg/s/cm^2    -  HB_ABS line flux (NB: units only valid for SDSS and AAOmega spectra)
+HB_ABS_FLUX_ERR     35  10^(-17)erg/s/cm^2    -  HB_ABS flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HB_ABS_EW           36  A                     -  HB_ABS line equivalent width
+HB_ABS_EW_ERR       37  A                     -  HB_ABS equivalent width uncertainty
+HB_ABS_NPEG         38  -                     -  Number of parameters pegged at their boundaries for gaussian fit to HB
+AMP_HB_B            39  10^(-17)erg/s/cm^2/A  -  HB_B line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+AMP_HB_B_ERR        40  10^(-17)erg/s/cm^2/A  -  HB_B uncertainty on line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+POS_HB_B            41  A                     -  HB_B line position from Gaussian fit measured relative to HB_CEN
+POS_HB_B_ERR        42  A                     -  HB_B uncertainty on line position from Gaussian fit
+SIG_HB_B            43  A                     -  HB_B line sigma from Gaussian fit
+SIG_HB_B_ERR        44  A                     -  Uncertainty on the HB_B line sigma from the Gaussian fit
+HB_B_FLUX           45  10^(-17)erg/s/cm^2    -  HB_B line flux (NB: units only valid for SDSS and AAOmega spectra)
+HB_B_FLUX_ERR       46  10^(-17)erg/s/cm^2    -  HB_B flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HB_B_EW             47  A                     -  HB_B line equivalent width
+HB_B_EW_ERR         48  A                     -  HB_B equivalent width uncertainty
+HB_B_NPEG           49  -                     -  Number of parameters pegged at their boundaries for gaussian fit to HB
+AMP_OIIIB           50  10^(-17)erg/s/cm^2/A  -  OIIIB line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+AMP_OIIIB_ERR       51  10^(-17)erg/s/cm^2/A  -  OIIIB uncertainty on line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+POS_OIIIB           52  A                     -  OIIIB line position from Gaussian fit measured relative to HB_CEN
+POS_OIIIB_ERR       53  A                     -  OIIIB uncertainty on line position from Gaussian fit
+SIG_OIIIB           54  A                     -  OIIIB line sigma from Gaussian fit
+SIG_OIIIB_ERR       55  A                     -  Uncertainty on the OIIIB line sigma from the Gaussian fit
+OIIIB_FLUX          56  10^(-17)erg/s/cm^2    -  OIIIB line flux (NB: units only valid for SDSS and AAOmega spectra)
+OIIIB_FLUX_ERR      57  10^(-17)erg/s/cm^2    -  OIIIB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+OIIIB_EW            58  A                     -  OIIIB line equivalent width
+OIIIB_EW_ERR        59  A                     -  OIIIB equivalent width uncertainty
+AMP_OIIIR           60  10^(-17)erg/s/cm^2/A  -  OIIIR line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+AMP_OIIIR_ERR       61  10^(-17)erg/s/cm^2/A  -  OIIIR uncertainty on line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+POS_OIIIR           62  A                     -  OIIIR line position from Gaussian fit measured relative to HB_CEN
+POS_OIIIR_ERR       63  A                     -  OIIIR uncertainty on line position from Gaussian fit
+SIG_OIIIR           64  A                     -  OIIIR line sigma from Gaussian fit
+SIG_OIIIR_ERR       65  A                     -  Uncertainty on the OIIIR line sigma from the Gaussian fit
+OIIIR_FLUX          66  10^(-17)erg/s/cm^2    -  OIIIR line flux (NB: units only valid for SDSS and AAOmega spectra)
+OIIIR_FLUX_ERR      67  10^(-17)erg/s/cm^2    -  OIIIR flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+OIIIR_EW            68  A                     -  OIIIR line equivalent width
+OIIIR_EW_ERR        69  A                     -  OIIIR equivalent width uncertainty
+OIIIR_NPEG          70  -                     -  Number of parameters pegged at their boundaries for gaussian fit to OIIIR
+OIIIB_NPEG          71  -                     -  Number of parameters pegged at their boundaries for gaussian fit to OIIIB
+HA_CONT             72  10^(-17)erg/s/cm^2/A  -  NIIB/HA/NIIR group continuum intercept (NB: units only valid for SDSS and AAOmega spectra)
+HA_CONT_ERR         73  10^(-17)erg/s/cm^2/A  -  NIIB/HA/NIIR group continuum intercept uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HA_GRAD             74  10^(-17)erg/s/cm^2/A  -  NIIB/HA/NIIR group continuum gradient (NB: units only valid for SDSS and AAOmega spectra)
+HA_GRAD_ERR         75  10^(-17)erg/s/cm^2/A  -  HA continuum gradient uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HA_REDCHI_EMB       76  -                     -  Reduced chisquared for the continuum+narrow+broad emission line fit
+HA_REDCHI_EMABS     77  -                     -  Reduced chisquared for the continuum+narrow+absorption emission line fit
+HA_FITFAIL          78  -                     -  If for code failed prior to fitting this line, then FITFAIL=1, if fitted then FITFAIL=0
+HA_NPEG             79  -                     -  Number of parameters pegged at their boundaries for gaussian fit to HA
+HA_MODSEL_EM_LINE   80  -                     -  Model selection score for the continuum-plus-emission-line fit compared to the straight-line continuum fit
+HA_MODSEL_EMB_EM    81  -                     -  Model selection score for the continuum and Narrow+Broad emission-line fit compared to the continuum-plus-narrow line fit
+HA_MODSEL_NABS_N    82  -                     -  Model selection score for the continuum and Narrow emission plus absorption line fit compared to the continuum-plus-narrow line fit
+HA_BF               83  -                     -  Analytic approximation to the Baye's factor for the best model
+HA_DELBIC           84  -                     -  Change in the Bayesian Information Criterion which compares the two models
+HA_DELAIC           85  -                     -  Similar to BIC, not used in the model selection
+HA_CEN              86  A                     -  For the fits, the wavelength positions were measured with respect to this value
+AMP_HA              87  10^(-17)erg/s/cm^2/A  -  HA line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+AMP_HA_ERR          88  10^(-17)erg/s/cm^2/A  -  HA uncertainty on line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+POS_HA              89  A                     -  HA line position from Gaussian fit measured relative to HA_CEN
+POS_HA_ERR          90  A                     -  HA uncertainty on line position from Gaussian fit
+SIG_HA              91  A                     -  HA line sigma from Gaussian fit
+SIG_HA_ERR          92  A                     -  Uncertainty on the HA line sigma from the Gaussian fit
+HA_FLUX             93  10^(-17)erg/s/cm^2    -  HA line flux (NB: units only valid for SDSS and AAOmega spectra)
+HA_FLUX_ERR         94  10^(-17)erg/s/cm^2    -  HA flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HA_EW               95  A                     -  HA line equivalent width
+HA_EW_ERR           96  A                     -  HA equivalent width uncertainty
+AMP_HA_ABS          97  10^(-17)erg/s/cm^2/A  -  HA_ABS line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+AMP_HA_ABS_ERR      98  10^(-17)erg/s/cm^2/A  -  HA_ABS uncertainty on line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+POS_HA_ABS          99  A                     -  HA_ABS line position from Gaussian fit measured relative to HA_CEN
+POS_HA_ABS_ERR     100  A                     -  HA_ABS uncertainty on line position from Gaussian fit
+SIG_HA_ABS         101  A                     -  HA_ABS line sigma from Gaussian fit
+SIG_HA_ABS_ERR     102  A                     -  Uncertainty on the HA_ABS line sigma from the Gaussian fit
+HA_ABS_FLUX        103  10^(-17)erg/s/cm^2    -  HA_ABS line flux (NB: units only valid for SDSS and AAOmega spectra)
+HA_ABS_FLUX_ERR    104  10^(-17)erg/s/cm^2    -  HA_ABS flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HA_ABS_EW          105  A                     -  HA_ABS line equivalent width
+HA_ABS_EW_ERR      106  A                     -  HA_ABS equivalent width uncertainty
+HA_ABS_NPEG        107  -                     -  Number of parameters pegged at their boundaries for gaussian fit to HA
+AMP_HA_B           108  10^(-17)erg/s/cm^2/A  -  HA_B line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+AMP_HA_B_ERR       109  10^(-17)erg/s/cm^2/A  -  HA_B uncertainty on line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+POS_HA_B           110  A                     -  HA_B line position from Gaussian fit measured relative to HA_CEN
+POS_HA_B_ERR       111  A                     -  HA_B uncertainty on line position from Gaussian fit
+SIG_HA_B           112  A                     -  HA_B line sigma from Gaussian fit
+SIG_HA_B_ERR       113  A                     -  Uncertainty on the HA_B line sigma from the Gaussian fit
+HA_B_FLUX          114  10^(-17)erg/s/cm^2    -  HA_B line flux (NB: units only valid for SDSS and AAOmega spectra)
+HA_B_FLUX_ERR      115  10^(-17)erg/s/cm^2    -  HA_B flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+HA_B_EW            116  A                     -  HA_B line equivalent width
+HA_B_EW_ERR        117  A                     -  HA_B equivalent width uncertainty
+HA_B_NPEG          118  -                     -  Number of parameters pegged at their boundaries for gaussian fit to HA
+AMP_NIIB           119  10^(-17)erg/s/cm^2/A  -  NIIB line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+AMP_NIIB_ERR       120  10^(-17)erg/s/cm^2/A  -  NIIB uncertainty on line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+POS_NIIB           121  A                     -  NIIB line position from Gaussian fit measured relative to HA_CEN
+POS_NIIB_ERR       122  A                     -  NIIB uncertainty on line position from Gaussian fit
+SIG_NIIB           123  A                     -  NIIB line sigma from Gaussian fit
+SIG_NIIB_ERR       124  A                     -  Uncertainty on the NIIB line sigma from the Gaussian fit
+NIIB_FLUX          125  10^(-17)erg/s/cm^2    -  NIIB line flux (NB: units only valid for SDSS and AAOmega spectra)
+NIIB_FLUX_ERR      126  10^(-17)erg/s/cm^2    -  NIIB flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+NIIB_EW            127  A                     -  NIIB line equivalent width
+NIIB_EW_ERR        128  A                     -  NIIB equivalent width uncertainty
+AMP_NIIR           129  10^(-17)erg/s/cm^2/A  -  NIIR line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+AMP_NIIR_ERR       130  10^(-17)erg/s/cm^2/A  -  NIIR uncertainty on line amplitude from Gaussian fit (NB: units only valid for SDSS and AAOmega spectra)
+POS_NIIR           131  A                     -  NIIR line position from Gaussian fit measured relative to HA_CEN
+POS_NIIR_ERR       132  A                     -  NIIR uncertainty on line position from Gaussian fit
+SIG_NIIR           133  A                     -  NIIR line sigma from Gaussian fit
+SIG_NIIR_ERR       134  A                     -  Uncertainty on the NIIR line sigma from the Gaussian fit
+NIIR_FLUX          135  10^(-17)erg/s/cm^2    -  NIIR line flux (NB: units only valid for SDSS and AAOmega spectra)
+NIIR_FLUX_ERR      136  10^(-17)erg/s/cm^2    -  NIIR flux uncertainty (NB: units only valid for SDSS and AAOmega spectra)
+NIIR_EW            137  A                     -  NIIR line equivalent width
+NIIR_EW_ERR        138  A                     -  NIIR equivalent width uncertainty
+NIIB_NPEG          139  -                     -  Number of parameters pegged at their boundaries for gaussian fit to NIIB
+NIIR_NPEG          140  -                     -  Number of parameters pegged at their boundaries for gaussian fit to NIIR

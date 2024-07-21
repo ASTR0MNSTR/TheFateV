@@ -337,11 +337,11 @@ def bin_stats(pars_dict):
 
     plotter_histo_BPT(ax1, [0, 1], DataFrame[pars_dict['x']], DataFrame['BPT'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
 
-    plotter_histo_WHAN(ax4, [0], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'BMS, %', DataFrame['BMS'], pars_dict['bins'])
+    plotter_histo_WHAN(ax6, [0], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'BMS, %', DataFrame['BMS'], pars_dict['bins'])
 
     plotter_histo_WHAN(ax5, [1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'MS, %', DataFrame['BMS'], pars_dict['bins'])
 
-    plotter_histo_WHAN(ax6, [0,1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
+    plotter_histo_WHAN(ax4, [0,1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
 
     ax2.legend(fontsize="13", loc='center right')
     ax5.legend(fontsize="15", loc='center right')
