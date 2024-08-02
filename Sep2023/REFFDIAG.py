@@ -58,7 +58,7 @@ class Main:
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
-        fig.savefig('./FIGURES_IN_PAPER/APERTURE_DIAG.pdf', dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+        fig.savefig('./FIGURES_IN_PAPER/APERTURE_DIAG.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         plt.show()
 
     def sorting_forWHAN(self, keys):
@@ -153,7 +153,7 @@ class Main:
         merged_WHAN = merging_WHAN(Main.sorting_forWHAN(self, keys))
         merged_BPT = merging_BPT(Main.sorting_forBPT(self, keys))
         if kwarg == 'WHAN':
-            patches, texts, autotexts = figure.pie(Main.sorting_forWHAN(self, keys), radius=1, labels=my_level_list(Main.sorting_forWHAN(self, keys), 'WHAN'), colors=self.WHAN_colors, autopct=my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.75, labeldistance=1.1)
+            patches, texts, autotexts = figure.pie(Main.sorting_forWHAN(self, keys), radius=1, labels=my_level_list(Main.sorting_forWHAN(self, keys), 'WHAN'), colors=self.WHAN_colors, autopct=my_autopct_WHAN, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.725, labeldistance=1.05)
             [autotext.set_color('black') for autotext in autotexts]
             autotexts[0].set_color('white')
             autotexts[1].set_color('white')
@@ -162,7 +162,7 @@ class Main:
             figure.pie(merged_WHAN, radius=1-size, colors=self.WHAN_colors_merged, wedgeprops=dict(width=size, edgecolor='w'))
             figure.set(aspect='equal')
         elif kwarg == 'BPT':
-            patches, texts, autotexts = figure.pie(Main.sorting_forBPT(self, keys), radius=1, labels=my_level_list(Main.sorting_forBPT(self, keys), 'BPT'), colors=self.BPT_colors, autopct=my_autopct_BPT, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.75, labeldistance=1.1)
+            patches, texts, autotexts = figure.pie(Main.sorting_forBPT(self, keys), radius=1, labels=my_level_list(Main.sorting_forBPT(self, keys), 'BPT'), colors=self.BPT_colors, autopct=my_autopct_BPT, wedgeprops=dict(width=size, edgecolor='w'), pctdistance=0.725, labeldistance=1.05)
             [autotext.set_color('black') for autotext in autotexts]
             autotexts[0].set_color('white')
             autotexts[3].set_color('white')

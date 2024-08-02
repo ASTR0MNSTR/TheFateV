@@ -756,14 +756,14 @@ class Main(hp):
             self.ax_med_WHAN.scatter(-99, -99, alpha=1, color = WHAN_color_plt[key][0], s = WHAN_color_plt[key][1], marker= WHAN_color_plt[key][2], label=key)
 
         for key in self.cd_WHAN_leg.keys():
-            self.ax7.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = 30, label=key)
+            self.ax7.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = 50, label=key)
 
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGNXY', s = 25)
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'dodgerblue', label='AGNX', s = 25)
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNCXY', s = 25)
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'darkgreen', label='UNCX', s = 25)
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SFGXY', s = 25)
-        self.ax6.scatter(-99, -99, alpha= 1, color = 'crimson', label='SFGX', s = 25)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'midnightblue', label='AGNXY', s = 50)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'dodgerblue', label='AGNX', s = 50)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'springgreen', label='UNCXY', s = 50)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'darkgreen', label='UNCX', s = 50)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'mediumvioletred', label='SFGXY', s = 50)
+        self.ax6.scatter(-99, -99, alpha= 1, color = 'crimson', label='SFGX', s = 50)
         self.ax6.legend(loc=3)
         self.ax7.legend(loc=3)
         self.ax_med_WHAN.legend(loc=3)
@@ -779,7 +779,7 @@ class Main(hp):
         self.fig.colorbar(self.s_m, cax=cbar_ax, label=r'$\log \mathrm{(age \: / \: yr)}$')
         #self.ax7.legend(loc=3, fontsize="13")
         
-        self.fig.savefig('./FIGURES_IN_PAPER/BPT_WHAN.pdf', dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+        self.fig.savefig('./FIGURES_IN_PAPER/BPT_WHAN.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         #self.fig.savefig('WHAN.pdf')
 
         # plt.show()

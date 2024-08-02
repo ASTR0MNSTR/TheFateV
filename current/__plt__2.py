@@ -363,7 +363,7 @@ def bin_stats(pars_dict):
     # ax6.set_xticks([r for r in range(6)], ['<0.05', '0.05-0.10', '0.10-0.15', '0.15-0.20', '0.20-0.25', '0.25-0.33'])
     ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'], fontsize=17)
 
-    fig.savefig(pars_dict['save_path'], dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+    fig.savefig(pars_dict['save_path'], dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
 
 def empty():
     return [0, 0, 0, 0, 0, 0, 0]
@@ -481,7 +481,8 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
         k = 0
         for rect in bar1:
             height = rect.get_height()
-            axes.text(rect.get_x() + rect.get_width() / 2.0, height, str(SAMPLE[k]), ha='center', va='bottom', fontsize='13')
+            if SAMPLE[k] != 0:
+                axes.text(rect.get_x() + rect.get_width() / 2.0, height, str(SAMPLE[k]), ha='center', va='bottom', fontsize='13')
             k+=1
 
 def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
@@ -566,7 +567,8 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
     k = 0
     for rect in bar1:
         height = rect.get_height()
-        axes.text(rect.get_x() + rect.get_width() / 2.0, height, str(SAMPLE[k]), ha='center', va='bottom', fontsize='13')
+        if SAMPLE[k] != 0:
+            axes.text(rect.get_x() + rect.get_width() / 2.0, height, str(SAMPLE[k]), ha='center', va='bottom', fontsize='13')
         k+=1
     all = [sAGN, wAGN, NOEL, SF, ELR, NER, LLR, SAMPLE]
 

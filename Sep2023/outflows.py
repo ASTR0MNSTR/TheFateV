@@ -167,8 +167,8 @@ class Main:
         ax1.text(8.7 + k*(10.0-8.7), -3 + k*(4.0 - (-3.0)), 'BPT', fontsize=20)
         ax2.text(8.7 + k*(10.0-8.7), -3 + k*(4.0 - (-3.0)), 'WHAN', fontsize=20)
         
-        ax1.set_ylabel(r'$\log \mathrm{(\dot{M}_{H_2} \: / \: (M_\odot/yr))}$', fontsize=20)
-        ax3.set_ylabel(r'$\log \mathrm{(\dot{M}_{H_2} \: / \: (M_\odot/yr))}$', fontsize=20)
+        ax1.set_ylabel(r'$\log \mathrm{(\dot{M}_{H_2} \: / \: M_{\odot} yr^{-1})}$', fontsize=20)
+        ax3.set_ylabel(r'$\log \mathrm{(\dot{M}_{H_2} \: / \: M_{\odot} yr^{-1})}$', fontsize=20)
         ax3.set_xlabel(r'$\log \mathrm{(age \: / \: yr)}$', fontsize=20)
         ax4.set_xlabel(r'$\log \mathrm{(age \: / \: yr)}$', fontsize=20)
         
@@ -205,7 +205,7 @@ class Main:
             ax3, ax4
         )
         
-        self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW.pdf', dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+        self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
     
     def plotting_init(self, pars, ax1, ax2):
         Main.plotter(self, [ax1, ax2], pars['X'], pars['Y'], pars['Y_up'], pars['Y_down'], 'BPT', 'WHAN', pars['bids_chain'], pars['legend'])

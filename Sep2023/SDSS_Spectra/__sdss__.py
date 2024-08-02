@@ -86,7 +86,7 @@ def plotter_extractor_sdss(path_to_file, output_path, wave):
     ax3.plot(vel, Y_DATA_MODEL, color='r')
     ax3.set_xlabel('Velocity, km/s')
     
-    fig.savefig(output_path, dpi=70, bbox_inches = 'tight', pad_inches = 0.0001)
+    fig.savefig(output_path, dpi=300, bbox_inches = 'tight', pad_inches = 0.0001)
     
 def plotter_extractor_gama(path_to_file, output_path, wave):
     hdul = fits.open(path_to_file)
@@ -118,4 +118,4 @@ def plotter_extractor_gama(path_to_file, output_path, wave):
     ax2 = fig.add_subplot(spec[1])
     ax2.plot(vel, Y_DATA_FLUX, color='black')
     ax2.set_xlabel('Velocity, km/s')
-    fig.savefig(output_path, dpi=70, bbox_inches = 'tight', pad_inches = 0.0001)
+    fig.savefig(output_path, dpi=300, bbox_inches = 'tight', pad_inches = 0.0001)

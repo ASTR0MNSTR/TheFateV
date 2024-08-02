@@ -110,4 +110,4 @@ def universal_plotter(path_to_file, path_to_save, data_row):
     
     # fig.suptitle(f'SPECID = {specid} \n CATAID = {cataid}')
     
-    fig.savefig(path_to_save, dpi=70, bbox_inches = 'tight', pad_inches = 0.0001)
+    fig.savefig(path_to_save, dpi=300, bbox_inches = 'tight', pad_inches = 0.0001)

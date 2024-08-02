@@ -26,7 +26,7 @@ def my_autopct_BPT(pct):
     return (f'{pct:.2f}%') if pct > 3 else ''
     
 def my_autopct_WHAN(pct):
-    return (f'{pct:.2f}%') if pct > 3 else ''
+    return (f'{pct:.2f}%') if pct > 3 and round(pct, 2) != 4.96 else ''
 
 def merging_BPT(list_obj):
     AGNXY, AGNX, UNCXY, UNCX, UNCY, SFXY, SFX, SFY, NOEL = list_obj
@@ -107,11 +107,30 @@ def theor_lines(axes, key):
     
     for ax in axes:
         if key == 'mdms':
+            # x = np.arange(7.9, 10.1, 0.01)
+            # a_all = 2.3152363967664957
+            # b_all = 5.276003555081468
+            # y = ((-(10**x)/10**9) / b_all) - a_all
+            # ax.plot(x, y, color='k', linestyle='solid')
+            
+            # x = np.arange(7.9, 10.1, 0.01)
+            # a_all = 2.3152363967664957
+            # b_all = 5.276003555081468
+            # y = ((-(10**x)/10**9) / b_all) - a_all
+            # ax.plot(x, y, color='k', linestyle='solid')
+            
             x = np.arange(7.9, 10.1, 0.01)
-            a_all = 2.3152363967664957
-            b_all = 5.276003555081468
-            y = ((-(10**x)/10**9) / b_all) - a_all
+            a_all = 2.31
+            b_all = 2.26 
+            y = ((-(10**x)/10**9) / b_all)*np.log10(2.7182) - a_all
             ax.plot(x, y, color='k', linestyle='solid')
+            
+            # x = np.arange(7.9, 10.1, 0.01)
+            # a_all = 2.31
+            # b_all = 2.26 
+            # y = ((-(10**x)/10**9) / b_all)*np.log10(2.7182) - a_all
+            # ax.plot(x, y, color='k', linestyle='dashed')
+            
         elif key == 'sfrsm':
             x = np.arange(6.9, 12, 0.1)
             # ax.plot(x, (0.84 - 0.026*11.636)*x - (6.51 - 0.11*11.636), color='k', linestyle='solid')
@@ -172,7 +191,7 @@ def plotting(pars_dict):
         ax4 = phys_plotter(ax4, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['BPT'], bids, 'BPT', True)
         ax5 = phys_plotter(ax5, DataFrame[pars_dict['x']], DataFrame[pars_dict['y']], DataFrame[pars_dict['up']], DataFrame[pars_dict['down']], DataFrame['WHAN'], bids, 'WHAN', True)
 
-    fig1.savefig(pars_dict['save_path'], dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+    fig1.savefig(pars_dict['save_path'], dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
 
 def contours(x , y , lev, sigma, bin1, bin2):
         #mode{‘reflect’, ‘constant’, ‘nearest’, ‘mirror’, ‘wrap’}, optional\n”,

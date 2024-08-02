@@ -92,7 +92,7 @@ def my_level_list(data, kwarg):
     for i in range(len(data)):
         if ((data[i]*100/np.sum(data)) > 30.55 and data[i]*100/np.sum(data) < 30.57): #2%
             list.append('')
-        elif (data[i]*100/np.sum(data)) > 2: #2%
+        elif (data[i]*100/np.sum(data)) > 4: #2%
             list.append(labels[i])
         else:
             list.append('')
@@ -519,7 +519,7 @@ def bin_stats(pars_dict):
     # ax6.set_xticks([r for r in range(6)], ['<0.05', '0.05-0.10', '0.10-0.15', '0.15-0.20', '0.20-0.25', '0.25-0.33'])
     ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'], fontsize=17)
 
-    plt.savefig(pars_dict['save_path'], dpi=70, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+    plt.savefig(pars_dict['save_path'], dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
 
 def empty():
     return [0, 0, 0, 0, 0, 0, 0]
