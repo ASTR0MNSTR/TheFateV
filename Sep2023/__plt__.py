@@ -254,7 +254,7 @@ def classlist_plotter(axis, classlist, bids):
         err_down = np.asarray(err_down)
             
         axis.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100, edgecolors='black')
         axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
@@ -294,7 +294,7 @@ def classlist_plotter_uplim(axis, classlist, bids):
         err_down = np.asarray(err_down)
             
         axis.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100, edgecolors='black')
         for i, elem in enumerate(up_lim_end):
             if elem:
                 axis.arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
@@ -326,7 +326,7 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
                 list_names = list_names_BPT_1
             elif WHAN_or_BPT == 'WHAN':
                 list_names = list_names_WHAN
-            axis.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names[j])
+            axis.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names[j], edgecolors='black')
         axis.legend(loc=3, fontsize=15)
     
     return axis   

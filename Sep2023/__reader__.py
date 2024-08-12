@@ -2,7 +2,7 @@ import pandas as pd
 
 def merge_phys_databases(source_path, input_path, output_path):
 
-    SourceDataFrame = pd.read_csv(source_path, sep="\s{2,}", header=0, index_col=0, engine='python')
+    SourceDataFrame = pd.read_csv(source_path, sep=r"\s+", header=0, index_col=0, engine='python')
     InputDataFrame = pd.read_csv(input_path)
     MergedDataFrame = pd.merge(InputDataFrame, SourceDataFrame, how='inner', on='CATAID_1')
     print(MergedDataFrame.shape)
@@ -10,7 +10,7 @@ def merge_phys_databases(source_path, input_path, output_path):
     
 def merge_phys_databases_outflow(source_path, input_path, output_path):
 
-    SourceDataFrame = pd.read_csv(source_path, sep="\s{2,}", header=0, index_col=0, engine='python', usecols=['SPECID', 'CATAID_1', 'Z_1', 'SFR_0_1Gyr_percentile16', 'SFR_0_1Gyr_percentile50', 'SFR_0_1Gyr_percentile84', 'mass_stellar_percentile16', 'mass_stellar_percentile50', 'mass_stellar_percentile84', 'ager_percentile50'])
+    SourceDataFrame = pd.read_csv(source_path, sep=r"\s+", header=0, index_col=0, engine='python', usecols=['SPECID', 'CATAID_1', 'Z_1', 'SFR_0_1Gyr_percentile16', 'SFR_0_1Gyr_percentile50', 'SFR_0_1Gyr_percentile84', 'mass_stellar_percentile16', 'mass_stellar_percentile50', 'mass_stellar_percentile84', 'ager_percentile50'])
     InputDataFrame = pd.read_csv(input_path)
     MergedDataFrame = pd.merge(InputDataFrame, SourceDataFrame, how='inner', on='SPECID')
     print(MergedDataFrame.shape)
@@ -18,7 +18,7 @@ def merge_phys_databases_outflow(source_path, input_path, output_path):
 
 def merge_phys_databases_all(source_path, input_path, output_path):
 
-    SourceDataFrame = pd.read_csv(source_path, sep="\s{2,}", header=0, index_col=0, engine='python')
+    SourceDataFrame = pd.read_csv(source_path, sep=r"\s+", header=0, index_col=0, engine='python')
     InputDataFrame = pd.read_csv(input_path)
     MergedDataFrame = pd.merge(InputDataFrame, SourceDataFrame, how='inner', on='SPECID')
     print(MergedDataFrame.shape)

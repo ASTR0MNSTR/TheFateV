@@ -293,15 +293,10 @@ class Main(hp):
 
         # dust_correction module:
         
-        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, HA_ew, HA_ew_err, pair_HA = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, Z)
-
+        AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LOIII, LOIII_er, HA_ew, HA_ew_err, pair_HA = AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_ERR, Z)
         
         X_er = 0
         Y_er = 0
-        try:
-            log_LAGN = math.log10(LAGN*(10**43))
-        except ValueError:
-            log_LAGN = -99999.0
 
         SFR_HA, SFR_HA_er = hp.SFR(HA, HA_er, Z)
 
@@ -317,7 +312,7 @@ class Main(hp):
 
         kwargs = [SURV, SURV_CODE, IS_BEST, IS_SBEST, CATAID,
                   [SFR_HA, SFR_HA_er], AGN, FLUXES, FLUXES_ER, bms, [RA, DEC, Z, SPEC_ID], [X, pair_x_flags, HA_ew, pair_HA], SC_WHAN,
-                  [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW, HA_EW_ERR], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er]
+                  [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW, HA_EW_ERR], HgF_cont, HdF_cont, HA_cont, age, LOIII, LOIII_er]
                 #   [HdA, HdA_er, HdF, HdF_er, HgA, HgA_er, HgF, HgF_er], [HA_EW_1, HA_EW_ERR_1], HgF_cont, HdF_cont, HA_cont, age, LAGN, LAGN_er, k_OIII, log_LAGN, k_HA, E_B_V, OIII_m, OIII_er_m, LAGN_m, out_m, LAGN_max, out_m_off]
         res_out_out = [res_out, kwargs]
         return res_out_out
@@ -454,9 +449,9 @@ class Main(hp):
             # 'OII' : self.OII_l,
             # 'OII_er' : self.OII_l_er,
             # 'log(LAGN)' : self.logLAGN,
-            'LAGN' : self.LAGNs,
+            'LOIII' : self.LAGNs,
             # 'LAGN_MM_max' : self.LAGN_max_m_out,
-            'LAGN_er' : self.LAGNs_er,
+            'LOIII_er' : self.LAGNs_er,
             'BMS': self.BMS,
             # 'LAGN_MM' : self.LAGN_m_out,
             # 'OUT_MM' : self.out_m_out,
@@ -534,18 +529,18 @@ class Main(hp):
             ax.plot(X_11, 1.01*X_11 + 0.48, c='black', linestyle='dotted', linewidth=3)
             ax.text(-1.5, 1.2, 'AGN')
             ax.text(0, -1, 'UNC', ha='center', va='center')
-            ax.text(-1.5, 0.1, 'SF')
+            ax.text(-1.5, 0.1, 'SFG')
             ax.text(0.5, -0.5, 'LINER')
             ax.set_box_aspect(1)
 
         self.ax4.set_ylabel(r'$\log{\mathrm{([OIII]/H\beta)}}$')
 
         norm = mpl.colors.Normalize(vmin=8.8,vmax=10.0)
-        c_m = mpl.cm.jet
+        c_m = mpl.cm.viridis
         self.s_m = mpl.cm.ScalarMappable(cmap=c_m, norm=norm)
         self.s_m.set_array([])
         
-        cmap = plt.cm.jet  
+        cmap = plt.cm.viridis  
         cmaplist = [cmap(i) for i in range(cmap.N)]
 
         cmap_segment = mpl.colors.LinearSegmentedColormap.from_list(
@@ -609,7 +604,7 @@ class Main(hp):
                         self.ax5.scatter(x, y, s=5, color=self.cd_WHAN[SC_WHAN][0], alpha=1)
                         #self.ax4.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker =self.cd_WHAN[SC_WHAN][2], alpha=0.5)
                         #self.ax5.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.s_m.to_rgba(age), marker =self.cd_WHAN[SC_WHAN][2], alpha=0.5)
-                        self.ax_med_BPT.scatter(x, y, s=5, color=self.s_m.to_rgba(age), alpha=0.3)
+                        self.ax_med_BPT.scatter(x, y, s=5, color=self.s_m.to_rgba(age), alpha=0.15)
                         k += 1
                     except KeyError:
                         pass
@@ -627,11 +622,11 @@ class Main(hp):
         
         for item in class_list:
             big_point_X, big_point_Y, big_point_age = median_position(item[0], item[1], item[2], [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]])
-            self.ax_med_BPT.scatter(big_point_X, big_point_Y, s = 150, color = self.s_m_INT.to_rgba(big_point_age), marker=item[3][1])
+            self.ax_med_BPT.scatter(big_point_X, big_point_Y, s = 150, color = self.s_m_INT.to_rgba(big_point_age), marker=item[3][1], edgecolors='black')
 
         
         for key in BPT_color_plt:
-            self.ax_med_BPT.scatter(-99, -99, alpha=1, color = BPT_color_plt[key][0], s = BPT_color_plt[key][1], marker= BPT_color_plt[key][2], label=key)
+            self.ax_med_BPT.scatter(-99, -99, alpha=1, color = BPT_color_plt[key][0], s = BPT_color_plt[key][1], marker= BPT_color_plt[key][2], label=key, edgecolors='black')
         
         self.ax_med_BPT.legend(loc=3)
         print('Number of points on BPT: ', k)
@@ -686,7 +681,7 @@ class Main(hp):
 
             X_wAGN = np.arange(-0.4, 2.5, 0.01)
             ax.plot(X_wAGN, 0.77815125+X_wAGN*0, 'black', linewidth=3)
-            ax.text(-1.5, 2, 'SF')
+            ax.text(-1.5, 2, 'SFG')
             ax.text(0.6, 0.5, 'wAGN')
             ax.text(0.6, 2, 'sAGN')
 
@@ -735,7 +730,7 @@ class Main(hp):
                 AGN_flags.append(SC_WHAN)
                 if len(pair_x_flags) == 0 and len(pair_y_flags) == 0:
                     self.ax6.scatter(x, y, s=30, color=self.color_dict[AGN][0], alpha=1, marker=self.color_dict[AGN][2])
-                    self.ax_med_WHAN.scatter(x, y, s=30, color=self.s_m.to_rgba(age), alpha=0.3, marker=self.color_dict[AGN][2])
+                    self.ax_med_WHAN.scatter(x, y, s=30, color=self.s_m.to_rgba(age), alpha=0.15, marker=self.color_dict[AGN][2])
                     self.ax7.scatter(x, y, s=30, color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=1)
                     #self.ax6.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.cd_WHAN[SC_WHAN][0], marker = '.', alpha=0.5)
                     #self.ax7.scatter(x, y, s=self.cd_WHAN[SC_WHAN][1], color=self.s_m.to_rgba(age), marker = '.', alpha=0.5)
@@ -750,10 +745,10 @@ class Main(hp):
         
         for j, item in enumerate(class_list):
             big_point_X, big_point_Y, big_point_age = median_position(item[0], item[1], item[2], [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]])
-            self.ax_med_WHAN.scatter(big_point_X, big_point_Y, s = 150, color = self.s_m.to_rgba(big_point_age), marker=item[3][1])
+            self.ax_med_WHAN.scatter(big_point_X, big_point_Y, s = 150, color = self.s_m.to_rgba(big_point_age), marker=item[3][1], edgecolors='black')
         
         for key in WHAN_color_plt:
-            self.ax_med_WHAN.scatter(-99, -99, alpha=1, color = WHAN_color_plt[key][0], s = WHAN_color_plt[key][1], marker= WHAN_color_plt[key][2], label=key)
+            self.ax_med_WHAN.scatter(-99, -99, alpha=1, color = WHAN_color_plt[key][0], s = WHAN_color_plt[key][1], marker= WHAN_color_plt[key][2], label=key, edgecolors='black')
 
         for key in self.cd_WHAN_leg.keys():
             self.ax7.scatter(-99, -99, alpha= 1, color = self.cd_WHAN_leg[key][0], marker = self.cd_WHAN_leg[key][2], s = 50, label=key)

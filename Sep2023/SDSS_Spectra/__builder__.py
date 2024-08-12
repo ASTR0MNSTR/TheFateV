@@ -78,7 +78,7 @@ def universal_plotter(path_to_file, path_to_save, data_row):
                          hspace=0)
     
     ax_obs = fig.add_subplot(spec[0])
-    ax_obs.set_title(data_row['SPECID'][0])
+    ax_obs.set_title(str(data_row['SPECID'][0]) + ' ' + str(data_row['Z'][0]))
     ax_HB = fig.add_subplot(spec[1])
     ax_HA = fig.add_subplot(spec[2])
     

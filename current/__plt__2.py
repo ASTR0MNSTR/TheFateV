@@ -159,7 +159,7 @@ def classlist_plotter(axis, classlist, bids):
         err_down = np.asarray(err_down)
             
         axis.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
+        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100, edgecolors='black')
         axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
@@ -167,7 +167,7 @@ def classlist_plotter(axis, classlist, bids):
 def classlist_plotter_uplim(axis, classlist, bids):
     errs = []
     means = []
-    pert = np.linspace(-0.05, 0.05, num=len(classlist))
+    pert = np.linspace(-0.01, 0.01, num=len(classlist))
     for i, item in enumerate(classlist):
         X_plot = []
         Y_plot = []
@@ -198,14 +198,16 @@ def classlist_plotter_uplim(axis, classlist, bids):
         err_up = np.asarray(err_up)
         err_down = np.asarray(err_down)
             
-        axis.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
-        axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100)
         for i, elem in enumerate(up_lim_end):
             if elem:
-                axis.arrow(X_plot[i], Y_plot[i], 0, -0.3, width = 0.007, alpha = 1, color=item[4][0])
-        axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
-        axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
-        axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+                axis.arrow(X_plot[i], Y_plot[i], 0, -0.3, head_width=0.01, head_length=0.1, width = 0.003, alpha = 1, color=item[4][0], edgecolor='black', facecolor='black')
+                axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+            else:
+                axis.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
+                axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
+                axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
+                axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+                axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100, edgecolors='black')
 
 def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):    
 
@@ -232,7 +234,7 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
                 list_names = list_names_BPT_1
             elif WHAN_or_BPT == 'WHAN':
                 list_names = list_names_WHAN
-            axis.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names[j])
+            axis.scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names[j], edgecolors='black')
         axis.legend(loc=3, fontsize=17)
     
     return axis   
@@ -293,10 +295,10 @@ def class_list_creator_w_err_out(x, y, up, down, AGN_keys, WHAN_or_BPT, ks):
         keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFGXY'], ['SFGX'], ['NOEL']]
         colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['silver', 'o']]
     elif WHAN_or_BPT == 'WHAN':
-        # keys = [['sAGN'], ['wAGN'], ['SF'], ['ELR'], ['NER'], ['LLR']]
-        keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SFG', 'ELR', 'NER', 'LLR']]
-        # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
-        colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v'], ['black', 'h']]
+        keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR']]
+        # keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SFG', 'ELR', 'NER', 'LLR']]
+        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
+        # colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v'], ['black', 'h']]
     class_list = []
     
     for j, chain in enumerate(keys):
@@ -320,6 +322,8 @@ def class_list_creator_w_err_out(x, y, up, down, AGN_keys, WHAN_or_BPT, ks):
 def bin_stats(pars_dict):
     
     DataFrame = pd.read_csv(pars_dict['input_path'])
+    
+    adjusting_plotting_pars()
     
     gs_top = plt.GridSpec(6, 1, hspace=0, wspace=0)
     fig = plt.figure(figsize=(12, 18), tight_layout=True)
@@ -348,21 +352,22 @@ def bin_stats(pars_dict):
 
     top_axes = [ax2, ax3, ax5]
     for item in top_axes:
-        item.tick_params(top=False, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
+        item.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
 
-    ax1.tick_params(top=False, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
+    ax1.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
     ax1.text(5.5, 80, 'BPT', fontsize='15', ha='center', va='center')
     ax4.text(5.5, 80, 'WHAN', fontsize='15', ha='center', va='center')
     #ax1.xaxis.set_label_position('top')
     # ax1.set_title('BPT classification')
-    ax4.tick_params(top=False, labeltop=False, bottom=True, labelbottom=False, right=True, direction='in')
+    ax4.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
+    ax6.tick_params(top=False, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
     #ax4.xaxis.set_label_position('top')
     # ax4.set_title('WHAN classification')
 
     ax6.set_xlabel(pars_dict['xlabel'], fontsize=17)
     # ax6.set_xticks([r for r in range(6)], ['<0.05', '0.05-0.10', '0.10-0.15', '0.15-0.20', '0.20-0.25', '0.25-0.33'])
     ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'], fontsize=17)
-
+    
     fig.savefig(pars_dict['save_path'], dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
 
 def empty():
@@ -460,16 +465,16 @@ def plotter_histo_BPT(axes, BMS_condition, age, SC_BPT, y_name, BMS, bins):
  
         # Make the plot
         bar1 = axes.bar(br1, AGN_perc, color ='midnightblue', width = barWidth,
-        edgecolor ='grey', label ='AGNXY')
-        axes.bar(br1, AGNX_perc, color ='dodgerblue', width = barWidth, edgecolor ='grey', label ='AGNX')
-        # axes.bar(br1, AGNY_perc, color ='aqua', width = barWidth, edgecolor ='grey', label ='AGNY')
-        axes.bar(br1, UNC_perc, color ='springgreen', width = barWidth, edgecolor ='grey', label ='UNCXY')
-        axes.bar(br1, UNCX_perc, color ='darkgreen', width = barWidth, edgecolor ='grey', label ='UNCX')
-        axes.bar(br1, UNCY_perc, color ='limegreen', width = barWidth, edgecolor ='grey', label ='UNCY')
-        axes.bar(br1, NOEL_perc, color ='silver', width = barWidth, edgecolor ='grey', label ='NOEL')
-        axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SFGXY')
-        axes.bar(br1, SFX_perc, color ='crimson', width = barWidth, edgecolor ='grey', label ='SFGX')
-        axes.bar(br1, SFY_perc, color ='fuchsia', width = barWidth, edgecolor ='grey', label ='SFGY')
+        edgecolor ='black', label ='AGNXY')
+        axes.bar(br1, AGNX_perc, color ='dodgerblue', width = barWidth, edgecolor ='black', label ='AGNX')
+        # axes.bar(br1, AGNY_perc, color ='aqua', width = barWidth, edgecolor ='black', label ='AGNY')
+        axes.bar(br1, UNC_perc, color ='springgreen', width = barWidth, edgecolor ='black', label ='UNCXY')
+        axes.bar(br1, UNCX_perc, color ='darkgreen', width = barWidth, edgecolor ='black', label ='UNCX')
+        axes.bar(br1, UNCY_perc, color ='limegreen', width = barWidth, edgecolor ='black', label ='UNCY')
+        axes.bar(br1, NOEL_perc, color ='silver', width = barWidth, edgecolor ='black', label ='NOEL')
+        axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='black', label ='SFGXY')
+        axes.bar(br1, SFX_perc, color ='crimson', width = barWidth, edgecolor ='black', label ='SFGX')
+        axes.bar(br1, SFY_perc, color ='fuchsia', width = barWidth, edgecolor ='black', label ='SFGY')
         
         yticks = np.arange(0, 101, 25)
         axes.set_ylabel(f'{y_name}', fontsize=17)
@@ -548,13 +553,13 @@ def plotter_histo_WHAN(axes, BMS_condition, age, SC_WHAN, y_name, BMS, bins):
  
         # Make the plot
     bar1 = axes.bar(br1, sAGN_perc, color ='midnightblue', width = barWidth,
-    edgecolor ='grey', label ='sAGN')
-    axes.bar(br1, wAGN_perc, color ='dodgerblue', width = barWidth, edgecolor ='grey', label ='wAGN')
-    axes.bar(br1, NOEL_perc, color ='springgreen', width = barWidth, edgecolor ='grey', label ='UNC')
-    axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='grey', label ='SFG')
-    axes.bar(br1, ELR_perc, color ='sandybrown', width = barWidth, edgecolor ='grey', label ='ELR')
-    axes.bar(br1, RG_perc, color ='chocolate', width = barWidth, edgecolor ='grey', label ='NER')
-    axes.bar(br1, LLR_perc, color ='maroon', width = barWidth, edgecolor ='grey', label ='LLR')
+    edgecolor ='black', label ='sAGN')
+    axes.bar(br1, wAGN_perc, color ='dodgerblue', width = barWidth, edgecolor ='black', label ='wAGN')
+    axes.bar(br1, NOEL_perc, color ='springgreen', width = barWidth, edgecolor ='black', label ='UNC')
+    axes.bar(br1, SF_perc, color ='mediumvioletred', width = barWidth, edgecolor ='black', label ='SFG')
+    axes.bar(br1, ELR_perc, color ='sandybrown', width = barWidth, edgecolor ='black', label ='ELR')
+    axes.bar(br1, RG_perc, color ='chocolate', width = barWidth, edgecolor ='black', label ='NER')
+    axes.bar(br1, LLR_perc, color ='maroon', width = barWidth, edgecolor ='black', label ='LLR')
  
         # Adding Xticks
 

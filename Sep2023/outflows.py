@@ -11,18 +11,18 @@ from __plt__ import *
 from __algo__ import *
 from __reader__ import *
     
-def outflow_wAGN(SFR, LAGN, MS):
+def outflow_wAGN(SFR, LOIII, MS):
     try: 
-        return 1.14*math.log10(0.52*(10**SFR) + 0.51*LAGN) - 0.41*math.log10((10**(MS))/(10**11))
+        return 1.14*math.log10(0.52*(10**SFR) + 0.51*(10**(LOIII + np.log10(3500) - 43))) - 0.41*math.log10((10**(MS))/(10**11))
         # return 1.14*math.log10(0.52*(10**SFR)) - 0.41*(MS - 11)
     except:
-        return -99
+        return -99999.0
 
 def outflow_woAGN(SFR, MS):
     try: 
         return 1.14*math.log10(0.52*(10**SFR)) - 0.41*math.log10((10**(MS))/(10**11))
     except:
-        return -99
+        return -99999.0
     
 def fit(x, y_mid, y_up, y_down):
     n_sim = 50
@@ -117,14 +117,14 @@ class Main:
         
         for i in range(len(self.DataFrame['SFR_0_1Gyr_percentile50'])):
                 
-            if self.DataFrame['LAGN_er'][i] in [-1, -2]:
-                OUTFLOW.append(outflow_wAGN(self.DataFrame['SFR_0_1Gyr_percentile50'][i], self.DataFrame['LAGN'][i], self.DataFrame['mass_stellar_percentile50'][i]))
-                OUTFLOW_up.append(self.DataFrame['LAGN_er'][i])
-                OUTFLOW_down.append(self.DataFrame['LAGN_er'][i])
+            if self.DataFrame['LOIII_er'][i] in [-1, -2]:
+                OUTFLOW.append(outflow_wAGN(self.DataFrame['SFR_0_1Gyr_percentile50'][i], self.DataFrame['LOIII'][i], self.DataFrame['mass_stellar_percentile50'][i]))
+                OUTFLOW_up.append(-100000.0)
+                OUTFLOW_down.append(-100000.0)
             else:
-                OUTFLOW.append(outflow_wAGN(self.DataFrame['SFR_0_1Gyr_percentile50'][i], self.DataFrame['LAGN'][i], self.DataFrame['mass_stellar_percentile50'][i]))
-                OUTFLOW_up.append(outflow_wAGN(self.DataFrame['SFR_0_1Gyr_percentile50'][i], self.DataFrame['LAGN'][i] + float(self.DataFrame['LAGN_er'][i]), self.DataFrame['mass_stellar_percentile50'][i]))
-                OUTFLOW_down.append(outflow_wAGN(self.DataFrame['SFR_0_1Gyr_percentile50'][i], self.DataFrame['LAGN'][i] - float(self.DataFrame['LAGN_er'][i]), self.DataFrame['mass_stellar_percentile50'][i]))
+                OUTFLOW.append(outflow_wAGN(self.DataFrame['SFR_0_1Gyr_percentile50'][i], self.DataFrame['LOIII'][i], self.DataFrame['mass_stellar_percentile50'][i]))
+                OUTFLOW_up.append(outflow_wAGN(self.DataFrame['SFR_0_1Gyr_percentile50'][i], np.log10(10**self.DataFrame['LOIII'][i] + 10**float(self.DataFrame['LOIII_er'][i])), self.DataFrame['mass_stellar_percentile50'][i]))
+                OUTFLOW_down.append(outflow_wAGN(self.DataFrame['SFR_0_1Gyr_percentile50'][i], np.log10(10**self.DataFrame['LOIII'][i] - 10**float(self.DataFrame['LOIII_er'][i])), self.DataFrame['mass_stellar_percentile50'][i]))
             
             OUTFLOW_off.append(outflow_woAGN(self.DataFrame['SFR_0_1Gyr_percentile50'][i], self.DataFrame['mass_stellar_percentile50'][i]))
             OUTFLOW_up_off.append(outflow_woAGN(self.DataFrame['SFR_0_1Gyr_percentile84'][i], self.DataFrame['mass_stellar_percentile16'][i]))
@@ -134,18 +134,15 @@ class Main:
             #     print(self.DataFrame['Z_1'][i])
             #     print(self.DataFrame['SFR_0_1Gyr_percentile50'][i])
             #     print(self.DataFrame['mass_stellar_percentile50'][i])
-            #     print(self.DataFrame['LAGN'][i])
+            #     print(self.DataFrame['LOIII'][i])
             #     print(OUTFLOW_up[-1])
             #     print(OUTFLOW[-1])
             #     print(OUTFLOW_down[-1])
                 
-        self.DataFrame['OUT_OR'] = OUTFLOW
-        self.DataFrame['OUT_OR_OFF'] = OUTFLOW_off
-        self.DataFrame.to_csv(output_path, index=False)
         
-        self.DataFrame['OUTFLOW'] = OUTFLOW_off
-        self.DataFrame['OUTFLOW_up'] = OUTFLOW_up_off
-        self.DataFrame['OUTFLOW_down'] = OUTFLOW_down_off
+        self.DataFrame['out_off_16'] = OUTFLOW_down_off
+        self.DataFrame['out_off_50'] = OUTFLOW_off
+        self.DataFrame['out_off_84'] = OUTFLOW_up_off
         
         gs_top = plt.GridSpec(2, 2, wspace=0, hspace=0)
         self.fig1 = plt.figure(figsize=(12, 12))
@@ -181,36 +178,35 @@ class Main:
 
         ax1, ax2 = Main.plotting_init(self,
             {'X' : 'ager_percentile50',
-             'Y' : 'OUTFLOW',
-             'Y_up' : 'OUTFLOW_up',
-             'Y_down' : 'OUTFLOW_down',
+             'Y' : 'out_off_50',
+             'Y_up' : 'out_off_84',
+             'Y_down' : 'out_off_16',
              'bids_chain' : [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]],
              'legend' : False
              },
             ax1, ax2
         )
         
-        self.DataFrame['OUTFLOW'] = OUTFLOW
-        self.DataFrame['OUTFLOW_up'] = OUTFLOW_up
-        self.DataFrame['OUTFLOW_down'] = OUTFLOW_down   
+        self.DataFrame['out_on_16'] = OUTFLOW_down   
+        self.DataFrame['out_on_50'] = OUTFLOW
+        self.DataFrame['out_on_84'] = OUTFLOW_up
         
         ax3, ax4 = Main.plotting_init(self,
             {'X' : 'ager_percentile50',
-             'Y' : 'OUTFLOW',
-             'Y_up' : 'OUTFLOW_up',
-             'Y_down' : 'OUTFLOW_down',
+             'Y' : 'out_on_50',
+             'Y_up' : 'out_on_84',
+             'Y_down' : 'out_on_16',
              'bids_chain' : [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]],
              'legend' : True
              },
             ax3, ax4
         )
-        
+        self.DataFrame.to_csv(output_path, index=False)
         self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
     
     def plotting_init(self, pars, ax1, ax2):
         Main.plotter(self, [ax1, ax2], pars['X'], pars['Y'], pars['Y_up'], pars['Y_down'], 'BPT', 'WHAN', pars['bids_chain'], pars['legend'])
         return ax1, ax2
-
 
     def plotter(self, axes, x, y, up, down, BPT_key, WHAN_key, bids_chain, legend):
         XX = []
@@ -235,23 +231,23 @@ class Main:
             Y_down = self.DataFrame[down][i]
             
             alpha = 0.2
-            if Y_up == -2:
+            if Y_up == -100000.0:
                 axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=alpha)
                 axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=alpha)
                 k = 0
                 Y_up = 0
                 Y_down = 0
-            elif Y_up == -1:
-                axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=alpha)
-                axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=alpha)
-                k = -1
-                Y_up = 0
-                Y_down = 0
+            # elif Y_up == -1:
+            #     axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[AGN][0], alpha=alpha)
+            #     axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=alpha)
+            #     k = -1
+            #     Y_up = 0
+            #     Y_down = 0
             else:
                 # axes[0].errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_BPT[AGN][0], marker = '.')
                 # axes[1].errorbar(X, Y, yerr = [[Y - float(Y_down)], [float(Y_up) - Y]], alpha = 0.5, color = self.color_dict_WHAN[WHAN][0], marker = '.')
-                axes[0].scatter(X, Y, alpha = alpha, color = self.color_dict_BPT[AGN][0], marker = '.')
-                axes[1].scatter(X, Y, alpha = alpha, color = self.color_dict_WHAN[WHAN][0], marker = '.')
+                axes[0].scatter(X, Y, alpha = alpha, color = self.color_dict_BPT[AGN][0], marker = '.', s = self.color_dict_BPT[AGN][1])
+                axes[1].scatter(X, Y, alpha = alpha, color = self.color_dict_WHAN[WHAN][0], marker = '.', s = self.color_dict_WHAN[WHAN][1])
                 X_fit.append(X)
                 Y_fit.append(Y)
                 Y_fit_up.append(Y_up)

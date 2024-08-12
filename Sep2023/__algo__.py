@@ -112,37 +112,37 @@ def dust_correction(HA, HA_er, HB, HB_er):
         
     return coefs, E_B_V
 
-def luminosity_calcularor(OIII, OIII_er, z, LAGN_er):
+def luminosity_calcularor(OIII, OIII_er, z, LOIII_er):
     cosmo = FlatLambdaCDM(H0=70 * u.km / u.s / u.Mpc, Om0=0.3)
     dist_Q = cosmo.luminosity_distance(z)
     distance = dist_Q.to(u.cm).value
     
-    LAGN = 3500 * 4 * np.pi * distance* distance * OIII / ((1+z) * (10**(60))) #erg/s
-    if LAGN_er == None:
-        LAGN_er = 3500 * 4 * np.pi * (distance* distance) * OIII_er / ((1+z) * (10**(60)))
-    return LAGN, LAGN_er
+    LOIII = np.log10(4 * np.pi * distance* distance * OIII / ((1+z))) - 17 #erg/s
+    if LOIII_er == None:
+        LOIII_er = np.log10(4 * np.pi * (distance* distance) * OIII_er / ((1+z))) - 17
+    return LOIII, LOIII_er
     
 def AGN_lum(OIII, OIII_er, z, coef):
     SN = 2
     if OIII == -99999.0 or OIII_er < 0:
         return -99999.0, -99999.0
     elif OIII < 0 and OIII_er > 0 and SN*OIII_er + OIII < 0: #absorption
-        OIII += SN*OIII_er
+        OIII = SN*OIII_er
         # LAGN_er = 'upAbs'
-        LAGN_er = -1
-    elif OIII <= SN*OIII_er: #non-detection
+        LOIII_er = -1
+    elif OIII < SN*OIII_er: #non-detection
         OIII += SN*OIII_er
         # LAGN_er = 'upNon'
-        LAGN_er = -2
-    elif OIII > SN*OIII_er:
+        LOIII_er = -2
+    elif OIII >= SN*OIII_er:
         OIII_er *= coef
         OIII *= coef
-        LAGN_er = None
+        LOIII_er = None
     else:
         print('SMTH WRONG!')
     
-    LAGN, LAGN_err = luminosity_calcularor(OIII, OIII_er, z, LAGN_er)
-    return LAGN, LAGN_err
+    LOIII, LOIII_err = luminosity_calcularor(OIII, OIII_er, z, LOIII_er)
+    return LOIII, LOIII_err
     
 
 def line_flagging(pair, spec_coefs):
@@ -296,7 +296,7 @@ def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, 
     
     HA_ew, HA_ew_err, pair_HA = ew_proc(HA_ew, HA_ew_err)
     
-    # coefs_1, E_B_V = dust_correction(HA, HA_er, HB, HB_er)
+    # coefs, E_B_V = dust_correction(HA, HA_er, HB, HB_er)
 
     coefs = [1, 1, 1, 1, 1, 1, 1]
     
@@ -330,7 +330,7 @@ def AGN_reg(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_ew, HA_ew_err, 
     
     #AGN Luminosity estimation
     coef = coefs[0]
-    LAGN, LAGN_er = AGN_lum(OIII, OIII_er, z, coef)
+    LOIII, LOIII_er = AGN_lum(OIII, OIII_er, z, coef)
 
-    return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LAGN, LAGN_er, HA_ew, HA_ew_err, pair_HA
+    return AGN, X, pair_x_flags, Y, pair_y_flags, SC_WHAN, LOIII, LOIII_er, HA_ew, HA_ew_err, pair_HA
 

@@ -195,11 +195,11 @@ class Main(hp):
 
         if legend_key == 1:
             for j, item in enumerate(class_list_BPT):
-                axes[0].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j])
+                axes[0].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_BPT_1[j], edgecolors='black')
             axes[0].legend(loc=3, fontsize=15)
 
             for j, item in enumerate(class_list_WHAN):
-                axes[1].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j])
+                axes[1].scatter(-99, -99, alpha = 1, color=item[4][0], marker=item[4][1], s = 150, label=list_names_WHAN[j], edgecolors='black')
             axes[1].legend(loc=3, fontsize=15)
         
         return axes
