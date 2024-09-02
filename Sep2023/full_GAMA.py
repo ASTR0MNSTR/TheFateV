@@ -49,10 +49,10 @@ class Main:
     def __init__(self, path):
         self.path = path
         self.out_path = r'E:/databases/GAMA_MACHINE.csv'
-        self.final_out_path = r'E:/databases/MRT/MRT.csv'
+        self.final_out_path = r'E:/databases/MRT/MRT_old.csv'
         
     def completely_different_extraction(self):
-        DirectSummation_path = r'E:\LICENSE\ProgsData\main\DirectSummationv05'
+        DirectSummation_path = r"E:\databases\GAMAs4\DirectSummationv05"
         DS_cols ={
             'SPECID' : 0,
             'CATAID' : 1,
@@ -76,6 +76,7 @@ class Main:
         DirectSummation = pd.read_csv(DirectSummation_path, sep=r"\s+", engine='python', usecols=DS_cols.values(), names=DS_cols.keys())
         DirectSummation = DirectSummation[DirectSummation.IS_BEST == True]
         DirectSummation = DirectSummation[DirectSummation.IS_SBEST == True]
+        print(DirectSummation.shape)
         # print(DirectSummation)
         
         MagPhys_path = r'E:\databases\GAMAs\MagPhys'
@@ -90,18 +91,22 @@ class Main:
         }
         
         MagPhys = pd.read_csv(MagPhys_path, sep=r"\s+", engine='python', usecols=MP_cols.values(), names=MP_cols.keys())
+        print(MagPhys.shape)
         
-        Sersic_path = r'E:\databases\SersicCatSDSS'
+        Sersic_path = r'E:\databases\GAMAs\SersicCatSDSS'
         S_cols = {
             'CATAID' : 0,
             'GALINDEX_r' : 86,
             'GALINDEXERR_r' : 93
         }
         Sersic = pd.read_csv(Sersic_path, sep=r"\s+", engine='python', usecols=S_cols.values(), names=S_cols.keys())
+        print(Sersic.shape)
         # print(Sersic)
         
         Result1 = pd.merge(DirectSummation, MagPhys, how="left", on='CATAID')
+        print(Result1.shape)
         FinalDataFrame = pd.merge(Result1, Sersic, how="left", on='CATAID')
+        print(FinalDataFrame.shape)
         FinalDataFrame.fillna(-99999.0, inplace=True)
         FinalDataFrame.RA = FinalDataFrame.RA.round(6)
         FinalDataFrame.DEC = FinalDataFrame.DEC.round(6)
@@ -162,6 +167,7 @@ class Main:
         print('Spectra processing finished!')
         
         NewFrameDict = {
+            'SPECID' : DataFrame['SPECID'],
             'CATAID' : DataFrame['CATAID'],
             'RA' : DataFrame['RA'],
             'DEC' : DataFrame['DEC'],

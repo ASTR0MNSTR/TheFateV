@@ -147,7 +147,7 @@ ARRAY5  = 'WDISP   '           / Wavelength dispersion
 CTYPE1  = 'LINEAR  '           / Wavelength dispersion                          
 CUNIT1  = 'Angstrom'           / Units for axis 1                               
 CRPIX1  =                   1. / Starting pixel (1-indexed)                     
-CRVAL1  =               3.5803 / Central wavelength (log10) of first pixel      
+CRVFAL1  =               3.5803 / Central wavelength (log10) of first pixel      
 CDELT1  =               0.0001 / Log10 dispersion per pixel                     
 CD1_1   =               0.0001 / Log10 dispersion per pixel                     
 HISTORY The following keywords were added by GAMA.                              
