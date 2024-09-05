@@ -143,6 +143,41 @@ def theor_lines(axes, key):
             # ax.text(11.3, (0.84 - 0.026*11.4074)*11.3 - (6.5 - 0.11*11.4074), 'z = 0.19', rotation=9)
             # ax.plot(x, (0.84 - 0.026*9.8615801)*x - (6.51 - 0.11*9.8615801), linestyle='solid', color='k')
             # ax.text(11.3, (0.84 - 0.026*9.8615801)*11.3 - (6.5 - 0.11*9.8615801), 'z = 0.33', rotation=9)
+            
+def fit(x, y_mid, y_up, y_down):
+    n_sim = 50
+    a_list= []
+    b_list = []
+    b_err_list = []
+    for i in range(1000):
+        data = []
+        x_fit = []
+        for j in range(len(x)):  
+            pair = [y_mid[j] - y_down[j], y_up[j] - y_mid[j], y_mid[j]]
+            if random.random() > 0.5:
+                data.append(pair[2] + abs(random.gauss(0, pair[1])))
+            else:
+                data.append(pair[2] - abs(random.gauss(0, pair[0])))
+
+            x_fit.append(10**x[j])
+
+        x_fit = np.array(x_fit)
+        y_fit = np.array(data)
+        popt, pcov = curve_fit(lambda age, a, b: a - 0.4343*age/b, x_fit, y_fit)
+
+        a_list.append(popt[0])
+        b_list.append(popt[1])
+        b_err_list.append(np.sqrt(np.diag(pcov))[1])
+        
+    a_array = np.array(a_list)
+    b_array = np.array(b_list)
+    b_array = b_array/(10**9)
+    a = np.percentile(a_array, 50)
+    b = np.percentile(b_array, 50)
+    print(a, '+', np.percentile(a_array, 84) - a, '-', a - np.percentile(a_array, 16))
+    print(b, '+', np.percentile(b_array, 84) - b, '-', b - np.percentile(b_array, 16))
+    print('\n')
+    return a, b
     
             
 def plotting(pars_dict):
@@ -315,6 +350,13 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
         axis.scatter(X, Y, alpha=0.4, color = color_dict[AGN][0], marker='.', s = color_dict[AGN][1])
                     
     class_list = class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT)
+    
+    # a, b = fit(x, y, up, down)
+    
+    a = -2.257
+    b = 2.213
+    x_theor = np.arange(8.6, 10.2, 0.01)
+    axis.plot(x_theor, a - 0.4343*(10**x_theor)/(b*(10**9)), color='orange', linestyle='dashed', linewidth=3.)
     
     classlist_plotter(axis, class_list, bids)
     # rainbow_plotter(axis, class_list)

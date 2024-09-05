@@ -45,13 +45,13 @@ class Main:
         Main.histo(self, ax2, [0], 'WHAN')
         Main.histo(self, ax4, [1], 'WHAN')
         Main.histo(self, ax6, [0, 1], 'WHAN')
-        ax1.set(title='below-MS (1298 galaxies)')
-        ax3.set(title='MS (697 galaxies)')
-        ax5.set(title='Total (1995 galaxies)')     
+        ax1.set(title='below-MS (1539 galaxies)')
+        ax3.set(title='MS (870 galaxies)')
+        ax5.set(title='Total (2409 galaxies)')     
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
-        fig.savefig('./FIGURES_IN_PAPER/BMSMS.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+        fig.savefig('./FIGURES_IN_PAPER_DR4/BMSMS.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         plt.show()
 
     def sorting_forWHAN(self, keys):
@@ -129,7 +129,7 @@ class Main:
                     UNCY += 1
                 elif self.dataframe['BPT'][i] == 'NDA':
                 #   NDA += 1
-                    pass
+                    self.total1 -= 1
                 elif self.dataframe['BPT'][i] == 'NOEL':
                     NOEL += 1
                 else:
@@ -164,6 +164,6 @@ class Main:
             
             
 if __name__ == '__main__':
-    obj = Main('GAMA_ETG_OLA.csv')
+    obj = Main(r'E:\databases\GAMAs4\DETG_DR4.csv')
     obj.reading()
     obj.plotting()

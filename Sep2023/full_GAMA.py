@@ -4,6 +4,34 @@ from astropy.cosmology import Planck13 as cosmo
 from __algo__ import *
 from __plt__ import *
 
+def aperture_flagging(REFF, REFF_err, SURVEY):
+    apers = []
+    for i, surv in enumerate(SURVEY):
+        ER = REFF_err[i]
+        Y = REFF[i]
+        if ER == -9999.0 or 2*ER > Y:
+            Y = -99999.0
+            ER = -99999.0
+            trust = -1
+        else:
+            if surv == 'GAMA':
+                if (Y - ER) > 2:
+                    trust = 1
+                elif (Y + ER) < 2:
+                    trust = 0
+                else:
+                    trust = -1 
+            elif surv == 'SDSS':
+                if (Y - ER) > 3:
+                    trust = 1
+                elif (Y + ER) < 3:
+                    trust = 0
+                else:
+                    trust = -1
+        apers.append(trust)
+    return apers
+        
+
 def MS_flagging(SFR_array, MS_array, Z_array):
     bms = []
     for i in range(len(Z_array)):
@@ -79,7 +107,7 @@ class Main:
         print(DirectSummation.shape)
         # print(DirectSummation)
         
-        MagPhys_path = r'E:\databases\GAMAs\MagPhys'
+        MagPhys_path = r'E:\databases\GAMAs4\MagPhysv06'
         MP_cols = {
             'CATAID' : 0,
             'mass_stellar_percentile16' : 34,
@@ -93,7 +121,7 @@ class Main:
         MagPhys = pd.read_csv(MagPhys_path, sep=r"\s+", engine='python', usecols=MP_cols.values(), names=MP_cols.keys())
         print(MagPhys.shape)
         
-        Sersic_path = r'E:\databases\GAMAs\SersicCatSDSS'
+        Sersic_path = r'E:\databases\GAMAs4\SersicCatSDSSv09'
         S_cols = {
             'CATAID' : 0,
             'GALINDEX_r' : 86,
@@ -172,6 +200,7 @@ class Main:
             'RA' : DataFrame['RA'],
             'DEC' : DataFrame['DEC'],
             'Z' : DataFrame['Z'],
+            'SURVEY' : DataFrame['SURVEY'],
             'deltaMS' : MS_flag,
             'BPT' : BPTs,
             'WHAN' : WHANs, 

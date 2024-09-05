@@ -185,7 +185,7 @@ class Main(hp):
         with open(self.ola_file, 'r') as input:
             reader = csv.DictReader(input)
             for row in reader:
-                self.sample_dict.update({int(row['CATAID_1']): [int(row['below=0/MS=1']), float(row['ager_percentile50'])]})
+                self.sample_dict.update({int(row['CATAID_1']): [int(row['below=0/MS=1']), float(row['ager_percentile50'])]})   
 
     def samples_get(self):
         with open(r'E:\backup\backup_BPT\Sep2023\outflow4OR_1.txt', 'r') as f:
@@ -820,7 +820,7 @@ class Main(hp):
 
 
 if __name__ == '__main__':
-    obj = Main('E:\LICENSE\ProgsData\main\Oleg_GAMA_belowMS.csv', 'E:\LICENSE\ProgsData\main\DirectSummationv05', r'E:\backup\backup_BPT\GAMA_ETG_OLA.csv')
+    obj = Main(r"E:\databases\GAMAs\Oleg_GAMA_belowMS.csv", r'E:\databases\GAMAs\DirectSummation', r'E:\backup\backup_BPT\GAMA_ETG_OLA4.csv')
     obj.ola_reading()
     # obj.samples_get()
     obj.gama_reading()

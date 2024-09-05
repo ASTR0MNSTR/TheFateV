@@ -69,7 +69,7 @@ class Main:
         
         axs[3, 0].remove()
         axs[3, 1].remove()
-        fig.savefig('./FIGURES_IN_PAPER/DIAG.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+        fig.savefig('./FIGURES_IN_PAPER_DR4/DIAG.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         plt.show()
 
     def sorting_forWHAN(self, keys):
@@ -133,6 +133,6 @@ class Main:
         
         
 if __name__ == '__main__':
-    obj = Main('GAMA_ETG_OLA.csv')
+    obj = Main(r'E:\databases\GAMAs4\DETG_DR4.csv')
     obj.reading()
     obj.plotting()

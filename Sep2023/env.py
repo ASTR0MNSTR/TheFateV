@@ -27,9 +27,8 @@ class hp:
         return SFR - SFR_teor
     
 class Main(hp):
-    def __init__(self, ola_file, out):
-        self.ola_file = ola_file
-        self.out = out
+    def __init__(self, path_to_data):
+        self.path_to_data = path_to_data
         self.base_dict = {}
         self.data_dict = []
         self.color_dict_BPT = color_dict_BPT
@@ -44,47 +43,6 @@ class Main(hp):
             1 : ['*', 25], #ms
             -1 : ['x', 25] #??????
         }
-    
-    def reading(self):
-        k = 0
-        t = 0
-        with open(self.ola_file, 'r') as input:
-            lines = input.readlines()
-        lines_stripped = [line.strip() for line in lines]
-        for line in lines_stripped:
-            GAMAID = int(line.split()[0])
-            try:
-                m_s = float(line.split()[35])
-                age = float(line.split()[125])
-                Y = float(line.split()[1011])
-                Y_err = float(line.split()[1012])
-                Y_flag = float(line.split()[1013])
-                self.base_dict.update({GAMAID: [m_s, age, Y, Y_err, Y_flag]})
-                t += 1
-            except:
-                pass
-        
-        print(f'All galaxies with data: {t}')
-   
-        #print(self.base_dict)
-
-        self.data_dict = []
-
-        with open(self.out, 'r') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                self.data_dict.append({'GAMAID': int(row['CATAID_1']), 'AGN': row['BPT'], 'SC_WHAN' : row['WHAN']})
-                
-        #print(self.data_dict)
-
-    def matching(self):
-        for item in self.data_dict:
-            try:
-                self.base_dict[item['GAMAID']].extend([item['AGN'], item['SC_WHAN']])
-            except KeyError:
-                pass
-            
-        # print(self.base_dict)
     
     def plotting_mdms_age(self):
         gs_top = plt.GridSpec(2, 2, wspace=0, hspace=0.15)
@@ -127,10 +85,10 @@ class Main(hp):
         generating_annotation(ax2, 9.9 + k*(11.6 - 9.9), -2 + k*(3 - (-2)), 'WHAN')
 
         bids_mass = [[10.0, 10.25], [10.25, 10.5], [10.5, 10.75], [10.75, 11], [11, 11.25], [11.25, 11.5]]
-        ax1, ax2 = Main.plotter(self, bids_mass, [ax1, ax2], 0, 0)
+        ax1, ax2 = Main.plotter(self, bids_mass, [ax1, ax2], 'mass_stellar_percentile50', 0)
         bids_age = [[8.8, 9.0], [9.0, 9.2], [9.2, 9.4], [9.4, 9.6], [9.6, 9.8], [9.8, 10.0]]
-        ax3, ax4 = Main.plotter(self, bids_age, [ax3, ax4], 1, 1)
-        self.fig1.savefig('./FIGURES_IN_PAPER/SurfaceDensity.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+        ax3, ax4 = Main.plotter(self, bids_age, [ax3, ax4], 'ager_percentile50', 1)
+        self.fig1.savefig('./FIGURES_IN_PAPER_DR4/SurfaceDensity.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         #plt.show()
 
     def plotter(self, bids, axes, xkey, legend_key):
@@ -143,14 +101,16 @@ class Main(hp):
         WHAN_keys = []
         ks = []
 
-        for key in self.base_dict.keys():
-            if len(self.base_dict[key]) == 7:
-                X = self.base_dict[key][xkey]
-                Y = self.base_dict[key][2]
-                Y_er = self.base_dict[key][3]
-                Y_flag = self.base_dict[key][4]
-                BPT = self.base_dict[key][5]
-                WHAN = self.base_dict[key][6]
+        df = pd.read_csv(self.path_to_data)
+        clean_df = df.dropna()
+        clean_df.reset_index(inplace=True, drop=True)
+        for index, row in clean_df.iterrows():
+                X = row[xkey]
+                Y = row['SurfaceDensity']
+                Y_er = row['SurfaceDensityErr']
+                Y_flag = row['SurfaceDensityFlag']
+                BPT = row['BPT']
+                WHAN = row['WHAN']
                 if Y > 0 and Y_er > 0 and Y - 2*Y_er >= 0 and Y_flag == 0:
                     Y_up = np.log10(Y + Y_er)
                     Y_down = np.log10(Y - Y_er)
@@ -158,6 +118,14 @@ class Main(hp):
                     axes[0].scatter(X, Y, alpha= 0.5, color = self.color_dict_BPT[BPT][0], marker='.', s = 30)
                     axes[1].scatter(X, Y, alpha= 0.5, color = self.color_dict_WHAN[WHAN][0], marker='.', s = 30)
                     k = 1
+                    tot_age.append(X)
+                    tot.append(Y)
+                    tot_up.append(Y_up)
+                    tot_down.append(Y_down)
+                    BPT_keys.append(BPT)
+                    WHAN_keys.append(WHAN)
+                    ks.append(k)
+
                 elif (Y > 0 and Y_er == -999.9) or (Y_flag in [1, 2]): #case 2
                     Y_up = np.log10(Y)
                     Y_down = np.log10(Y)
@@ -165,6 +133,14 @@ class Main(hp):
                     axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[BPT][0], alpha=0.5)
                     axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.5)
                     k = 0
+                    tot_age.append(X)
+                    tot.append(Y)
+                    tot_up.append(Y_up)
+                    tot_down.append(Y_down)
+                    BPT_keys.append(BPT)
+                    WHAN_keys.append(WHAN)
+                    ks.append(k)
+
                     
                 elif Y > 0 and Y_er > 0 and Y - 2*Y_er < 0:
                     Y_up = np.log10(Y + 2*Y_er)
@@ -174,13 +150,14 @@ class Main(hp):
                     axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.5)
                     k = -1
                     
-                tot_age.append(X)
-                tot.append(Y)
-                tot_up.append(Y_up)
-                tot_down.append(Y_down)
-                BPT_keys.append(BPT)
-                WHAN_keys.append(WHAN)
-                ks.append(k)
+                    tot_age.append(X)
+                    tot.append(Y)
+                    tot_up.append(Y_up)
+                    tot_down.append(Y_down)
+                    BPT_keys.append(BPT)
+                    WHAN_keys.append(WHAN)
+                    ks.append(k)
+
 
                 
                 #Y = hp.ms_func(item[y], item[x], item['Z'])
@@ -205,7 +182,7 @@ class Main(hp):
         return axes
 
 if __name__ == '__main__':
-    obj = Main('E:\LICENSE\ProgsData\main\GAMAforOleg_1.txt', 'GAMA_ETG_OLA.csv')
-    obj.reading()
-    obj.matching()
+    obj = Main(r'E:\databases\GAMAs4\DETG_DR4.csv')
+    # obj.reading()
+    # obj.matching()
     obj.plotting_mdms_age()

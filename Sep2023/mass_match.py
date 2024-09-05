@@ -81,8 +81,8 @@ class Main:
 
         Dict_for_dataframe ={
             'SPECID' : spec_ids_out,
-            'GALRE_i' : reff,
-            'GALREERR_i' : reff_err,
+            'GALRE_r' : reff,
+            'GALREERR_r' : reff_err,
             'Aperture_1_Reff': trust_val
         }
 

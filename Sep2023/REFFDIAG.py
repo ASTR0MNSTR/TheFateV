@@ -9,8 +9,8 @@ def plotting_pars():
 
 class Main:
 
-    def __init__(self, file):
-        self.file = file
+    def __init__(self, path_to_data):
+        self.path_to_data = path_to_data
         self.dataframe = None
         self.WHAN_labels = ['sAGN', 'wAGN', 'UNC', 'SFG', 'ELR', 'LLR', 'NER']
         self.WHAN_colors = ['midnightblue', 'blue', 'springgreen', 'mediumvioletred', 'sandybrown', 'maroon', 'chocolate']
@@ -24,12 +24,11 @@ class Main:
         self.indexes_BPT = []
     
     def reading(self):
-        usecols= ['WHAN', 'BPT', 'Aperture_1_Reff', 'Z', 'mass_stellar_percentile50']
-        source_path = r'E:/LICENSE/ProgsData/main/GAMAforOleg.txt'
-        input_path = r'E:/databases/GAMA_ETG_OLA_R_r_1.csv'
-        output_path = r'E:/databases/Merged.csv'
-        merge_phys_databases(source_path, input_path, output_path)
-        self.dataframe = pd.read_csv(output_path, usecols=usecols)
+        usecols= ['WHAN', 'BPT', 'in_aperture', 'Z', 'mass_stellar_percentile50']
+        # source_path = r'E:/LICENSE/ProgsData/main/GAMAforOleg.txt'
+        # input_path = r'E:/databases/GAMA_ETG_OLA_R_r_1.csv'
+        # merge_phys_databases(source_path, input_path, output_path)
+        self.dataframe = pd.read_csv(self.path_to_data, usecols=usecols)
     
     def plotting(self):
 
@@ -52,13 +51,13 @@ class Main:
         Main.histo(self, ax2, [0], 'WHAN')
         Main.histo(self, ax4, [1], 'WHAN')
         Main.histo(self, ax6, [0, 1], 'WHAN')
-        ax1.set(title=r'$> 1 \; R_{eff}$' + ' (969 gal.) \n [compact galaxies]')
-        ax3.set(title=r'$< 1 \; R_{eff}$' + ' (652 gal.) \n [extended galaxies]')
-        ax5.set(title='Total (1621 gal.)')     
+        ax1.set(title=r'$> 1 \; R_{eff}$' + ' (1202 gal.) \n [compact galaxies]')
+        ax3.set(title=r'$< 1 \; R_{eff}$' + ' (679 gal.) \n [extended galaxies]')
+        ax5.set(title='Total (1881 gal.)')     
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
-        fig.savefig('./FIGURES_IN_PAPER/APERTURE_DIAG.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+        fig.savefig('./FIGURES_IN_PAPER_DR4/APERTURE_DIAG.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         plt.show()
 
     def sorting_forWHAN(self, keys):
@@ -73,8 +72,8 @@ class Main:
         NDA = 0
         self.total1 = 0
         redshift = []
-        for i in range(len(self.dataframe['Aperture_1_Reff'])):
-            if self.dataframe['Aperture_1_Reff'][i] in keys:
+        for i in range(len(self.dataframe['in_aperture'])):
+            if self.dataframe['in_aperture'][i] in keys:
                 self.total1 += 1
                 redshift.append(float(self.dataframe['Z'][i]))
                 if self.dataframe['WHAN'][i] == 'SFG':
@@ -118,8 +117,8 @@ class Main:
         NOEL = 0
 
         self.total2 = 0
-        for i in range(len(self.dataframe['Aperture_1_Reff'])):
-            if self.dataframe['Aperture_1_Reff'][i] in keys:
+        for i in range(len(self.dataframe['in_aperture'])):
+            if self.dataframe['in_aperture'][i] in keys:
                 self.total2 += 1
                 if self.dataframe['BPT'][i] in ['SFGXY']:
                     SF += 1
@@ -139,7 +138,7 @@ class Main:
                     UNCY += 1
                 elif self.dataframe['BPT'][i] == 'NDA':
                 #   NDA += 1
-                    pass
+                    self.total1 -= 1
                 elif self.dataframe['BPT'][i] == 'NOEL':
                     NOEL += 1
                 else:
@@ -171,6 +170,6 @@ class Main:
             figure.set(aspect='equal')
 
 if __name__ == '__main__':
-    obj = Main('E:/databases/GAMA_ETG_OLA_R_r_1.csv')
+    obj = Main(r"E:\databases\GAMAs4\DETG_DR4.csv")
     obj.reading()
     obj.plotting()

@@ -76,8 +76,8 @@ def func(x, A, B):
     return np.log10(A) + (-1*(10**x)/B)*math.log10(math.exp(1))
     
 class Main:
-    def __init__(self, file):
-        self.file = file 
+    def __init__(self, path_to_data):
+        self.path_to_data = path_to_data
         
         self.color_dict_BPT = color_dict_BPT
         self.color_dict_WHAN = cd_WHAN
@@ -143,7 +143,9 @@ class Main:
         self.DataFrame['out_off_16'] = OUTFLOW_down_off
         self.DataFrame['out_off_50'] = OUTFLOW_off
         self.DataFrame['out_off_84'] = OUTFLOW_up_off
-        
+    
+    def initial_plotting(self):
+        self.DataFrame = pd.read_csv(self.path_to_data)
         gs_top = plt.GridSpec(2, 2, wspace=0, hspace=0)
         self.fig1 = plt.figure(figsize=(12, 12))
         # adjusting_figure_size(12, 12, 1, 0.2, 0.7, 0.2)
@@ -187,9 +189,6 @@ class Main:
             ax1, ax2
         )
         
-        self.DataFrame['out_on_16'] = OUTFLOW_down   
-        self.DataFrame['out_on_50'] = OUTFLOW
-        self.DataFrame['out_on_84'] = OUTFLOW_up
         
         ax3, ax4 = Main.plotting_init(self,
             {'X' : 'ager_percentile50',
@@ -201,8 +200,8 @@ class Main:
              },
             ax3, ax4
         )
-        self.DataFrame.to_csv(output_path, index=False)
-        self.fig1.savefig('./FIGURES_IN_PAPER/OUTFLOW.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+
+        self.fig1.savefig('./FIGURES_IN_PAPER_DR4/OUTFLOW.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
     
     def plotting_init(self, pars, ax1, ax2):
         Main.plotter(self, [ax1, ax2], pars['X'], pars['Y'], pars['Y_up'], pars['Y_down'], 'BPT', 'WHAN', pars['bids_chain'], pars['legend'])
@@ -312,6 +311,6 @@ class Main:
 
 
 if __name__ == '__main__':
-    obj = Main('GAMA_ETG_OLA.csv')
-    obj.reading()
+    obj = Main(r'E:\databases\GAMAs4\DETG_DR4.csv')
+    obj.initial_plotting()
     # obj.plotting()
