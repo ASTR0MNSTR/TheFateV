@@ -104,6 +104,7 @@ class Main(hp):
         df = pd.read_csv(self.path_to_data)
         clean_df = df.dropna()
         clean_df.reset_index(inplace=True, drop=True)
+        print(clean_df.shape)
         for index, row in clean_df.iterrows():
                 X = row[xkey]
                 Y = row['SurfaceDensity']
@@ -115,8 +116,8 @@ class Main(hp):
                     Y_up = np.log10(Y + Y_er)
                     Y_down = np.log10(Y - Y_er)
                     Y = np.log10(Y)
-                    axes[0].scatter(X, Y, alpha= 0.5, color = self.color_dict_BPT[BPT][0], marker='.', s = 30)
-                    axes[1].scatter(X, Y, alpha= 0.5, color = self.color_dict_WHAN[WHAN][0], marker='.', s = 30)
+                    axes[0].scatter(X, Y, alpha= 0.4, color = self.color_dict_BPT[BPT][0], marker='.', s = 30)
+                    axes[1].scatter(X, Y, alpha= 0.4, color = self.color_dict_WHAN[WHAN][0], marker='.', s = 30)
                     k = 1
                     tot_age.append(X)
                     tot.append(Y)
@@ -130,8 +131,8 @@ class Main(hp):
                     Y_up = np.log10(Y)
                     Y_down = np.log10(Y)
                     Y = np.log10(Y)
-                    axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[BPT][0], alpha=0.5)
-                    axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.5)
+                    axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[BPT][0], alpha=0.4)
+                    axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.4)
                     k = 0
                     tot_age.append(X)
                     tot.append(Y)
@@ -146,8 +147,8 @@ class Main(hp):
                     Y_up = np.log10(Y + 2*Y_er)
                     Y_down = np.log10(Y + 2*Y_er)
                     Y = np.log10(Y + 2*Y_er)
-                    axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[BPT][0], alpha=0.5)
-                    axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.5)
+                    axes[0].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_BPT[BPT][0], alpha=0.4)
+                    axes[1].arrow(X, Y, 0, -0.1, head_width=0.01, head_length=0.03, color=self.color_dict_WHAN[WHAN][0], alpha=0.4)
                     k = -1
                     
                     tot_age.append(X)
@@ -161,7 +162,7 @@ class Main(hp):
 
                 
                 #Y = hp.ms_func(item[y], item[x], item['Z'])
-
+        print(len(tot_age))
                 #marker = self.color_dict[AGN][2]
         
         class_list_BPT = class_list_creator_w_err_out(tot_age, tot, tot_up, tot_down, BPT_keys, 'BPT', ks)

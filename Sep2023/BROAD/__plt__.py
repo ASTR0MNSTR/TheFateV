@@ -90,7 +90,7 @@ def my_level_list(data, kwarg):
         labels = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'UNCY', 'SFGXY', 'SFGX', 'SFGY', 'NOEL']
 
     for i in range(len(data)):
-        if ((data[i]*100/np.sum(data)) > 30.55 and data[i]*100/np.sum(data) < 30.57): #2%
+        if ((data[i]*100/np.sum(data)) > 32.8 and data[i]*100/np.sum(data) < 32.9): #2%
             list.append('')
         elif (data[i]*100/np.sum(data)) > 4: #2%
             list.append(labels[i])
