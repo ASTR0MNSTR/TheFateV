@@ -96,6 +96,9 @@ class Main:
             ax.plot(X_111, (0.61/(X_111 - 0.05)) + 1.3,
                       c='k', linestyle='dashed', linewidth=3)  # Kauffman, 2003
             # https://adsabs.harvard.edu/full/2003MNRAS.346.1055K
+            X = np.arange(-4, 0.4, 0.01)
+            ax.plot(X, (-30.787 + 1.1358*X + 0.27297*(X**2))*np.tanh(5.7409*X) - 31.093, linestyle='solid', linewidth=5, c='violet')
+            # https://ui.adsabs.harvard.edu/abs/2006MNRAS.371..972S/abstract
             ax.plot(X_11, 1.01*X_11 + 0.48, c='black', linestyle='dotted', linewidth=3)
             ax.text(-1.5, 1.2, 'AGN')
             ax.text(0, -1, 'UNC', ha='center', va='center')

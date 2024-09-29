@@ -46,6 +46,25 @@ def MS_flagging(SFR_array, MS_array, Z_array):
     bms = np.array(bms)
     return bms
 
+def morphology_flagging(index_array, index_err_array, Z_array):
+    morph = []
+    for i in range(len(index_array)):
+        if 0.01 < Z_array[i] < 0.32:
+            if index_array[i] > 2*index_err_array[i] and index_array[i] > 0 and index_err_array[i] >= 0:
+                if index_array[i] + 2*index_err_array[i] < 2.5:
+                    morph.append('S')
+                elif index_array[i] - 2*index_err_array[i] > 4:
+                    morph.append('E')
+                else:
+                    morph.append('U')
+            else:
+                morph.append('U')  
+        else:
+            morph.append('U')
+            
+    return morph
+    
+
 def spectra_processing(OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_er, Z):
     lines = [OIII, OIII_er, HB, HB_er, NII, NII_er, HA, HA_er, HA_EW, HA_EW_er, Z]
     if '""' not in lines:
