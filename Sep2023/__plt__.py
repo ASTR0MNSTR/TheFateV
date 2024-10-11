@@ -268,6 +268,7 @@ def classlist_plotter(axis, classlist, bids):
         err_plot = []
         err_up = []
         err_down = []
+        # X, Y, err, length, res = monte_carlo(item[0], item[1], item[2], item[3], bids)
         X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
         means.append(Y)
         errs.append(err)
@@ -287,12 +288,13 @@ def classlist_plotter(axis, classlist, bids):
             err_down.append(err[0][0])
         err_up = np.asarray(err_up)
         err_down = np.asarray(err_down)
-            
+        
         axis.fill_between(X_plot, Y_plot + err_up, Y_plot - err_down, color = item[4][0], alpha = 0.17)
         axis.scatter(X_plot, Y_plot, alpha = 1, color=item[4][0], marker=item[4][1], s = 100, edgecolors='black')
         axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+        # axis.text(X_plot[-1], Y_plot[-1], round(res.pvalue, 5), color=item[4][0])
 
 def classlist_plotter_uplim(axis, classlist, bids):
     errs = []
@@ -306,7 +308,8 @@ def classlist_plotter_uplim(axis, classlist, bids):
         err_down = []
         up_lim_end = []
             
-        X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
+        X, Y, err, length, res = monte_carlo(item[0], item[1], item[2], item[3], bids)
+        # X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
         up_lim = up_lim_analysis(item[0], item[5], bids)
         means.append(Y)
         errs.append(err)
@@ -336,6 +339,7 @@ def classlist_plotter_uplim(axis, classlist, bids):
         axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
+        axis.text(X_plot[-1], Y_plot[-1], round(res.pvalue, 5), color=item[4][0])
 
 def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):    
 
@@ -426,13 +430,13 @@ def class_list_creator_wo_err(x, y, age, AGN_keys, WHAN_or_BPT):
 
 def class_list_creator_w_err_out(x, y, up, down, AGN_keys, WHAN_or_BPT, ks):
     if WHAN_or_BPT == 'BPT':
-        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFGXY'], ['SFGX'], ['NOEL']]
-        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['silver', 'o']]
+        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFGXY'], ['SFGX'], ['NOEL'], ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'SFGXY', 'SFGX', 'NOEL']]
+        colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['silver', 'o'], ['black', 'h']]
     elif WHAN_or_BPT == 'WHAN':
-        keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR']]
-        # keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SFG', 'ELR', 'NER', 'LLR']]
-        colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
-        # colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v'], ['black', 'h']]
+        # keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR']]
+        keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR'], ['sAGN', 'wAGN', 'SFG', 'ELR', 'NER', 'LLR']]
+        # colors_markers = [['midnightblue', 'P'], ['blue', 'P'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', 'o'], ['maroon', 'o']]
+        colors_markers = [['midnightblue', 'P'], ['blue', 'o'], ['mediumvioletred', '*'], ['sandybrown', 'D'], ['chocolate', '^'], ['maroon', 'v'], ['black', 'h']]
     class_list = []
     
     for j, chain in enumerate(keys):

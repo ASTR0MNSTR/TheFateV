@@ -50,7 +50,7 @@ cd_WHAN_leg = {
         }
 
 list_names_BPT = ['AGN', 'UNC', 'SFG', 'NOEL']
-list_names_BPT_1 = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'SFGXY', 'SFGX', 'NOEL']
+list_names_BPT_1 = ['AGNXY', 'AGNX', 'UNCXY', 'UNCX', 'SFGXY', 'SFGX', 'NOEL', 'ALL']
 list_names_WHAN = ['sAGN', 'wAGN', 'SFG','ELR', 'NER', 'LLR', 'ALL']
 
 

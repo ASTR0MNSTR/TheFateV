@@ -64,7 +64,7 @@ class Main(hp):
 
         ax1.set_ylabel(r'$\log \mathrm{(\sigma), \: Mpc^{-2}}$')
         ax1.set_xlabel(r'$\log \mathrm{(M_{stellar} \: / \: M_\odot)}$')
-        ax2.set_xlabel(r'$\log \mathrm{(\sigma), \: Mpc^{-2}}$')
+        ax2.set_xlabel(r'$\log \mathrm{(M_{stellar} \: / \: M_\odot)}$')
         ax3.set_ylabel(r'$\log \mathrm{(\sigma), \: Mpc^{-2}}$')
         ax3.set_xlabel(r'$\log \mathrm{(age \: / \: yr)}$')
         ax4.set_xlabel(r'$\log \mathrm{(age \: / \: yr)}$')

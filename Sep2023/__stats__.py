@@ -1,6 +1,7 @@
 from scipy.optimize import curve_fit
 import random
 from scipy.stats import bootstrap
+from scipy.stats import spearmanr
 import numpy as np
 
 def linear_function(x, a, b):
@@ -42,7 +43,8 @@ def monte_carlo(x, y_mid, y_up, y_down, x_bids):
         stmeaner = []
         stmean = []
         bidding = [(pair[0] + pair[1])/2 for pair in x_bids]
-
+        res = spearmanr(x, y_mid)
+        
         for j, item in enumerate(x):
             for i, pair in enumerate(x_bids):
                 if item >= pair[0] and item < pair[1]:
@@ -52,7 +54,7 @@ def monte_carlo(x, y_mid, y_up, y_down, x_bids):
         length = [len(item) for item in y_values]
 
         for mean in y_values:
-            if len(mean) <= 3:
+            if len(mean) <= 10:
                 stmean.append(-99)
                 stmeaner.append(0)
             else:
@@ -69,7 +71,8 @@ def monte_carlo(x, y_mid, y_up, y_down, x_bids):
                 medians = np.asarray(medians)
                 stmean.append(np.median(medians))
                 stmeaner.append([[np.median(medians) - np.percentile(medians, 16)], [np.percentile(medians, 84) - np.median(medians)]])
-        return bidding, stmean, stmeaner, length
+        return bidding, stmean, stmeaner, length, res
+        # return bidding, stmean, stmeaner, length
     
 def bootstrapper(x, y_mid, y_up, y_down, x_bids):
         y_values = empty(x_bids)

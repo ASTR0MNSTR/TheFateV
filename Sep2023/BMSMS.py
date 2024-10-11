@@ -51,7 +51,7 @@ class Main:
         #self.ax1.legend(title = 'BPT: ', loc=2)
         #self.ax2.legend(title = 'WHAN:', loc=2)
 
-        fig.savefig('./FIGURES_IN_PAPER_DR4/BMSMS.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+        fig.savefig('./FIGURES_IN_PAPER_DR4/BMSMS_STAS06.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         plt.show()
 
     def sorting_forWHAN(self, keys):
@@ -164,6 +164,6 @@ class Main:
             
             
 if __name__ == '__main__':
-    obj = Main(r'E:\databases\GAMAs4\DETG_DR4.csv')
+    obj = Main(r'E:\databases\GAMAs4\DETG_DR4_STAS06.csv')
     obj.reading()
     obj.plotting()
