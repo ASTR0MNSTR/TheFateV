@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from astropy.cosmology import Planck13 as cosmo
-from __algo__stas_06 import *
+from __algo__ import *
 from __plt__ import *
 
 def aperture_flagging(REFF, REFF_err, SURVEY):

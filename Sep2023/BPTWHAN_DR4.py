@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-from __algo__stas_06 import *
+from __algo__ import *
 from __legpars__ import *
 from __stats__ import *
 from __plt__ import *

@@ -268,8 +268,8 @@ def classlist_plotter(axis, classlist, bids):
         err_plot = []
         err_up = []
         err_down = []
-        # X, Y, err, length, res = monte_carlo(item[0], item[1], item[2], item[3], bids)
-        X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
+        X, Y, err, length, res = monte_carlo(item[0], item[1], item[2], item[3], bids)
+        # X, Y, err, length = monte_carlo(item[0], item[1], item[2], item[3], bids)
         means.append(Y)
         errs.append(err)
         for j in range(len(X)):
@@ -339,7 +339,7 @@ def classlist_plotter_uplim(axis, classlist, bids):
         axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
-        axis.text(X_plot[-1], Y_plot[-1], round(res.pvalue, 5), color=item[4][0])
+        # axis.text(X_plot[-1], Y_plot[-1], round(res.pvalue, 5), color=item[4][0])
 
 def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):    
 
