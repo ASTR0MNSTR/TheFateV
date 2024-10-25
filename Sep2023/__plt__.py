@@ -294,7 +294,7 @@ def classlist_plotter(axis, classlist, bids):
         axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
-        # axis.text(X_plot[-1], Y_plot[-1], round(res.pvalue, 5), color=item[4][0])
+        axis.text(X_plot[-1], Y_plot[-1], round(res.pvalue, 5), color=item[4][0])
 
 def classlist_plotter_uplim(axis, classlist, bids):
     errs = []
@@ -339,7 +339,8 @@ def classlist_plotter_uplim(axis, classlist, bids):
         axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
-        # axis.text(X_plot[-1], Y_plot[-1], round(res.pvalue, 5), color=item[4][0])
+        axis.text(X_plot[-1], Y_plot[-1], round(res.pvalue, 5), color=item[4][0])
+        print(item[4][0], ' : ', round(res.pvalue, 5))
 
 def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):    
 
@@ -357,10 +358,10 @@ def phys_plotter(axis, x, y, up, down, AGN_keys, bids, WHAN_or_BPT, leg):
     
     # a, b = fit(x, y, up, down)
     
-    a = -2.257
-    b = 2.213
-    x_theor = np.arange(8.6, 10.2, 0.01)
-    axis.plot(x_theor, a - 0.4343*(10**x_theor)/(b*(10**9)), color='orange', linestyle='dashed', linewidth=3.)
+    # a = -2.257
+    # b = 2.213
+    # x_theor = np.arange(8.6, 10.2, 0.01)
+    # axis.plot(x_theor, a - 0.4343*(10**x_theor)/(b*(10**9)), color='orange', linestyle='dashed', linewidth=3.)
     
     classlist_plotter(axis, class_list, bids)
     # rainbow_plotter(axis, class_list)

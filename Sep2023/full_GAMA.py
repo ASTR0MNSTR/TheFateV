@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from astropy.cosmology import Planck13 as cosmo
 from __algo__ import *
+from __algo__stas06 import *
 from __plt__ import *
 
 def aperture_flagging(REFF, REFF_err, SURVEY):
@@ -50,17 +51,19 @@ def morphology_flagging(index_array, index_err_array, Z_array):
     morph = []
     for i in range(len(index_array)):
         if 0.01 < Z_array[i] < 0.32:
-            if index_array[i] > 2*index_err_array[i] and index_array[i] > 0 and index_err_array[i] >= 0:
-                if index_array[i] + 2*index_err_array[i] < 2.5:
+            if index_array[i] > 3*index_err_array[i] and index_array[i] > 0 and index_err_array[i] >= 0:
+                # if index_array[i] + 2*index_err_array[i] < 2.5:
+                if index_array[i] < 2.5:
                     morph.append('S')
-                elif index_array[i] - 2*index_err_array[i] > 4:
+                # elif index_array[i] - 2*index_err_array[i] > 4:
+                elif index_array[i] > 4:
                     morph.append('E')
                 else:
-                    morph.append('U')
+                    morph.append('U_r')
             else:
-                morph.append('U')  
+                morph.append('U_3')  
         else:
-            morph.append('U')
+            morph.append('U_z')
             
     return morph
     
