@@ -408,7 +408,7 @@ def class_list_creator_w_err(x, y, up, down, AGN_keys, WHAN_or_BPT):
 
 def class_list_creator_wo_err(x, y, age, AGN_keys, WHAN_or_BPT):
     if WHAN_or_BPT == 'BPT':
-        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFXY'], ['SFX'], ['NOEL']]
+        keys = [['AGNXY'], ['AGNX'], ['UNCXY'], ['UNCX'], ['SFGXY'], ['SFGX'], ['NOEL']]
         colors_markers = [['midnightblue', 'P'], ['dodgerblue', 'P'], ['springgreen', 'H'], ['darkgreen', 'H'], ['mediumvioletred', '*'], ['crimson', 'p'], ['silver', 'o']]
     elif WHAN_or_BPT == 'WHAN':
         keys = [['sAGN'], ['wAGN'], ['SFG'], ['ELR'], ['NER'], ['LLR']]

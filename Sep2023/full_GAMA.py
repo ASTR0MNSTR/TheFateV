@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from astropy.cosmology import Planck13 as cosmo
 from __algo__ import *
-from __algo__stas06 import *
+# from __algo__stas06 import *
 from __plt__ import *
 
 def aperture_flagging(REFF, REFF_err, SURVEY):
@@ -99,7 +99,7 @@ class Main:
     def __init__(self, path):
         self.path = path
         self.out_path = r'E:/databases/GAMA_MACHINE.csv'
-        self.final_out_path = r'E:/databases/MRT/MRT_old.csv'
+        self.final_out_path = r'E:/databases/MRT/MRT_new.csv'
         
     def completely_different_extraction(self):
         DirectSummation_path = r"E:\databases\GAMAs4\DirectSummationv05"

@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-from __algo__stas06 import *
+from __algo__ import *
 from __legpars__ import *
 from __stats__ import *
 from __plt__ import *
@@ -91,13 +91,13 @@ class Main:
             X_1 = np.arange(-4, 0.4, 0.01)
             X_111 = np.arange(-4, 0, 0.01)
             X_11 = np.arange(-0.2, 1.5, 0.01)
-            # ax.plot(X_1, (0.61/(X_1 - 0.47)) + 1.19,
-            #           c='k', linewidth=3)  # Kauffmann, 2001
-            # ax.plot(X_111, (0.61/(X_111 - 0.05)) + 1.3,
-            #           c='k', linestyle='dashed', linewidth=3)  # Kewley, 2001
+            ax.plot(X_1, (0.61/(X_1 - 0.47)) + 1.19,
+                      c='k', linewidth=3)  # Kauffmann, 2001
+            ax.plot(X_111, (0.61/(X_111 - 0.05)) + 1.3,
+                      c='k', linestyle='dashed', linewidth=3)  # Kewley, 2001
             # https://adsabs.harvard.edu/full/2003MNRAS.346.1055K
-            X = np.arange(-4, 0.4, 0.01)
-            ax.plot(X, (-30.787 + 1.1358*X + 0.27297*(X**2))*np.tanh(5.7409*X) - 31.093, linestyle='solid', linewidth=5, c='violet')
+            # X = np.arange(-4, 0.4, 0.01)
+            # ax.plot(X, (-30.787 + 1.1358*X + 0.27297*(X**2))*np.tanh(5.7409*X) - 31.093, linestyle='solid', linewidth=5, c='violet')
             # https://ui.adsabs.harvard.edu/abs/2006MNRAS.371..972S/abstract
             ax.plot(X_11, 1.01*X_11 + 0.48, c='black', linestyle='dotted', linewidth=3)
             ax.text(-1.5, 1.2, 'AGN')
@@ -327,14 +327,14 @@ class Main:
         self.fig.colorbar(self.s_m, cax=cbar_ax, label=r'$\log \mathrm{(age \: / \: yr)}$')
         #self.ax7.legend(loc=3, fontsize="13")
         
-        self.fig.savefig('./FIGURES_IN_PAPER_S_06/BPT_WHAN_S06.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+        self.fig.savefig('./FIGURES_IN_PAPER_DR4/BPT_WHAN.pdf', dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
         #self.fig.savefig('WHAN.pdf')
 
         # plt.show()
 
 
 if __name__ == '__main__':
-    obj = Main(r"E:\databases\GAMAs4\DETG_DR4_S_06.csv")
+    obj = Main(r"E:\databases\GAMAs4\DETG_DR4.csv")
     obj.getting_coords()
     obj.plotting_BPT()
     obj.plotting_WHAN()
