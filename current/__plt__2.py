@@ -164,7 +164,7 @@ def classlist_plotter(axis, classlist, bids):
         axis.plot(X_plot, Y_plot + err_up, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot - err_down, alpha = 1, color=item[4][0])
         axis.plot(X_plot, Y_plot, alpha = 1, color=item[4][0], linestyle = '--')
-        axis.text(X_plot[-1], Y_plot[-1], round(res.pvalue, 5), color=item[4][0])
+        # axis.text(X_plot[-1], Y_plot[-1], round(res.pvalue, 5), color=item[4][0])
 
 def classlist_plotter_uplim(axis, classlist, bids):
     errs = []
@@ -330,41 +330,43 @@ def bin_stats(pars_dict):
     
     adjusting_plotting_pars()
     
-    gs_top = plt.GridSpec(6, 1, hspace=0, wspace=0)
-    fig = plt.figure(figsize=(12, 18), tight_layout=True)
+    gs_top = plt.GridSpec(2, 1, hspace=0, wspace=0)
+    fig = plt.figure(figsize=(12, 6), tight_layout=True)
 
-    ax1 = fig.add_subplot(gs_top[0,0])
-    ax2 = fig.add_subplot(gs_top[1,0])
-    ax3 = fig.add_subplot(gs_top[2,0])
-    ax4 = fig.add_subplot(gs_top[3,0])
-    ax5 = fig.add_subplot(gs_top[4,0])
-    ax6 = fig.add_subplot(gs_top[5,0])
+    # ax1 = fig.add_subplot(gs_top[0,0])
+    # ax2 = fig.add_subplot(gs_top[1,0])
+    # ax3 = fig.add_subplot(gs_top[2,0])
+    # ax4 = fig.add_subplo/t(gs_top[3,0])
+    ax5 = fig.add_subplot(gs_top[0,0])
+    ax6 = fig.add_subplot(gs_top[1,0])
     
-    plotter_histo_BPT(ax3, [0], DataFrame[pars_dict['x']], DataFrame['BPT'], 'BMS, %', DataFrame['BMS'], pars_dict['bins'])
+    # plotter_histo_BPT(ax3, [0], DataFrame[pars_dict['x']], DataFrame['BPT'], 'BMS, %', DataFrame['BMS'], pars_dict['bins'])
 
-    plotter_histo_BPT(ax2, [1], DataFrame[pars_dict['x']], DataFrame['BPT'], 'MS, %', DataFrame['BMS'], pars_dict['bins'])
+    # plotter_histo_BPT(ax2, [1], DataFrame[pars_dict['x']], DataFrame['BPT'], 'MS, %', DataFrame['BMS'], pars_dict['bins'])
 
-    plotter_histo_BPT(ax1, [0, 1], DataFrame[pars_dict['x']], DataFrame['BPT'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
+    plotter_histo_BPT(ax5, [0, 1], DataFrame[pars_dict['x']], DataFrame['BPT'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
 
-    plotter_histo_WHAN(ax6, [0], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'BMS, %', DataFrame['BMS'], pars_dict['bins'])
+    # plotter_histo_WHAN(ax4, [0], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'BMS, %', DataFrame['BMS'], pars_dict['bins'])
 
-    plotter_histo_WHAN(ax5, [1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'MS, %', DataFrame['BMS'], pars_dict['bins'])
+    # plotter_histo_WHAN(ax1, [1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'MS, %', DataFrame['BMS'], pars_dict['bins'])
 
-    plotter_histo_WHAN(ax4, [0,1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
+    plotter_histo_WHAN(ax6, [0,1], DataFrame[pars_dict['x']], DataFrame['WHAN'], 'Total, %', DataFrame['BMS'], pars_dict['bins'])
 
-    ax2.legend(fontsize="13", loc='center right')
-    ax5.legend(fontsize="15", loc='center right')
+    ax5.legend(fontsize="13", loc='center right')
+    ax6.legend(fontsize="15", loc='center right')
 
-    top_axes = [ax2, ax3, ax5]
-    for item in top_axes:
-        item.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
+    # top_axes = [ax2, ax3, ax5]
+    # for item in top_axes:
+        # item.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
+    
+    ax5.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
 
-    ax1.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
-    ax1.text(5.5, 80, 'BPT', fontsize='15', ha='center', va='center')
-    ax4.text(5.5, 80, 'WHAN', fontsize='15', ha='center', va='center')
+    # ax1.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
+    # ax1.text(5.5, 80, 'BPT', fontsize='15', ha='center', va='center')
+    # ax4.text(5.5, 80, 'WHAN', fontsize='15', ha='center', va='center')
     #ax1.xaxis.set_label_position('top')
     # ax1.set_title('BPT classification')
-    ax4.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
+    # ax4.tick_params(top=False, labeltop=False, bottom=False, labelbottom=False, right=True, direction='in')
     ax6.tick_params(top=False, labeltop=False, bottom=True, labelbottom=True, right=True, direction='in')
     #ax4.xaxis.set_label_position('top')
     # ax4.set_title('WHAN classification')
@@ -373,7 +375,7 @@ def bin_stats(pars_dict):
     # ax6.set_xticks([r for r in range(6)], ['<0.05', '0.05-0.10', '0.10-0.15', '0.15-0.20', '0.20-0.25', '0.25-0.33'])
     ax6.set_xticks([r for r in range(len(pars_dict['bins_names']))], pars_dict['bins_names'], fontsize=17)
     
-    fig.savefig(pars_dict['save_path'], dpi=300, transparent = True, bbox_inches = 'tight', pad_inches = 0.0001)
+    fig.savefig(pars_dict['save_path'], dpi=500, transparent = True, bbox_inches = 'tight', pad_inches = 0.1)
 
 def empty():
     return [0, 0, 0, 0, 0, 0, 0]
